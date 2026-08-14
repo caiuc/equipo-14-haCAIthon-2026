@@ -2,7 +2,7 @@
 
 > **Obligatorio:** todo agente que cambie el repositorio debe actualizar este archivo en el mismo cambio. Ver [`../AGENTS.md`](../AGENTS.md).
 
-Última actualización: **2026-08-14 14:34 America/Santiago — Codex**
+Última actualización: **2026-08-14 14:39 America/Santiago — Codex**
 
 ## Resumen ejecutivo
 
@@ -10,9 +10,7 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 
 ## Trabajo activo
 
-| Tarea | Owner | Rama | Lease hasta | Write set |
-| --- | --- | --- | --- | --- |
-| RTN-008 | Codex | `docs/RTN-008-agent-task-leases` | 2026-08-15T02:34:08Z | Gobernanza y documentación multiagente; ver `docs/claims/RTN-008.md` |
+No hay claims activos. Antes de implementar una tarea, reservarla mediante el protocolo de [`claims/README.md`](claims/README.md).
 
 ## Completado
 
@@ -33,7 +31,8 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 - TypeScript, lint, 5 tests de dominio y export web verificados.
 - README y `CONTRIBUTING.md` preparados para onboarding del repositorio.
 - Rama de integración `develop` y rama `chore/RTN-001-initial-setup` publicadas.
-- Draft PR abierto contra `develop`: `https://github.com/caiuc/equipo-14-haCAIthon-2026/pull/1`.
+- Setup inicial fusionado en `develop`: `https://github.com/caiuc/equipo-14-haCAIthon-2026/pull/1`.
+- Protocolo de task leases: plan remoto, write set, heartbeat, expiración, takeover y liberación documentados en [`claims/README.md`](claims/README.md).
 
 “Completado” aquí significa que el artefacto fue escrito; las capacidades marcadas `EN CURSO` en `TASKS.md` aún requieren aceptación/verificación antes de considerarse listas.
 
@@ -94,3 +93,4 @@ Ejecutado el 2026-08-14:
 | 2026-08-14 | Codex | RTN-002 | Agregó reglas obligatorias, Gitflow, Conventional Commits, backlog y tracking | Pendiente revisión final de enlaces |
 | 2026-08-14 | Codex | RTN-001, 002, 004, 005, 801, 802 | Estabilizó dependencias/assets/rutas, agregó tests y cerró setup/documentación | Expo check, typecheck, lint, 5 tests, export web y diff-check OK |
 | 2026-08-14 | Codex | RTN-007 | Publicó `develop`, 4 commits convencionales y draft PR #1 desde `chore/RTN-001-initial-setup` | Push remoto y PR contra `develop` confirmados |
+| 2026-08-14 | Codex | RTN-008 | Publicó el plan en PR #2 y completó el protocolo de claims en PR #3 tras un merge temprano del plan | Enlaces Markdown locales y `git diff --check` OK; claim liberado |

@@ -28,7 +28,31 @@ Refs: RTN-###
 
 ## Scopes recomendados
 
-`app`, `auth`, `communities`, `recycling`, `leaderboards`, `missions`, `social`, `sharing`, `barcode`, `db`, `design`, `docs`, `ci`, `deps`.
+`app`, `auth`, `communities`, `recycling`, `leaderboards`, `missions`, `social`, `sharing`, `barcode`, `db`, `design`, `docs`, `tasks`, `ci`, `deps`.
+
+## Commits de coordinación
+
+Toda tarea que escriba en el repositorio comienza con un commit sin implementación:
+
+```text
+chore(tasks): claim RTN-203 community creation
+
+Refs: RTN-203
+```
+
+Si el lease debe renovarse en un commit independiente:
+
+```text
+chore(tasks): refresh RTN-203 lease
+```
+
+Al cerrar, la liberación puede acompañar el último commit documental o usar:
+
+```text
+chore(tasks): release RTN-203 claim
+```
+
+Estos commits no son ruido permanente cuando el PR se integra por squash, y hacen visible la coordinación mientras el trabajo está activo.
 
 ## Reglas de redacción
 
