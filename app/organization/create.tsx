@@ -10,7 +10,7 @@ import { radius, spacing } from '@/design/tokens';
 import { useOrganizations } from '@/features/organizations/OrganizationProvider';
 import { AppShell } from '@/navigation/AppShell';
 
-const accents = ['#FF6246', '#159A79', '#2A7DE1', '#8F78C6', '#D55064', '#E09B2D'];
+const LIME_ACCENT = '#7BCB3B';
 const organizationSchema = z.object({
   name: z.string().trim().min(3, 'El nombre debe tener al menos 3 caracteres.').max(80),
   description: z.string().trim().min(12, 'Describe la organización en al menos 12 caracteres.').max(500),
@@ -23,13 +23,12 @@ export default function CreateOrganizationScreen() {
   const { createOrganization } = useOrganizations();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [accent, setAccent] = useState(accents[1]!);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>();
 
   const submit = async () => {
     setError(undefined);
-    const parsed = organizationSchema.safeParse({ name, description, accent });
+    const parsed = organizationSchema.safeParse({ name, description, accent: LIME_ACCENT });
     if (!parsed.success) {
       setError(parsed.error.issues[0]?.message ?? 'Revisa los datos ingresados.');
       return;
@@ -51,7 +50,7 @@ export default function CreateOrganizationScreen() {
       {error && <View style={[styles.message, { backgroundColor: colors.dangerSoft }]} accessibilityRole="alert"><AppText variant="caption" style={{ color: colors.danger }}>{error}</AppText></View>}
       <Field label="Nombre"><TextInput value={name} onChangeText={setName} maxLength={80} placeholder="Ej. Ingeniería Circular" placeholderTextColor={colors.textMuted} style={[styles.input, { color: colors.text, borderColor: colors.border }]} /></Field>
       <Field label="Descripción"><TextInput value={description} onChangeText={setDescription} maxLength={500} multiline placeholder="¿Cuál es el propósito de esta organización?" placeholderTextColor={colors.textMuted} style={[styles.input, styles.multiline, { color: colors.text, borderColor: colors.border }]} /></Field>
-      <Field label="Color de identidad"><View style={styles.accents}>{accents.map((item) => <Pressable key={item} onPress={() => setAccent(item)} accessibilityLabel={`Usar color ${item}`} accessibilityState={{ selected: accent === item }} style={[styles.accent, { backgroundColor: item }, accent === item && { borderColor: colors.text, borderWidth: 3 }]}>{accent === item && <Check color="#FFFFFF" size={18} />}</Pressable>)}</View></Field>
+      <Field label="Identidad visual"><View style={[styles.identity, { backgroundColor: colors.environmentalSoft }]}><View style={[styles.accent, { backgroundColor: LIME_ACCENT }]}><Check color="#17351B" size={18} /></View><View style={{ flex: 1 }}><AppText variant="bodyStrong">Verde reciclaje</AppText><AppText variant="caption" style={{ color: colors.textMuted }}>Todas las organizaciones comparten la identidad de Retorna.</AppText></View></View></Field>
       <Button label="Crear organización" onPress={() => void submit()} loading={loading} />
     </Card>
   </ScreenScroll></AppShell>;
@@ -69,7 +68,7 @@ const styles = StyleSheet.create({
   field: { gap: spacing.sm },
   input: { borderWidth: 1, minHeight: 52, borderRadius: radius.md, paddingHorizontal: spacing.lg, fontSize: 16, outlineStyle: 'none' } as never,
   multiline: { minHeight: 112, paddingTop: spacing.md, textAlignVertical: 'top' },
-  accents: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md },
+  identity: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, borderRadius: radius.md, padding: spacing.md },
   accent: { width: 46, height: 46, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
   message: { borderRadius: radius.md, padding: spacing.md },
 });

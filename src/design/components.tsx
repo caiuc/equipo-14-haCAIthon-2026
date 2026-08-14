@@ -59,7 +59,7 @@ export function Card({ style, children, ...props }: ViewProps) {
         {
           backgroundColor: colors.surface,
           borderColor: colors.border,
-          shadowColor: isDark ? '#000000' : '#101B2D',
+          shadowColor: isDark ? '#000000' : '#244827',
         },
         style,
       ]}
@@ -99,7 +99,7 @@ export function Button({
     dark: colors.surfaceStrong,
   };
   const foregrounds: Record<ButtonVariant, string> = {
-    primary: '#FFFFFF',
+    primary: '#17351B',
     secondary: colors.text,
     ghost: colors.text,
     danger: colors.danger,
@@ -128,27 +128,32 @@ export function Button({
 }
 
 export function Avatar({ initials, color, size = 44, imageUrl }: { initials: string; color: string; size?: number; imageUrl?: string }) {
+  const { colors } = useTheme();
+  void color;
   void imageUrl;
   return (
-    <View style={[styles.avatar, { width: size, height: size, borderRadius: size / 2, backgroundColor: color }]} accessibilityLabel={`Avatar ${initials}`}>
-      <AppText variant={size > 52 ? 'h3' : 'caption'} style={{ color: '#FFFFFF' }}>{initials}</AppText>
+    <View style={[styles.avatar, { width: size, height: size, borderRadius: size / 2, backgroundColor: colors.primary }]} accessibilityLabel={`Avatar ${initials}`}>
+      <AppText variant={size > 52 ? 'h3' : 'caption'} style={{ color: '#17351B' }}>{initials}</AppText>
     </View>
   );
 }
 
 export function CommunityAvatar({ initials, color, size = 48 }: { initials: string; color: string; size?: number }) {
+  const { colors } = useTheme();
+  void color;
   return (
-    <View style={[styles.communityAvatar, { width: size, height: size, borderRadius: Math.round(size * 0.32), backgroundColor: color }]}>
-      <AppText variant={size > 52 ? 'h3' : 'caption'} style={{ color: '#FFFFFF', fontWeight: '900' }}>{initials}</AppText>
+    <View style={[styles.communityAvatar, { width: size, height: size, borderRadius: Math.round(size * 0.32), backgroundColor: colors.primary }]}>
+      <AppText variant={size > 52 ? 'h3' : 'caption'} style={{ color: '#17351B', fontWeight: '900' }}>{initials}</AppText>
     </View>
   );
 }
 
 export function ProgressBar({ value, color, height = 9, accessibilityLabel }: { value: number; color?: string; height?: number; accessibilityLabel?: string }) {
   const { colors } = useTheme();
+  void color;
   return (
     <View accessibilityRole="progressbar" accessibilityValue={{ min: 0, max: 100, now: Math.round(value) }} accessibilityLabel={accessibilityLabel} style={[styles.progressTrack, { height, backgroundColor: colors.surfaceMuted }]}>
-      <View style={{ height: '100%', width: `${Math.max(2, Math.min(100, value))}%`, backgroundColor: color ?? colors.environmental, borderRadius: radius.pill }} />
+      <View style={{ height: '100%', width: `${Math.max(2, Math.min(100, value))}%`, backgroundColor: colors.primary, borderRadius: radius.pill }} />
     </View>
   );
 }
@@ -218,8 +223,8 @@ export function CategoryBadge({ category, selected = false, onPress }: { categor
   const { colors } = useTheme();
   const Icon = categoryIcons[category.icon];
   return (
-    <Pressable onPress={onPress} accessibilityRole={onPress ? 'button' : undefined} accessibilityState={{ selected }} style={[styles.categoryBadge, { borderColor: selected ? category.color : colors.border, backgroundColor: selected ? `${category.color}14` : colors.surface }]}>
-      <View style={[styles.categoryIcon, { backgroundColor: `${category.color}20` }]}><Icon size={22} color={category.color} strokeWidth={2.2} /></View>
+    <Pressable onPress={onPress} accessibilityRole={onPress ? 'button' : undefined} accessibilityState={{ selected }} style={[styles.categoryBadge, { borderColor: selected ? colors.primary : colors.border, backgroundColor: selected ? colors.environmentalSoft : colors.surface }]}>
+      <View style={[styles.categoryIcon, { backgroundColor: colors.environmentalSoft }]}><Icon size={22} color={colors.primary} strokeWidth={2.2} /></View>
       <AppText variant="caption" numberOfLines={2} style={{ textAlign: 'center', color: selected ? colors.text : colors.textMuted }}>{category.shortName}</AppText>
     </Pressable>
   );
@@ -233,7 +238,7 @@ const styles = StyleSheet.create({
     ...Platform.select({
       ios: { shadowOpacity: 0.06, shadowRadius: 18, shadowOffset: { width: 0, height: 7 } },
       android: { elevation: 2 },
-      web: { boxShadow: '0 8px 28px rgba(16, 27, 45, 0.055)' } as ViewStyle,
+      web: { boxShadow: '0 8px 28px rgba(36, 72, 39, 0.08)' } as ViewStyle,
     }),
   },
   button: { minHeight: 48, borderRadius: radius.md, paddingHorizontal: spacing.xl, flexDirection: 'row', gap: spacing.sm, alignItems: 'center', justifyContent: 'center', borderWidth: 1 },

@@ -1,4 +1,4 @@
-import { Home, Plus, Trophy, UserRound, UsersRound } from 'lucide-react-native';
+import { Home, Recycle, Trophy, UserRound, UsersRound } from 'lucide-react-native';
 import type { LucideIcon } from 'lucide-react-native';
 import { usePathname, useRouter } from 'expo-router';
 import React from 'react';
@@ -12,7 +12,7 @@ import { radius, spacing } from '@/design/tokens';
 const navItems: { label: string; path: '/home' | '/communities' | '/recycle' | '/leaderboards' | '/profile'; icon: LucideIcon }[] = [
   { label: 'Inicio', path: '/home', icon: Home },
   { label: 'Comunidades', path: '/communities', icon: UsersRound },
-  { label: 'Reciclar', path: '/recycle', icon: Plus },
+  { label: 'Reciclar', path: '/recycle', icon: Recycle },
   { label: 'Ranking', path: '/leaderboards', icon: Trophy },
   { label: 'Perfil', path: '/profile', icon: UserRound },
 ];
@@ -64,7 +64,7 @@ function MobileNav() {
   const pathname = usePathname();
   const router = useRouter();
   return (
-    <View style={[styles.mobileNav, { backgroundColor: colors.surface, borderColor: colors.border, shadowColor: isDark ? '#000' : '#101B2D' }]}>
+    <View style={[styles.mobileNav, { backgroundColor: colors.surface, borderColor: colors.border, shadowColor: isDark ? '#000' : '#244827' }]}>
       {navItems.map((item) => {
         const active = pathIsActive(pathname, item.path);
         const Icon = item.icon;
@@ -72,7 +72,7 @@ function MobileNav() {
         return (
           <Pressable key={item.path} onPress={() => router.push(item.path)} accessibilityRole="tab" accessibilityState={{ selected: active }} style={({ pressed }) => [styles.mobileLink, primary && styles.primaryMobileLink, pressed && { opacity: 0.72 }]}>
             {primary ? (
-              <View style={[styles.recycleButton, { backgroundColor: colors.primary }]}><Icon size={26} color="#FFFFFF" strokeWidth={2.7} /></View>
+              <View style={[styles.recycleButton, { backgroundColor: colors.primary }]}><Icon size={26} color="#17351B" strokeWidth={2.7} /></View>
             ) : <Icon size={21} color={active ? colors.primary : colors.textMuted} strokeWidth={active ? 2.7 : 2} />}
             <AppText variant="caption" style={{ fontSize: 10, color: primary || active ? colors.text : colors.textMuted }}>{item.label}</AppText>
           </Pressable>
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   mobileNav: {
     position: 'absolute', left: 0, right: 0, bottom: 0, height: 78, borderTopWidth: 1,
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', paddingBottom: Platform.OS === 'ios' ? 12 : 5,
-    ...Platform.select({ ios: { shadowOpacity: 0.12, shadowRadius: 18, shadowOffset: { width: 0, height: -4 } }, android: { elevation: 16 }, web: { boxShadow: '0 -10px 30px rgba(16,27,45,.08)' } as ViewStyle }),
+    ...Platform.select({ ios: { shadowOpacity: 0.12, shadowRadius: 18, shadowOffset: { width: 0, height: -4 } }, android: { elevation: 16 }, web: { boxShadow: '0 -10px 30px rgba(36,72,39,.10)' } as ViewStyle }),
   },
   mobileLink: { flex: 1, height: 58, minWidth: 54, alignItems: 'center', justifyContent: 'center', gap: 4 },
   primaryMobileLink: { marginTop: -23 },
