@@ -2,7 +2,7 @@
 
 > **Obligatorio:** todo agente que cambie el repositorio debe actualizar este archivo en el mismo cambio. Ver [`../AGENTS.md`](../AGENTS.md).
 
-Última actualización: **2026-08-14 15:44 America/Santiago — Codex**
+Última actualización: **2026-08-14 15:51 America/Santiago — Codex**
 
 ## Resumen ejecutivo
 
@@ -13,7 +13,6 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 | Tarea | Owner | Rama | Lease hasta | Write set |
 | --- | --- | --- | --- | --- |
 | RTN-302 | Codex | `feat/RTN-302-recycling-flow` | 2026-08-15T03:10:22Z | Claim remoto activo; flujo de reciclaje/cámara sin solapamiento con RTN-501 |
-| RTN-307 | Codex | `feat/RTN-307-circular-action` | 2026-08-15T03:44:48Z | Demo pública autocontenida; dominio y ruta propios; comparte sólo layout y tracking |
 
 ## Completado
 
@@ -25,6 +24,7 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 - Primer borrador de tokens, temas, logo SVG y componentes base.
 - Auth propia Supabase, perfil y organizaciones implementados en código.
 - Identidad visual unificada en verde lima: tokens light/dark, componentes, formularios y navegación de reciclaje.
+- Reto Acción Circular público y autocontenido: prevención, reutilización y reciclaje sin QR; evidencia opcional; XP, participación e impacto material separados.
 - Primer borrador de shell responsive.
 - Primer borrador visual de onboarding, Home y Comunidades.
 - Gobernanza multiagente: `AGENTS.md` y documentación `/docs`.
@@ -96,6 +96,11 @@ Ejecutado el 2026-08-14:
 | `npm test` (RTN-501) | OK; 5/5 tests existentes |
 | `git diff --check` (RTN-501) | OK |
 | Cálculo de contraste (RTN-501) | OK; 6.69:1 o superior en combinaciones principales |
+| `npm run typecheck` + `npm run lint` (RTN-307) | OK, sin errores ni warnings |
+| `npm test` (RTN-307) | OK; 9/9 tests, incluidos 4 del reto circular |
+| `npm run web:export` (RTN-307) | OK; 20 rutas, incluida `/circular-action` |
+| Recorrido web (RTN-307) | OK; selección, evidencia y registro cambian XP/participación; impacto sigue sin dato confirmado; consola sin errores |
+| `git diff --check` (RTN-307) | OK |
 
 ## Registro de cambios de agentes
 
@@ -108,3 +113,4 @@ Ejecutado el 2026-08-14:
 | 2026-08-14 | Codex | RTN-101–106 | Retiró Clerk; agregó Supabase Auth, perfil real, organizaciones, membresías, solicitudes, roles, migración, seed y UI | Typecheck, lint, 5 tests y diff-check OK; Supabase local no ejecutado; sin verificación web adicional por indicación del usuario |
 | 2026-08-14 | Codex | RTN-008 | Publicó el plan en PR #2 y completó el protocolo de claims en PR #3 tras un merge temprano del plan | Enlaces Markdown locales y `git diff --check` OK; claim liberado |
 | 2026-08-14 | Codex | RTN-501/502 | Unificó acentos en verde lima, superficies naturales y sombras bosque; retiró selectores multicolor y cambió el `+` central por flechas de reciclaje | Typecheck, lint, 5 tests, diff-check y contraste principal 6.69:1+ OK; revisión visual local queda a cargo del usuario |
+| 2026-08-14 | Codex | RTN-307 | Implementó el Reto Acción Circular autónomo y público, con catálogo priorizado, evidencia opcional de demo y métricas honestas | Typecheck, lint, 9 tests, export de 20 rutas, diff-check y recorrido web sin errores de consola |
