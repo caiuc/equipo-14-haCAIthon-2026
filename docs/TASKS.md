@@ -119,7 +119,7 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | ID | Tarea | Estado | Owner | Depende de | Criterio de aceptación / evidencia |
 | --- | --- | --- | --- | --- | --- |
 | RTN-801 | Tests de dominio críticos | PARCIAL | — | RTN-301, RTN-401, RTN-601 | 5 tests base pasan; faltan ledger, ranking, misión y permisos |
-| RTN-802 | PWA instalable/offline shell | RESERVADA | Claude · [claim](claims/RTN-802.md) | RTN-001 | manifest/assets/export listos; faltan service worker y Lighthouse |
-| RTN-803 | EAS web + Android | RESERVADA | Claude · [claim](claims/RTN-802.md) | RTN-001, RTN-004 | preview web y APK reproducibles |
+| RTN-802 | PWA instalable/offline shell | COMPLETADA | Claude · [claim](claims/RTN-802.md) | RTN-001 | manifest, assets, export, service worker y verificación (export servido + Lighthouse) listos |
+| RTN-803 | EAS web + Android | PARCIAL | — | RTN-001, RTN-004 | preview web reproducible; `app.json`/`eas.json` corregidos para build reproducible; falta proyecto EAS real y ejecutar `eas build --platform android` |
 | RTN-804 | Analítica con privacidad | PENDIENTE | — | RTN-001 | contrato + eventos críticos; no bloquea core |
 | RTN-805 | Performance mid-range Android | PENDIENTE | — | flujo core | listas/imágenes medidos y sin regresiones obvias |

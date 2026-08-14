@@ -6,24 +6,18 @@
     "orientation": "portrait",
     "scheme": "retorna",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
     "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#0B1628"
-    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "cl.retorna.app"
     },
     "android": {
       "package": "cl.retorna.app",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0B1628"
-      },
-      "edgeToEdgeEnabled": true
+      }
     },
     "web": {
       "bundler": "metro",

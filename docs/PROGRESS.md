@@ -2,7 +2,7 @@
 
 > **Obligatorio:** todo agente que cambie el repositorio debe actualizar este archivo en el mismo cambio. Ver [`../AGENTS.md`](../AGENTS.md).
 
-Última actualización: **2026-08-14 15:34 America/Santiago — Claude**
+Última actualización: **2026-08-14 15:44 America/Santiago — Claude**
 
 ## Resumen ejecutivo
 
@@ -10,9 +10,7 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 
 ## Trabajo activo
 
-| ID | Owner | Rama | Claim | Lease | Write set |
-| --- | --- | --- | --- | --- | --- |
-| RTN-802/803 | Claude | `feat/RTN-802-pwa-android-shell` | [`docs/claims/RTN-802.md`](claims/RTN-802.md) | 2026-08-15T03:34:24Z | `app.json`, `eas.json`, `app/+html.tsx`, `public/sw.js`, `public/manifest.json` |
+No hay claims activos de esta intervención. RTN-802/803 liberaron su claim ([`docs/claims/RTN-802.md`](claims/RTN-802.md), `RELEASED`); RTN-302 (`feat/RTN-302-recycling-flow`) y RTN-501 (`feat/RTN-501-lime-visual-refresh`) siguen activos en ramas remotas propias, sin solapamiento de write set con este cambio.
 
 ## Completado
 
@@ -35,6 +33,8 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 - Rama de integración `develop` y rama `chore/RTN-001-initial-setup` publicadas.
 - Setup inicial fusionado en `develop`: `https://github.com/caiuc/equipo-14-haCAIthon-2026/pull/1`.
 - Protocolo de task leases: plan remoto, write set, heartbeat, expiración, takeover y liberación documentados en [`claims/README.md`](claims/README.md).
+- PWA instalable/offline: `app/+html.tsx` inyecta manifest, `theme-color` e íconos; `public/sw.js` cachea el app shell y sirve `offline.html` sin red; verificado sirviendo `dist/` y con Lighthouse (performance/accesibilidad/best-practices).
+- `app.json` corregido contra el esquema Expo SDK 57 (`newArchEnabled`, `splash` top-level y `android.edgeToEdgeEnabled` retirados; `android.versionCode` agregado) y `eas.json` con `cli.appVersionSource` para builds reproducibles; `expo-doctor` 21/21.
 
 “Completado” aquí significa que el artefacto fue escrito; las capacidades marcadas `EN CURSO` en `TASKS.md` aún requieren aceptación/verificación antes de considerarse listas.
 
@@ -47,7 +47,7 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 | RTN-301/306/401 | Dominio | Reglas iniciales y 5 tests base; cobertura crítica todavía incompleta |
 | RTN-501/502 | Diseño/nav | Componentes iniciales; revisión web/Android pendiente |
 | RTN-601–604 | Misiones/social/gamificación | Modelos/UI iniciales; backend y pruebas pendientes |
-| RTN-802 | PWA | Manifest, assets y export listos; service worker/Lighthouse pendientes |
+| RTN-803 | EAS web + Android | Config reproducible (`app.json`/`eas.json`) lista; falta proyecto EAS real y ejecutar `eas build --platform android` |
 
 ## No iniciado
 
@@ -58,7 +58,7 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 - Exportación PNG.
 - Scanner barcode y proveedor Open Food Facts.
 - CI y suite completa de tests.
-- Deploy web o build Android.
+- Deploy web (hosting real) y build Android en la nube (falta proyecto EAS y `eas build`); preview web y config reproducible ya verificados localmente.
 
 ## Bloqueos y riesgos conocidos
 
@@ -66,7 +66,9 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 2. Supabase Auth, migración y seed quedaron implementados pero no se ejecutaron contra una instancia local en esta intervención. Auth y organizaciones no ofrecen fallback demo intencionalmente.
 3. Las rutas pendientes existen como placeholders intencionales, pero sus capacidades aún no están implementadas.
 4. Los totales base en fixtures sirven para demo visual; no representan el ledger productivo futuro.
-5. No hubo verificación visual en Android ni auditoría de accesibilidad/Lighthouse.
+5. No hubo verificación visual en Android (sin SDK/emulador en este entorno) ni auditoría de accesibilidad dedicada (RTN-504 sigue pendiente).
+6. No hay proyecto EAS real conectado (`extra.eas.projectId` es placeholder) ni cuenta Expo autenticada con permiso de build; `eas build --platform android` no se ejecutó. Acción concreta: crear el proyecto EAS con el usuario/organización real (`eas init`) y correr `eas build --platform android --profile preview`.
+7. Lighthouse CLI ≥10 ya no incluye la categoría PWA (instalabilidad/service worker se movieron a Chrome DevTools). Se corrió Lighthouse (`performance` 0.53, `accessibility` 0.95, `best-practices` 1.0 sobre `dist/` servido localmente) y se verificó instalabilidad a mano: manifest enlazado, íconos 192/512, `theme-color`, `display: standalone` y service worker registrado y sirviendo `offline.html` sin red.
 
 ## Próximo paso recomendado
 
@@ -89,6 +91,14 @@ Ejecutado el 2026-08-14:
 | `npm run typecheck` (RTN-101–106) | OK |
 | `npm run lint` (RTN-101–106) | OK, sin warnings |
 | `npm test` (RTN-101–106) | OK; 5/5 tests existentes |
+| `npx expo-doctor` (RTN-802/803) | OK; 21/21 checks (antes 20/21, esquema `app.json` corregido) |
+| `npm run typecheck` (RTN-802/803) | OK |
+| `npm run lint` (RTN-802/803) | OK, sin warnings |
+| `npm test` (RTN-802/803) | OK; 5/5 tests |
+| `npm run web:export` (RTN-802/803) | OK; 19 rutas exportadas; `manifest.json`, `sw.js`, `offline.html` presentes en `dist/` |
+| Servir `dist/` y verificar HTML (RTN-802/803) | OK; `<link rel="manifest">`, `<meta name="theme-color">` y registro de `/sw.js` presentes; `sw.js`/`manifest.json`/`offline.html` responden 200 |
+| Lighthouse sobre `dist/` servido (RTN-802/803) | performance 0.53, accessibility 0.95, best-practices 1.0; categoría PWA no existe en Lighthouse ≥10, instalabilidad verificada a mano |
+| `git diff --check` (RTN-802/803) | OK |
 
 ## Registro de cambios de agentes
 
@@ -100,3 +110,4 @@ Ejecutado el 2026-08-14:
 | 2026-08-14 | Codex | RTN-007 | Publicó `develop`, 4 commits convencionales y draft PR #1 desde `chore/RTN-001-initial-setup` | Push remoto y PR contra `develop` confirmados |
 | 2026-08-14 | Codex | RTN-101–106 | Retiró Clerk; agregó Supabase Auth, perfil real, organizaciones, membresías, solicitudes, roles, migración, seed y UI | Typecheck, lint, 5 tests y diff-check OK; Supabase local no ejecutado; sin verificación web adicional por indicación del usuario |
 | 2026-08-14 | Codex | RTN-008 | Publicó el plan en PR #2 y completó el protocolo de claims en PR #3 tras un merge temprano del plan | Enlaces Markdown locales y `git diff --check` OK; claim liberado |
+| 2026-08-14 | Claude | RTN-802, RTN-803 | Agregó service worker/offline shell (`app/+html.tsx`, `public/sw.js`), corrigió esquema `app.json` y completó `eas.json` para build reproducible; publicó plan en draft PR #7 y cerró en el mismo PR | expo-doctor 21/21, typecheck, lint, 5/5 tests, web:export, export servido y verificado, Lighthouse ejecutado; sin proyecto EAS real ni APK generado; claim liberado |
