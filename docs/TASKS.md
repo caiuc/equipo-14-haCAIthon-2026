@@ -99,6 +99,7 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | RTN-508 | Retirar notificaciones de Inicio | COMPLETADA | — | RTN-506 | botón, indicador, import y estilos retirados; Configuración preservada; typecheck/lint/diff OK; [evidencia](claims/RTN-508.md) |
 | RTN-509 | Landing pública extendida | COMPLETADA | — | RTN-505, RTN-507 | acceso sin marco exterior; narrativa vertical responsive sobre registro, comunidad y progreso; modo demo preservado; typecheck/lint/5 tests/diff OK; [evidencia](claims/RTN-509.md) |
 | RTN-510 | Hero de acceso sobre fotografía | COMPLETADA | — | RTN-509 | fotografía provista a ancho completo cubre hero y formulario; overlay y controles de alto contraste; acceso responsive y funcional; typecheck/lint/5 tests/diff OK; [evidencia](claims/RTN-510.md) |
+| RTN-511 | Simplificar navegación e Inicio | EN CURSO | Codex · [claim](claims/RTN-511.md) | RTN-502, RTN-506 | sidebar sin Ranking; Inicio sin Configuración ni export semanal; logo enlaza a Inicio; ranking de Home preservado |
 
 ### T6 — Misiones, social y sharing
 
