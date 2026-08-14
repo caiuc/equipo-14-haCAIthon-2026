@@ -31,6 +31,7 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | RTN-004 | Gestión de environment y secretos | COMPLETADA | Codex | RTN-001 | `.env.example` completo, sin secretos, setup documentado |
 | RTN-005 | README principal de Retorna | COMPLETADA | Codex | RTN-002 | Inicio rápido y docs al comienzo; bases del hackathon preservadas debajo |
 | RTN-006 | Triage de vulnerabilidades transitivas | PENDIENTE | — | RTN-001 | auditar advisories sin downgrades incompatibles; decisión y mitigación documentadas |
+| RTN-007 | Publicar setup inicial con Gitflow | COMPLETADA | Codex | RTN-001, RTN-002 | `develop` y rama de trabajo publicadas; commits convencionales; draft PR #1 |
 
 ### T1 — Auth y datos
 

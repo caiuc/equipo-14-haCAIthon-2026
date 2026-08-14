@@ -2,7 +2,7 @@
 
 > **Obligatorio:** todo agente que cambie el repositorio debe actualizar este archivo en el mismo cambio. Ver [`../AGENTS.md`](../AGENTS.md).
 
-Última actualización: **2026-08-14 14:08 America/Santiago — Codex**
+Última actualización: **2026-08-14 14:14 America/Santiago — Codex**
 
 ## Resumen ejecutivo
 
@@ -26,6 +26,8 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 - Rutas explícitas para las capacidades pendientes, evitando navegación a páginas inexistentes.
 - TypeScript, lint, 5 tests de dominio y export web verificados.
 - README y `CONTRIBUTING.md` preparados para onboarding del repositorio.
+- Rama de integración `develop` y rama `chore/RTN-001-initial-setup` publicadas.
+- Draft PR abierto contra `develop`: `https://github.com/caiuc/equipo-14-haCAIthon-2026/pull/1`.
 
 “Completado” aquí significa que el artefacto fue escrito; las capacidades marcadas `EN CURSO` en `TASKS.md` aún requieren aceptación/verificación antes de considerarse listas.
 
@@ -85,3 +87,4 @@ Ejecutado el 2026-08-14:
 | 2026-08-14 | Codex | RTN-001, 004, 101, 201–203, 301, 306, 401, 501–502, 601–604, 802 | Inició arquitectura y scaffold visual/dominio antes de que el alcance se redujera | No verificado; instalación falló por timeout |
 | 2026-08-14 | Codex | RTN-002 | Agregó reglas obligatorias, Gitflow, Conventional Commits, backlog y tracking | Pendiente revisión final de enlaces |
 | 2026-08-14 | Codex | RTN-001, 002, 004, 005, 801, 802 | Estabilizó dependencias/assets/rutas, agregó tests y cerró setup/documentación | Expo check, typecheck, lint, 5 tests, export web y diff-check OK |
+| 2026-08-14 | Codex | RTN-007 | Publicó `develop`, 4 commits convencionales y draft PR #1 desde `chore/RTN-001-initial-setup` | Push remoto y PR contra `develop` confirmados |
