@@ -74,7 +74,7 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | RTN-304 | Historial y detalle | PENDIENTE | — | RTN-303 | filtros y detalle auditables |
 | RTN-305 | Editar/eliminar con reversión | PENDIENTE | — | RTN-303 | user/community/misiones/rankings consistentes tras mutación |
 | RTN-306 | Señales antiabuso de buena fe | PARCIAL | — | RTN-301 | límites suaves definidos; persistencia/admin pendientes |
-| RTN-307 | Reto Acción Circular autocontenido | COMPLETADA | — | RTN-301 | `/circular-action`; 4 acciones; evidencia opcional demo; XP, participación e impacto no confirmado separados; 4 tests y revisión web; [evidencia](claims/RTN-307.md) |
+| RTN-307 | Reto Acción Circular autocontenido | COMPLETADA | — | RTN-301 | `/circular-action`; 4 acciones; evidencia opcional demo; XP, participación e impacto no confirmado separados; 4 tests y revisión web; export limpio bloqueado por SSR heredado registrado; [evidencia](claims/RTN-307.md) |
 
 ### T4 — Competencia
 

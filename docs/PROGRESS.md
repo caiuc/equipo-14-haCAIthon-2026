@@ -69,6 +69,7 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 3. Las rutas pendientes existen como placeholders intencionales, pero sus capacidades aún no están implementadas.
 4. Los totales base en fixtures sirven para demo visual; no representan el ledger productivo futuro.
 5. No hubo verificación visual en Android ni auditoría de accesibilidad/Lighthouse.
+6. El árbol limpio actual falla en `npm run web:export` porque `src/data/supabase.ts` usa `AsyncStorage` web durante SSR (`ReferenceError: window is not defined`). RTN-307 se recorrió visualmente desde el export previo generado con una corrección SSR ajena que no se incluyó en su PR; resolverlo en el track de auth/plataforma.
 
 ## Próximo paso recomendado
 
@@ -98,7 +99,7 @@ Ejecutado el 2026-08-14:
 | Cálculo de contraste (RTN-501) | OK; 6.69:1 o superior en combinaciones principales |
 | `npm run typecheck` + `npm run lint` (RTN-307) | OK, sin errores ni warnings |
 | `npm test` (RTN-307) | OK; 9/9 tests, incluidos 4 del reto circular |
-| `npm run web:export` (RTN-307) | OK; 20 rutas, incluida `/circular-action` |
+| `npm run web:export` (RTN-307) | BLOQUEADO en árbol limpio por `ReferenceError: window is not defined` heredado de Supabase/AsyncStorage; el primer export de 20 rutas coexistía con una corrección SSR ajena y no incluida |
 | Recorrido web (RTN-307) | OK; selección, evidencia y registro cambian XP/participación; impacto sigue sin dato confirmado; consola sin errores |
 | `git diff --check` (RTN-307) | OK |
 
@@ -113,4 +114,4 @@ Ejecutado el 2026-08-14:
 | 2026-08-14 | Codex | RTN-101–106 | Retiró Clerk; agregó Supabase Auth, perfil real, organizaciones, membresías, solicitudes, roles, migración, seed y UI | Typecheck, lint, 5 tests y diff-check OK; Supabase local no ejecutado; sin verificación web adicional por indicación del usuario |
 | 2026-08-14 | Codex | RTN-008 | Publicó el plan en PR #2 y completó el protocolo de claims en PR #3 tras un merge temprano del plan | Enlaces Markdown locales y `git diff --check` OK; claim liberado |
 | 2026-08-14 | Codex | RTN-501/502 | Unificó acentos en verde lima, superficies naturales y sombras bosque; retiró selectores multicolor y cambió el `+` central por flechas de reciclaje | Typecheck, lint, 5 tests, diff-check y contraste principal 6.69:1+ OK; revisión visual local queda a cargo del usuario |
-| 2026-08-14 | Codex | RTN-307 | Implementó el Reto Acción Circular autónomo y público, con catálogo priorizado, evidencia opcional de demo y métricas honestas | Typecheck, lint, 9 tests, export de 20 rutas, diff-check y recorrido web sin errores de consola |
+| 2026-08-14 | Codex | RTN-307 | Implementó el Reto Acción Circular autónomo y público, con catálogo priorizado, evidencia opcional de demo y métricas honestas | Typecheck, lint, 9 tests, diff-check y recorrido web OK; export limpio bloqueado por SSR heredado de Supabase, registrado arriba |
