@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react';
 
+import { useAppAuth } from '@/auth/AppAuthProvider';
 import { calculateActionImpact, isSuspiciousAction, recyclingDraftSchema } from '@/domain/rules';
 import type { AppState, Community, RecyclingAction, RecyclingDraft } from '@/domain/types';
 import { createSeedState } from './seed';
@@ -48,7 +49,7 @@ function reducer(state: AppState, action: StoreAction): AppState {
       return {
         ...state,
         memberships: [...state.memberships, { id: `membership-${Date.now()}`, communityId: action.payload.communityId, userId: state.currentUserId, role: 'member', joinedAt: action.payload.at }],
-        feed: community ? [{ id: `feed-join-${Date.now()}`, type: 'community_joined', actorId: state.currentUserId, communityId: community.id, title: `Martina se unió a ${community.name}`, detail: 'Una nueva comunidad recibirá sus próximos aportes.', createdAt: action.payload.at }, ...state.feed] : state.feed,
+        feed: community ? [{ id: `feed-join-${Date.now()}`, type: 'community_joined', actorId: state.currentUserId, communityId: community.id, title: `Una persona se unió a ${community.name}`, detail: 'Una nueva comunidad recibirá sus próximos aportes.', createdAt: action.payload.at }, ...state.feed] : state.feed,
       };
     }
     case 'leave':
@@ -90,7 +91,8 @@ interface RetornaStoreValue {
 const StoreContext = createContext<RetornaStoreValue | null>(null);
 
 export function RetornaStoreProvider({ children }: React.PropsWithChildren) {
-  const [state, dispatch] = useReducer(reducer, undefined, createSeedState);
+  const auth = useAppAuth();
+  const [storedState, dispatch] = useReducer(reducer, undefined, createSeedState);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
@@ -103,8 +105,29 @@ export function RetornaStoreProvider({ children }: React.PropsWithChildren) {
   }, []);
 
   useEffect(() => {
-    if (hydrated) void AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  }, [hydrated, state]);
+    if (hydrated) void AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(storedState));
+  }, [hydrated, storedState]);
+
+  const state = useMemo<AppState>(() => {
+    if (!auth.user || !auth.profile) return storedState;
+    const realProfile = {
+      id: auth.user.id,
+      username: auth.profile.username,
+      displayName: auth.profile.display_name,
+      initials: auth.profile.initials,
+      avatarColor: auth.profile.avatar_color,
+      bio: auth.profile.bio ?? undefined,
+      affiliation: auth.profile.affiliation ?? undefined,
+      campus: auth.profile.campus ?? undefined,
+      profileVisibility: 'authenticated' as const,
+      createdAt: auth.profile.created_at,
+    };
+    return {
+      ...storedState,
+      currentUserId: auth.user.id,
+      profiles: [realProfile, ...storedState.profiles.filter((item) => item.id !== auth.user?.id && item.id !== 'user-martina')],
+    };
+  }, [auth.profile, auth.user, storedState]);
 
   const joinedCommunities = useMemo(() => {
     const ids = new Set(state.memberships.filter((item) => item.userId === state.currentUserId).map((item) => item.communityId));
