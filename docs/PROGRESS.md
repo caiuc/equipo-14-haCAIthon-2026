@@ -2,11 +2,17 @@
 
 > **Obligatorio:** todo agente que cambie el repositorio debe actualizar este archivo en el mismo cambio. Ver [`../AGENTS.md`](../AGENTS.md).
 
-Última actualización: **2026-08-14 14:14 America/Santiago — Codex**
+Última actualización: **2026-08-14 14:34 America/Santiago — Codex**
 
 ## Resumen ejecutivo
 
 El repositorio partió sólo con las bases del hackathon. La entrega actual deja un setup Expo universal verificable, gobernanza obligatoria para agentes y trabajo separado por tracks. La aplicación funcional completa **no está terminada**; las features iniciadas quedan marcadas `PARCIAL` y libres para el siguiente agente.
+
+## Trabajo activo
+
+| Tarea | Owner | Rama | Lease hasta | Write set |
+| --- | --- | --- | --- | --- |
+| RTN-008 | Codex | `docs/RTN-008-agent-task-leases` | 2026-08-15T02:34:08Z | Gobernanza y documentación multiagente; ver `docs/claims/RTN-008.md` |
 
 ## Completado
 
