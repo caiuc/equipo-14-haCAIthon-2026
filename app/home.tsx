@@ -1,4 +1,4 @@
-import { ArrowUpRight, ChevronRight, Flame, Recycle, Settings, Sparkles, Trophy } from 'lucide-react-native';
+import { ArrowUpRight, Flame, Recycle, Trophy } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
 
@@ -28,7 +28,6 @@ export default function HomeScreen() {
       <ScreenScroll contentContainerStyle={styles.screen}>
         <View style={styles.header}>
           <View style={styles.identity}><Avatar initials={user.initials} color={user.avatarColor} size={48} /><View><AppText variant="caption" style={{ color: colors.textMuted }}>{user.campus ?? 'Tu espacio en Retorna'}</AppText><AppText variant="h2">Hola, {user.displayName.split(' ')[0]}</AppText></View></View>
-          <Pressable onPress={() => router.push('/settings')} accessibilityLabel="Configuración" style={[styles.iconButton, { backgroundColor: colors.surface }]}><Settings size={20} color={colors.text} /></Pressable>
         </View>
 
         <Pressable onPress={() => router.push('/recycle')} accessibilityRole="button" accessibilityLabel="Registrar reciclaje" style={({ pressed }) => [styles.recycleCta, { backgroundColor: colors.primary, borderColor: colors.primary, opacity: pressed ? 0.82 : 1 }]}>
@@ -47,9 +46,6 @@ export default function HomeScreen() {
         <View style={styles.section}><SectionHeader title="Desafío activo" /><ChallengeCard state={state} challenge={challenge} /></View>
         <View style={styles.section}><SectionHeader title="Ingeniería esta semana" actionLabel="Ranking" onAction={() => router.push('/leaderboards')} /><Card style={styles.leaderboard}><View style={styles.rankSummary}><View style={styles.trophy}><Trophy size={30} color={colors.environmental} /></View><View style={{ flex: 1 }}><AppText variant="caption" style={{ color: colors.text }}>Subiste 2 puestos</AppText><AppText variant="h3">Estás #{currentRank}</AppText></View><ArrowUpRight color={colors.environmental} /></View><LeaderboardRows entries={leaderboard} limit={5} /></Card></View>
         <View style={styles.section}><SectionHeader title="Actividad de tu red" actionLabel="Actualizar" /><Card style={styles.feed}>{state.feed.slice(0, 5).map((event) => <FeedItem key={event.id} event={event} state={state} />)}</Card></View>
-        <Pressable onPress={() => router.push('/share-card')} style={({ pressed }) => [styles.sharePrompt, { backgroundColor: colors.primary, borderColor: colors.primary, opacity: pressed ? 0.82 : 1 }]}>
-          <View style={styles.shareIcon}><Sparkles size={28} color="#000000" /></View><View style={{ flex: 1 }}><AppText variant="h3" style={{ color: '#000000' }}>Tu avance merece verse</AppText><AppText variant="caption" style={{ color: '#000000' }}>Crea una Story con tu ranking semanal.</AppText></View><ChevronRight color="#000000" />
-        </Pressable>
       </ScreenScroll>
     </AppShell>
   );
@@ -57,9 +53,8 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   screen: { maxWidth: 860, width: '100%', alignSelf: 'center', paddingTop: 22, gap: spacing.xxxl },
-  header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: spacing.md },
+  header: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   identity: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
-  iconButton: { width: 43, height: 43, alignItems: 'center', justifyContent: 'center' },
   recycleCta: { minHeight: 250, width: '100%', borderWidth: 2, padding: spacing.xxxl, alignItems: 'center', justifyContent: 'center', gap: spacing.md },
   recycleTitle: { color: '#000000', fontSize: 34, lineHeight: 39, fontWeight: '900', letterSpacing: -1.2, textAlign: 'center', textTransform: 'uppercase' },
   recycleDetail: { color: '#000000', fontWeight: '700', textAlign: 'center' },
@@ -75,6 +70,4 @@ const styles = StyleSheet.create({
   leaderboard: { padding: spacing.sm },
   rankSummary: { flexDirection: 'row', alignItems: 'center', padding: spacing.md, gap: spacing.md },
   trophy: { width: 48, height: 48, alignItems: 'center', justifyContent: 'center' },
-  sharePrompt: { minHeight: 105, borderRadius: radius.lg, borderWidth: 2, padding: spacing.lg, flexDirection: 'row', alignItems: 'center', gap: spacing.md },
-  shareIcon: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
 });

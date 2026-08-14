@@ -2,7 +2,7 @@
 
 > **Obligatorio:** todo agente que cambie el repositorio debe actualizar este archivo en el mismo cambio. Ver [`../AGENTS.md`](../AGENTS.md).
 
-Última actualización: **2026-08-14 16:25 America/Santiago — Claude**
+Última actualización: **2026-08-14 16:42 America/Santiago — Codex**
 
 ## Resumen ejecutivo
 
@@ -10,7 +10,9 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 
 ## Trabajo activo
 
-No hay claims activos de esta intervención. RTN-802/803 liberaron su claim ([`docs/claims/RTN-802.md`](claims/RTN-802.md), `RELEASED`). RTN-302 sigue con lease activo en su propia rama remota (`feat/RTN-302-recycling-flow`, vence `2026-08-15T03:10:22Z`), sin solapamiento de write set con este cambio.
+| Tarea | Owner | Rama | Lease hasta | Write set |
+| --- | --- | --- | --- | --- |
+| RTN-302 | Codex | `feat/RTN-302-recycling-flow` | 2026-08-15T03:10:22Z | Claim remoto activo; flujo de reciclaje/cámara sin solapamiento con RTN-501 |
 
 ## Completado
 
@@ -27,6 +29,9 @@ No hay claims activos de esta intervención. RTN-802/803 liberaron su claim ([`d
 - Logo Retorna ampliado y frase “El cambio empieza contigo” agregada sobre Tú→Planeta en login/registro.
 - Control inerte de notificaciones retirado del encabezado de Inicio.
 - Landing de acceso liberada de su marco exterior y ampliada con contenido vertical sobre registro, comunidades, desafíos y progreso.
+- Hero y formulario de acceso integrados sobre la fotografía de campus entregada, a ancho completo y con overlay oscuro de alto contraste.
+- Navegación iniciada simplificada: sidebar sin Ranking, logo enlazado a Inicio y Home sin Configuración ni CTA de exportación semanal.
+- `origin/develop` reintegrado en la branch visual; conflicto documental resuelto conservando tanto RTN-509–511 como RTN-802/803.
 - Primer borrador de shell responsive.
 - Primer borrador visual de onboarding, Home y Comunidades.
 - Gobernanza multiagente: `AGENTS.md` y documentación `/docs`.
@@ -120,6 +125,14 @@ Ejecutado el 2026-08-14:
 | `npm run lint` (RTN-509) | OK, sin warnings |
 | `npm test` (RTN-509) | OK; 5/5 tests existentes |
 | `git diff --check` (RTN-509) | OK |
+| `npm run typecheck` (RTN-510) | OK |
+| `npm run lint` (RTN-510) | OK, sin warnings |
+| `npm test` (RTN-510) | OK; 5/5 tests existentes |
+| `git diff --check` (RTN-510) | OK |
+| `npm run typecheck` (RTN-511) | OK |
+| `npm run lint` (RTN-511) | OK, sin warnings |
+| `npm test` (RTN-511) | OK; 5/5 tests existentes |
+| `git diff --check` (RTN-511) | OK |
 | `npx expo-doctor` (RTN-802/803) | OK; 21/21 checks (antes 20/21, esquema `app.json` corregido) |
 | `npm run typecheck` (RTN-802/803) | OK |
 | `npm run lint` (RTN-802/803) | OK, sin warnings |
@@ -128,6 +141,11 @@ Ejecutado el 2026-08-14:
 | Servir `dist/` y verificar HTML (RTN-802/803) | OK; `<link rel="manifest">`, `<meta name="theme-color">` y registro de `/sw.js` presentes; `sw.js`/`manifest.json`/`offline.html` responden 200 |
 | Lighthouse sobre `dist/` servido (RTN-802/803) | performance 0.53, accessibility 0.95, best-practices 1.0; categoría PWA no existe en Lighthouse ≥10, instalabilidad verificada a mano |
 | `git diff --check` (RTN-802/803) | OK |
+| Ausencia de archivos sin resolver (RTN-009) | OK; `git diff --diff-filter=U --name-only` vacío |
+| `npm run typecheck` (RTN-009) | OK |
+| `npm run lint` (RTN-009) | OK, sin warnings |
+| `npm test` (RTN-009) | OK; 5/5 tests existentes |
+| `git diff --check` (RTN-009) | OK |
 
 ## Registro de cambios de agentes
 
@@ -145,4 +163,7 @@ Ejecutado el 2026-08-14:
 | 2026-08-14 | Codex | RTN-508 | Retiró campana, indicador y estilos de notificaciones de Inicio; preservó Configuración | Typecheck, lint y diff-check OK |
 | 2026-08-14 | Codex | RTN-507 | Amplió el logo Retorna y agregó “El cambio empieza contigo” sobre el hero Tú→Planeta | Typecheck, lint y diff-check OK |
 | 2026-08-14 | Codex | RTN-509 | Quitó el marco exterior del acceso y sumó una landing vertical responsive con explicación del flujo, capacidades y CTA demo | Typecheck, lint, 5 tests y diff-check OK; revisión visual local queda a cargo del usuario |
+| 2026-08-14 | Codex | RTN-510 | Llevó la fotografía provista a todo el ancho del hero de acceso, oscureció el fondo y adaptó formulario/textos a blanco y lima | Typecheck, lint, 5 tests y diff-check OK; revisión visual local queda a cargo del usuario |
+| 2026-08-14 | Codex | RTN-511 | Retiró Ranking del sidebar de escritorio y los controles de Configuración/export semanal de Home; convirtió el logo en enlace a Inicio | Typecheck, lint, 5 tests y diff-check OK |
 | 2026-08-14 | Claude | RTN-802, RTN-803 | Agregó service worker/offline shell (`app/+html.tsx`, `public/sw.js`), corrigió esquema `app.json`, completó `eas.json` para build reproducible y conectó el proyecto EAS real (`@jupster/retorna-uc`); publicó plan en draft PR #7 y cerró en el mismo PR | expo-doctor 21/21, typecheck, lint, 5/5 tests, web:export, export servido y verificado, Lighthouse ejecutado; `eas build --platform android --profile preview` en curso; claim liberado |
+| 2026-08-14 | Codex | RTN-009 | Fusionó `origin/develop` en la branch visual y resolvió `docs/PROGRESS.md` combinando ambos historiales y evidencias | Sin archivos sin resolver; typecheck, lint, 5 tests y diff-check OK |

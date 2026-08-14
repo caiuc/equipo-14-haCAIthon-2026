@@ -14,14 +14,14 @@ const levels: { label: string; icon: LucideIcon }[] = [
   { label: 'Planeta', icon: Globe2 },
 ];
 
-export function AuthScaleHero() {
+export function AuthScaleHero({ transparent = false }: { transparent?: boolean }) {
   const { colors } = useTheme();
   const { width } = useWindowDimensions();
   const desktop = width >= 840;
   const fontSizes = desktop ? [42, 57, 75, 94, 112] : [34, 43, 53, 63, 73];
   const iconSizes = desktop ? [24, 30, 38, 48, 58] : [20, 24, 28, 33, 39];
 
-  return <View style={[styles.hero, { backgroundColor: colors.surfaceStrong }]}>
+  return <View style={[styles.hero, { backgroundColor: transparent ? 'transparent' : colors.surfaceStrong }]}>
     <RetornaLogo inverted />
     <View style={styles.message}>
       <AppText variant="h3" style={{ color: colors.primary, textTransform: 'uppercase' }}>El cambio empieza contigo</AppText>

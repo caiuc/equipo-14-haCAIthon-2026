@@ -41,6 +41,7 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | RTN-006 | Triage de vulnerabilidades transitivas | PENDIENTE | — | RTN-001 | auditar advisories sin downgrades incompatibles; decisión y mitigación documentadas |
 | RTN-007 | Publicar setup inicial con Gitflow | COMPLETADA | Codex | RTN-001, RTN-002 | `develop` y rama de trabajo publicadas; commits convencionales; draft PR #1 |
 | RTN-008 | Protocolo de reserva de tareas y archivos | COMPLETADA | Codex | RTN-002 | plan PR #2; implementación y liberación del claim en PR #3; lease, write set, heartbeat y conflictos documentados |
+| RTN-009 | Reintegrar `develop` en branch visual | COMPLETADA | — | RTN-008 | `origin/develop` integrado; conflicto de `PROGRESS` resuelto preservando RTN-509–511 y RTN-802/803; typecheck/lint/5 tests/diff OK; [evidencia](claims/RTN-009.md) |
 
 ### T1 — Auth y datos
 
@@ -98,6 +99,8 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | RTN-507 | Logo ampliado y frase de acceso | COMPLETADA | — | RTN-505 | wordmark 32 px, símbolo 50 px y frase sobre Tú→Planeta; typecheck/lint/diff OK; [evidencia](claims/RTN-507.md) |
 | RTN-508 | Retirar notificaciones de Inicio | COMPLETADA | — | RTN-506 | botón, indicador, import y estilos retirados; Configuración preservada; typecheck/lint/diff OK; [evidencia](claims/RTN-508.md) |
 | RTN-509 | Landing pública extendida | COMPLETADA | — | RTN-505, RTN-507 | acceso sin marco exterior; narrativa vertical responsive sobre registro, comunidad y progreso; modo demo preservado; typecheck/lint/5 tests/diff OK; [evidencia](claims/RTN-509.md) |
+| RTN-510 | Hero de acceso sobre fotografía | COMPLETADA | — | RTN-509 | fotografía provista a ancho completo cubre hero y formulario; overlay y controles de alto contraste; acceso responsive y funcional; typecheck/lint/5 tests/diff OK; [evidencia](claims/RTN-510.md) |
+| RTN-511 | Simplificar navegación e Inicio | COMPLETADA | — | RTN-502, RTN-506 | sidebar sin Ranking; Inicio sin Configuración ni export semanal; logo enlaza a Inicio; ranking de Home preservado; typecheck/lint/5 tests/diff OK; [evidencia](claims/RTN-511.md) |
 
 ### T6 — Misiones, social y sharing
 
