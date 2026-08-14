@@ -1,3 +1,47 @@
+# Retorna
+
+Plataforma comunitaria de reciclaje para la Pontificia Universidad Católica de Chile.
+
+> Recicla, aporta a tu comunidad y mueve el ranking.
+
+## Estado actual
+
+El repositorio está en fase de **setup inicial**. La arquitectura, las reglas multiagente y el backlog están documentados; el scaffold de aplicación todavía se encuentra en validación. Revisa el estado real antes de tomar trabajo:
+
+- [Reglas obligatorias para agentes](AGENTS.md)
+- [Índice de documentación](docs/README.md)
+- [Progreso vivo](docs/PROGRESS.md)
+- [Tareas por tracks](docs/TASKS.md)
+
+## Inicio rápido
+
+Requiere Node.js 22.
+
+```bash
+cp .env.example .env
+npm install
+npm run web
+```
+
+Con `EXPO_PUBLIC_DEMO_MODE=true` no se necesitan credenciales para la experiencia local. El modo productivo usará Clerk y Supabase.
+
+Comandos previstos:
+
+```bash
+npm run typecheck
+npm run lint
+npm test
+npm run web:export
+```
+
+> El setup aún no se considera verificado. Consulta [`docs/PROGRESS.md`](docs/PROGRESS.md) para bloqueos y evidencia actualizada.
+
+## Colaboración
+
+Antes de cambiar cualquier archivo, lee [`AGENTS.md`](AGENTS.md). El proyecto usa Gitflow liviano, Conventional Commits y requiere que **todo agente actualice** `docs/TASKS.md` y `docs/PROGRESS.md`.
+
+---
+
 # HaCAiThon 2026 · RESUMEN BASES OFICIALES
 
 <p align="left">

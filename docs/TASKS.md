@@ -1,0 +1,114 @@
+# Backlog coordinado
+
+Última actualización: **2026-08-14**
+
+## Leyenda
+
+- `PENDIENTE`: no iniciado.
+- `EN CURSO`: tiene owner activo; no tomar sin coordinación.
+- `PARCIAL`: existe trabajo previo, pero no tiene owner activo y puede retomarse.
+- `BLOQUEADA`: requiere dependencia o decisión externa documentada.
+- `COMPLETADA`: cumple aceptación y tiene evidencia.
+
+Todos los agentes deben actualizar este archivo al tomar/cerrar una tarea y también actualizar [`PROGRESS.md`](PROGRESS.md).
+
+## Orden y tracks
+
+```text
+T0 Foundation ─┬─> T1 Auth/Data ─> T2 Communities ─> T3 Recycling ─> T4 Competition
+               ├─> T5 Design ───────────────────────────────┘
+               └─> T8 Quality/Deploy (transversal)
+T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
+```
+
+### T0 — Foundation y gobernanza
+
+| ID | Tarea | Estado | Owner | Depende de | Criterio de aceptación / evidencia |
+| --- | --- | --- | --- | --- | --- |
+| RTN-001 | Scaffold Expo universal y tooling base | COMPLETADA | Codex | — | Install, Expo check, typecheck, lint, tests y export web exitosos; assets generados |
+| RTN-002 | Gobernanza multiagente y documentación | COMPLETADA | Codex | — | `AGENTS.md`, Gitflow, commits, tasks y progress enlazados y consistentes |
+| RTN-003 | CI inicial | PENDIENTE | — | RTN-001 | PR ejecuta typecheck, lint y tests |
+| RTN-004 | Gestión de environment y secretos | COMPLETADA | Codex | RTN-001 | `.env.example` completo, sin secretos, setup documentado |
+| RTN-005 | README principal de Retorna | COMPLETADA | Codex | RTN-002 | Inicio rápido y docs al comienzo; bases del hackathon preservadas debajo |
+| RTN-006 | Triage de vulnerabilidades transitivas | PENDIENTE | — | RTN-001 | auditar advisories sin downgrades incompatibles; decisión y mitigación documentadas |
+
+### T1 — Auth y datos
+
+| ID | Tarea | Estado | Owner | Depende de | Criterio de aceptación / evidencia |
+| --- | --- | --- | --- | --- | --- |
+| RTN-101 | Adaptador Clerk + modo demo | PARCIAL | — | RTN-001 | email/Google productivo configurables; demo explícita; sesión persistente validada |
+| RTN-102 | Proyecto Supabase y tipos generados | PENDIENTE | — | RTN-001 | CLI local, config, tipos y conexión documentados |
+| RTN-103 | Esquema relacional inicial | PENDIENTE | — | RTN-102 | migración reproducible con organizaciones, perfiles, comunidades y acciones |
+| RTN-104 | RLS Clerk y permisos base | PENDIENTE | — | RTN-103 | tests de acceso propio/ajeno/admin |
+| RTN-105 | Seed SQL demo | PENDIENTE | — | RTN-103 | datos ficticios marcados y reproducibles |
+
+### T2 — Comunidades
+
+| ID | Tarea | Estado | Owner | Depende de | Criterio de aceptación / evidencia |
+| --- | --- | --- | --- | --- | --- |
+| RTN-201 | Descubrimiento/búsqueda UI | PARCIAL | — | RTN-001, RTN-501 | estados loading/empty/error y responsive verificados |
+| RTN-202 | Detalle de comunidad UI | PARCIAL | — | RTN-201 | header, stats, ranking, desafío y feed con datos tipados |
+| RTN-203 | Crear comunidad | PARCIAL | — | RTN-103 | validación servidor, owner automático y flujo UI completo |
+| RTN-204 | Unirse/salir de públicas | PENDIENTE | — | RTN-104, RTN-202 | permisos, optimismo y rollback |
+| RTN-205 | Invitaciones/comunidades privadas | PENDIENTE | — | RTN-204 | código/link expirable y errores intencionales |
+| RTN-206 | Roles owner/admin/member | PENDIENTE | — | RTN-104 | matriz de permisos testeada |
+
+### T3 — Reciclaje y ledger
+
+| ID | Tarea | Estado | Owner | Depende de | Criterio de aceptación / evidencia |
+| --- | --- | --- | --- | --- | --- |
+| RTN-301 | Catálogo y reglas de puntos | PARCIAL | — | RTN-001 | cálculo puro documentado y testeado |
+| RTN-302 | Flujo manual de reciclaje | PENDIENTE | — | RTN-204, RTN-301 | categoría, cantidad, una comunidad, preview y confirmación |
+| RTN-303 | RPC transaccional + ledgers | PENDIENTE | — | RTN-103, RTN-301 | cliente no controla puntos; ambos ledgers atómicos |
+| RTN-304 | Historial y detalle | PENDIENTE | — | RTN-303 | filtros y detalle auditables |
+| RTN-305 | Editar/eliminar con reversión | PENDIENTE | — | RTN-303 | user/community/misiones/rankings consistentes tras mutación |
+| RTN-306 | Señales antiabuso de buena fe | PARCIAL | — | RTN-301 | límites suaves definidos; persistencia/admin pendientes |
+
+### T4 — Competencia
+
+| ID | Tarea | Estado | Owner | Depende de | Criterio de aceptación / evidencia |
+| --- | --- | --- | --- | --- | --- |
+| RTN-401 | Reglas de periodos y ranking | PARCIAL | — | RTN-301 | semana Chile/mes/all-time y desempate testeados |
+| RTN-402 | Ranking de usuarios | PENDIENTE | — | RTN-303, RTN-401 | query indexada + UI |
+| RTN-403 | Ranking de comunidades | PENDIENTE | — | RTN-303, RTN-401 | query indexada + UI |
+| RTN-404 | Ranking interno | PENDIENTE | — | RTN-204, RTN-402 | sólo miembros y contexto de comunidad |
+| RTN-405 | Snapshots/movimiento | PENDIENTE | — | RTN-402, RTN-403 | sólo si medición justifica cache |
+
+### T5 — Design system y navegación
+
+| ID | Tarea | Estado | Owner | Depende de | Criterio de aceptación / evidencia |
+| --- | --- | --- | --- | --- | --- |
+| RTN-501 | Tokens, logo y componentes base | PARCIAL | — | RTN-001 | light/dark, contraste, componentes y assets verificados |
+| RTN-502 | Shell mobile/desktop | PARCIAL | — | RTN-501 | bottom nav móvil y rail desktop sin rutas rotas |
+| RTN-503 | Estados loading/empty/error | PENDIENTE | — | RTN-501 | catálogo reutilizable y aplicado a flows críticos |
+| RTN-504 | Auditoría de accesibilidad | PENDIENTE | — | RTN-502 | teclado web, labels, contraste, targets y lector |
+
+### T6 — Misiones, social y sharing
+
+| ID | Tarea | Estado | Owner | Depende de | Criterio de aceptación / evidencia |
+| --- | --- | --- | --- | --- | --- |
+| RTN-601 | Modelo/progreso de misiones | PARCIAL | — | RTN-303 | métricas y progreso puro definidos; persistencia pendiente |
+| RTN-602 | Desafíos de comunidad | PARCIAL | — | RTN-303, RTN-206 | UI inicial existe; CRUD/permisos pendientes |
+| RTN-603 | Feed/follows | PARCIAL | — | RTN-303 | UI/fixtures iniciales; backend y privacidad pendientes |
+| RTN-604 | Niveles/badges/rachas | PARCIAL | — | RTN-303 | reglas iniciales; pruebas y persistencia pendientes |
+| RTN-605 | Builder/export de share cards | PENDIENTE | — | RTN-402, RTN-501 | Story + cuadrado exportan PNG real |
+| RTN-606 | Administración de misiones | PENDIENTE | — | RTN-104, RTN-601 | ruta protegida y CRUD mínimo |
+
+### T7 — Barcode y reglas Chile (post-core)
+
+| ID | Tarea | Estado | Owner | Depende de | Criterio de aceptación / evidencia |
+| --- | --- | --- | --- | --- | --- |
+| RTN-701 | Contrato `ProductLookupProvider` | PENDIENTE | — | RTN-302 | proveedor reemplazable + fallback manual |
+| RTN-702 | Adaptador Open Food Facts | PENDIENTE | — | RTN-701 | fields mínimos, User-Agent y errores tratados |
+| RTN-703 | Scanner Expo Camera | PENDIENTE | — | RTN-701 | permisos, web/Android y barcode único |
+| RTN-704 | Reglas estructuradas Chile | PENDIENTE | — | RTN-103 | incertidumbre, limpieza y manejo especial modelados |
+
+### T8 — Calidad, PWA y deploy
+
+| ID | Tarea | Estado | Owner | Depende de | Criterio de aceptación / evidencia |
+| --- | --- | --- | --- | --- | --- |
+| RTN-801 | Tests de dominio críticos | PARCIAL | — | RTN-301, RTN-401, RTN-601 | 5 tests base pasan; faltan ledger, ranking, misión y permisos |
+| RTN-802 | PWA instalable/offline shell | PARCIAL | — | RTN-001 | manifest/assets/export listos; faltan service worker y Lighthouse |
+| RTN-803 | EAS web + Android | PENDIENTE | — | RTN-001, RTN-004 | preview web y APK reproducibles |
+| RTN-804 | Analítica con privacidad | PENDIENTE | — | RTN-001 | contrato + eventos críticos; no bloquea core |
+| RTN-805 | Performance mid-range Android | PENDIENTE | — | flujo core | listas/imágenes medidos y sin regresiones obvias |
