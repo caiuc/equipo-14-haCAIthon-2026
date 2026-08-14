@@ -2,7 +2,7 @@
 
 > **Obligatorio:** todo agente que cambie el repositorio debe actualizar este archivo en el mismo cambio. Ver [`../AGENTS.md`](../AGENTS.md).
 
-Última actualización: **2026-08-14 17:01 America/Santiago — Codex**
+Última actualización: **2026-08-14 17:04 America/Santiago — Codex**
 
 ## Resumen ejecutivo
 
@@ -10,9 +10,7 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 
 ## Trabajo activo
 
-| Tarea | Owner | Rama | Lease hasta | Write set |
-| --- | --- | --- | --- | --- |
-| RTN-302 | Codex | `feat/RTN-302-recycling-flow` | 2026-08-15T03:10:22Z | Claim remoto activo; flujo de reciclaje/cámara sin solapamiento con RTN-501 |
+No hay claims activos. Antes de implementar una tarea, reservarla mediante el protocolo de [`claims/README.md`](claims/README.md).
 
 ## Completado
 
@@ -32,6 +30,7 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 - Hero y formulario de acceso integrados sobre la fotografía de campus entregada, a ancho completo y con overlay oscuro de alto contraste.
 - Navegación iniciada simplificada: sidebar sin Ranking, logo enlazado a Inicio y Home sin Configuración ni CTA de exportación semanal.
 - `origin/develop` reintegrado en la branch visual; conflicto documental resuelto conservando tanto RTN-509–511 como RTN-802/803.
+- Último `origin/develop` reintegrado de urgencia; conflicto de progreso resuelto conservando las evidencias de RTN-512/513 y RTN-302/701/702/703.
 - Hero de acceso reproducido sobre video local en loop automático, silencioso y sin controles; superficies fuertes blancas con bordes en light mode y negras en dark mode.
 - Autoplay del hero reafirmado al recibir el primer frame para Firefox, donde la llamada inicial ocurría antes del montaje del elemento de video.
 - Primer borrador de shell responsive.
@@ -56,6 +55,7 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 | ID | Trabajo | Estado real |
 | --- | --- | --- |
 | RTN-101–106 | Auth/datos/organizaciones | Código listo: Supabase Auth, perfiles, organizaciones, membresías, solicitudes, roles y UI. Falta levantar Supabase local y recorrer el flujo completo |
+| RTN-302/701/702/703 | Reciclaje y barcode | PR #4/local en revisión: scanner/manual, lookup local/Open Food Facts, confirmación contra store demo y bypass de preview sin cuenta implementados; falta prueba manual cámara real/Android |
 | RTN-201–203 | Comunidades | UI/fixtures parciales; backend, errores y aceptación pendientes |
 | RTN-301/306/401 | Dominio | Reglas iniciales y 5 tests base; cobertura crítica todavía incompleta |
 | RTN-502/504 | Navegación/accesibilidad | Shell funcional e icono de reciclaje actualizado; revisión visual web/Android y auditoría integral pendientes |
@@ -66,10 +66,9 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 
 - Migraciones de reciclaje, comunidades y resto del dominio fuera de usuarios/organizaciones.
 - Prueba integrada de la migración/RLS de usuarios y organizaciones.
-- Flujo manual de reciclaje completo.
+- Verificación manual de cámara real en Android y navegador para PR #4.
 - Pantallas completas de ranking, actividad, misión, settings y sharing.
 - Exportación PNG.
-- Scanner barcode y proveedor Open Food Facts.
 - CI y suite completa de tests.
 - Deploy web (hosting real) y build Android en la nube (falta proyecto EAS y `eas build`); preview web y config reproducible ya verificados localmente.
 
@@ -156,6 +155,13 @@ Ejecutado el 2026-08-14:
 | `npm test` (RTN-512) | OK; 5/5 tests existentes |
 | `npm run web:export` (RTN-512) | OK; 19 rutas y MP4 versionado de 3,7 MB presentes en `dist/` |
 | `git diff --check` (RTN-512) | OK |
+| `npm run typecheck` (post-merge RTN-302 + `origin/develop`) | OK |
+| `npm run lint` (post-merge RTN-302 + `origin/develop`) | OK, sin warnings |
+| `npm test` (post-merge RTN-302 + `origin/develop`) | OK; 10/10 tests |
+| `npm run web:export` (post-merge RTN-302 + `origin/develop`) | OK; 19 rutas estáticas exportadas a `dist/` |
+| `EXPO_PUBLIC_SKIP_AUTH_FOR_RECYCLE=true npm run web:export` | OK; `/recycle` exportado con bypass local |
+| `curl -I http://localhost:8090/recycle.html` | OK; `200 OK` desde servidor estático local |
+| Ausencia de archivos sin resolver (RTN-010) | OK; `git diff --diff-filter=U --name-only` vacío |
 
 ## Registro de cambios de agentes
 
@@ -179,3 +185,5 @@ Ejecutado el 2026-08-14:
 | 2026-08-14 | Codex | RTN-009 | Fusionó `origin/develop` en la branch visual y resolvió `docs/PROGRESS.md` combinando ambos historiales y evidencias | Sin archivos sin resolver; typecheck, lint, 5 tests y diff-check OK |
 | 2026-08-14 | Codex | RTN-512 | Reemplazó fotografía por video full-bleed en loop/mute sin controles y corrigió superficies fuertes según light/dark mode | Expo 21/21, dependencias compatibles, typecheck, lint, 5 tests, export web con MP4 y diff-check OK |
 | 2026-08-14 | Codex | RTN-513 | Reintentó `play()` al render del primer frame para evitar el video estático en Firefox | Fix puntual solicitado; sin suite de lint/tests por indicación del usuario |
+| 2026-08-14 | Codex | RTN-302/701/702/703 | Implementó flujo de reciclaje con modo cámara/manual, lookup local/Open Food Facts, fallback de categoría, preview de impacto, confirmación contra store demo y bypass local sin cuenta | Typecheck, lint, 10 tests, export web y `curl` a `recycle.html` OK; falta prueba manual con cámara real/Android |
+| 2026-08-14 | Codex | RTN-010 | Reintegró de urgencia `origin/develop` y combinó ambos historiales del único conflicto documental | Sin archivos sin resolver; sin lint/tests por indicación de urgencia del usuario |
