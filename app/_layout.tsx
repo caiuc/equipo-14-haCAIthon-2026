@@ -23,7 +23,7 @@ function RootNavigator() {
   const router = useRouter();
   const segments = useSegments();
   const firstSegment = segments[0];
-  const isPublic = firstSegment === undefined || firstSegment === 'sign-in' || firstSegment === 'sign-up';
+  const isPublic = firstSegment === undefined || ['sign-in', 'sign-up', 'circular-action'].includes(firstSegment);
 
   useEffect(() => {
     if (!auth.isLoaded) return;
