@@ -2,7 +2,7 @@
 
 > **Obligatorio:** todo agente que cambie el repositorio debe actualizar este archivo en el mismo cambio. Ver [`../AGENTS.md`](../AGENTS.md).
 
-Última actualización: **2026-08-14 16:58 America/Santiago — Codex**
+Última actualización: **2026-08-14 17:01 America/Santiago — Codex**
 
 ## Resumen ejecutivo
 
@@ -33,6 +33,7 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 - Navegación iniciada simplificada: sidebar sin Ranking, logo enlazado a Inicio y Home sin Configuración ni CTA de exportación semanal.
 - `origin/develop` reintegrado en la branch visual; conflicto documental resuelto conservando tanto RTN-509–511 como RTN-802/803.
 - Hero de acceso reproducido sobre video local en loop automático, silencioso y sin controles; superficies fuertes blancas con bordes en light mode y negras en dark mode.
+- Autoplay del hero reafirmado al recibir el primer frame para Firefox, donde la llamada inicial ocurría antes del montaje del elemento de video.
 - Primer borrador de shell responsive.
 - Primer borrador visual de onboarding, Home y Comunidades.
 - Gobernanza multiagente: `AGENTS.md` y documentación `/docs`.
@@ -177,3 +178,4 @@ Ejecutado el 2026-08-14:
 | 2026-08-14 | Claude | RTN-802, RTN-803 | Agregó service worker/offline shell (`app/+html.tsx`, `public/sw.js`), corrigió esquema `app.json`, completó `eas.json` para build reproducible y conectó el proyecto EAS real (`@jupster/retorna-uc`); publicó plan en draft PR #7 y cerró en el mismo PR | expo-doctor 21/21, typecheck, lint, 5/5 tests, web:export, export servido y verificado, Lighthouse ejecutado; `eas build --platform android --profile preview` en curso; claim liberado |
 | 2026-08-14 | Codex | RTN-009 | Fusionó `origin/develop` en la branch visual y resolvió `docs/PROGRESS.md` combinando ambos historiales y evidencias | Sin archivos sin resolver; typecheck, lint, 5 tests y diff-check OK |
 | 2026-08-14 | Codex | RTN-512 | Reemplazó fotografía por video full-bleed en loop/mute sin controles y corrigió superficies fuertes según light/dark mode | Expo 21/21, dependencias compatibles, typecheck, lint, 5 tests, export web con MP4 y diff-check OK |
+| 2026-08-14 | Codex | RTN-513 | Reintentó `play()` al render del primer frame para evitar el video estático en Firefox | Fix puntual solicitado; sin suite de lint/tests por indicación del usuario |

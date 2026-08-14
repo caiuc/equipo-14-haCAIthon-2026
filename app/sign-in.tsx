@@ -118,6 +118,7 @@ export default function SignInScreen() {
               allowsPictureInPicture={false}
               contentFit="cover"
               nativeControls={false}
+              onFirstFrameRender={() => heroPlayer.play()}
               player={heroPlayer}
               playsInline
               pointerEvents="none"

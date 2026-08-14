@@ -102,6 +102,7 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | RTN-510 | Hero de acceso sobre fotografía | COMPLETADA | — | RTN-509 | fotografía provista a ancho completo cubre hero y formulario; overlay y controles de alto contraste; acceso responsive y funcional; typecheck/lint/5 tests/diff OK; [evidencia](claims/RTN-510.md) |
 | RTN-511 | Simplificar navegación e Inicio | COMPLETADA | — | RTN-502, RTN-506 | sidebar sin Ranking; Inicio sin Configuración ni export semanal; logo enlaza a Inicio; ranking de Home preservado; typecheck/lint/5 tests/diff OK; [evidencia](claims/RTN-511.md) |
 | RTN-512 | Video hero y contraste por tema | COMPLETADA | — | RTN-510, RTN-511 | MP4 hero autoplay/loop/mute sin controles; overlay legible; light mode blanco delimitado y dark mode negro; Expo 21/21, typecheck/lint/5 tests/export/diff OK; [evidencia](claims/RTN-512.md) |
+| RTN-513 | Autoplay del hero en Firefox | COMPLETADA | — | RTN-512 | reproducción reafirmada al renderizar el primer frame, después del montaje del elemento web; [evidencia](claims/RTN-513.md) |
 
 ### T6 — Misiones, social y sharing
 
