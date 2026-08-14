@@ -2,7 +2,7 @@
 
 > **Obligatorio:** todo agente que cambie el repositorio debe actualizar este archivo en el mismo cambio. Ver [`../AGENTS.md`](../AGENTS.md).
 
-Última actualización: **2026-08-14 15:11 America/Santiago — Codex**
+Última actualización: **2026-08-14 15:34 America/Santiago — Codex**
 
 ## Resumen ejecutivo
 
@@ -10,7 +10,9 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 
 ## Trabajo activo
 
-No hay claims activos. Antes de implementar una tarea, reservarla mediante el protocolo de [`claims/README.md`](claims/README.md).
+| Tarea | Owner | Rama | Lease hasta | Write set |
+| --- | --- | --- | --- | --- |
+| RTN-302 | Codex | `feat/RTN-302-recycling-flow` | 2026-08-15T03:10:22Z | Claim remoto activo; flujo de reciclaje/cámara sin solapamiento con RTN-501 |
 
 ## Completado
 
@@ -21,6 +23,7 @@ No hay claims activos. Antes de implementar una tarea, reservarla mediante el pr
 - Fixtures realistas en español de Chile.
 - Primer borrador de tokens, temas, logo SVG y componentes base.
 - Auth propia Supabase, perfil y organizaciones implementados en código.
+- Identidad visual unificada en verde lima: tokens light/dark, componentes, formularios y navegación de reciclaje.
 - Primer borrador de shell responsive.
 - Primer borrador visual de onboarding, Home y Comunidades.
 - Gobernanza multiagente: `AGENTS.md` y documentación `/docs`.
@@ -43,7 +46,7 @@ No hay claims activos. Antes de implementar una tarea, reservarla mediante el pr
 | RTN-101–106 | Auth/datos/organizaciones | Código listo: Supabase Auth, perfiles, organizaciones, membresías, solicitudes, roles y UI. Falta levantar Supabase local y recorrer el flujo completo |
 | RTN-201–203 | Comunidades | UI/fixtures parciales; backend, errores y aceptación pendientes |
 | RTN-301/306/401 | Dominio | Reglas iniciales y 5 tests base; cobertura crítica todavía incompleta |
-| RTN-501/502 | Diseño/nav | Componentes iniciales; revisión web/Android pendiente |
+| RTN-502/504 | Navegación/accesibilidad | Shell funcional e icono de reciclaje actualizado; revisión visual web/Android y auditoría integral pendientes |
 | RTN-601–604 | Misiones/social/gamificación | Modelos/UI iniciales; backend y pruebas pendientes |
 | RTN-802 | PWA | Manifest, assets y export listos; service worker/Lighthouse pendientes |
 
@@ -87,6 +90,11 @@ Ejecutado el 2026-08-14:
 | `npm run typecheck` (RTN-101–106) | OK |
 | `npm run lint` (RTN-101–106) | OK, sin warnings |
 | `npm test` (RTN-101–106) | OK; 5/5 tests existentes |
+| `npm run typecheck` (RTN-501) | OK |
+| `npm run lint` (RTN-501) | OK, sin warnings |
+| `npm test` (RTN-501) | OK; 5/5 tests existentes |
+| `git diff --check` (RTN-501) | OK |
+| Cálculo de contraste (RTN-501) | OK; 6.69:1 o superior en combinaciones principales |
 
 ## Registro de cambios de agentes
 
@@ -98,3 +106,4 @@ Ejecutado el 2026-08-14:
 | 2026-08-14 | Codex | RTN-007 | Publicó `develop`, 4 commits convencionales y draft PR #1 desde `chore/RTN-001-initial-setup` | Push remoto y PR contra `develop` confirmados |
 | 2026-08-14 | Codex | RTN-101–106 | Retiró Clerk; agregó Supabase Auth, perfil real, organizaciones, membresías, solicitudes, roles, migración, seed y UI | Typecheck, lint, 5 tests y diff-check OK; Supabase local no ejecutado; sin verificación web adicional por indicación del usuario |
 | 2026-08-14 | Codex | RTN-008 | Publicó el plan en PR #2 y completó el protocolo de claims en PR #3 tras un merge temprano del plan | Enlaces Markdown locales y `git diff --check` OK; claim liberado |
+| 2026-08-14 | Codex | RTN-501/502 | Unificó acentos en verde lima, superficies naturales y sombras bosque; retiró selectores multicolor y cambió el `+` central por flechas de reciclaje | Typecheck, lint, 5 tests, diff-check y contraste principal 6.69:1+ OK; revisión visual local queda a cargo del usuario |

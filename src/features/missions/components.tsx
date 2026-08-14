@@ -19,7 +19,7 @@ export function MissionCard({ state, mission, compact = false }: { state: AppSta
         <Card style={[styles.mission, { backgroundColor: colors.surfaceStrong, borderColor: colors.surfaceStrong, opacity: pressed ? 0.9 : 1 }, compact && styles.compact]}>
           <View style={styles.missionTop}>
             <View style={[styles.artwork, { backgroundColor: colors.primary }]}>
-              <Flag size={24} color="#FFFFFF" strokeWidth={2.6} />
+              <Flag size={24} color="#17351B" strokeWidth={2.6} />
               <View style={[styles.artCircle, { backgroundColor: colors.environmental }]} />
             </View>
             <View style={{ flex: 1, gap: 5 }}>
@@ -52,13 +52,13 @@ export function ChallengeCard({ state, challenge, compact = false }: { state: Ap
     <Card style={[styles.challenge, compact && { padding: spacing.lg }]}>
       <View style={styles.challengeTop}>
         <View style={{ flex: 1, gap: 4 }}>
-          <AppText variant="eyebrow" style={{ color: community?.accent ?? colors.primary }}>{community?.name ?? 'Comunidad'}</AppText>
+          <AppText variant="eyebrow" style={{ color: colors.primary }}>{community?.name ?? 'Comunidad'}</AppText>
           <AppText variant="h3">{challenge.title}</AppText>
         </View>
         <Pill label={`${daysRemaining(challenge.endAt)} días`} />
       </View>
       {!compact && <AppText style={{ color: colors.textMuted }}>{challenge.description}</AppText>}
-      <ProgressBar value={progress.percent} color={community?.accent} />
+      <ProgressBar value={progress.percent} color={colors.primary} />
       <View style={styles.progressLabels}>
         <AppText variant="caption" style={{ color: colors.textMuted }}>{formatNumber(progress.value)} {challenge.unitLabel}</AppText>
         <AppText variant="caption" style={{ color: colors.textMuted }}>Faltan {formatNumber(progress.remaining)}</AppText>
