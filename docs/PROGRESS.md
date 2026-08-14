@@ -13,6 +13,7 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 | Tarea | Owner | Rama | Lease hasta | Write set |
 | --- | --- | --- | --- | --- |
 | RTN-302 | Codex | `feat/RTN-302-recycling-flow` | 2026-08-15T03:10:22Z | Claim remoto activo; flujo de reciclaje/cámara sin solapamiento con RTN-501 |
+| RTN-807 | Codex | `feat/RTN-807-integrate-circular-supabase` | 2026-08-15T04:05:18Z | Integra RTN-307 y RTN-806 sobre base visual exacta `b6325f4`; no toca RTN-302 |
 
 ## Completado
 

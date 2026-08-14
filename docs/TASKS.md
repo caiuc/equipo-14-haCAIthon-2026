@@ -126,3 +126,4 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | RTN-803 | EAS web + Android | PENDIENTE | — | RTN-001, RTN-004 | preview web y APK reproducibles |
 | RTN-804 | Analítica con privacidad | PENDIENTE | — | RTN-001 | contrato + eventos críticos; no bloquea core |
 | RTN-805 | Performance mid-range Android | PENDIENTE | — | flujo core | listas/imágenes medidos y sin regresiones obvias |
+| RTN-807 | Integración frontend, Acción Circular y Supabase | RESERVADA | Codex · [claim](claims/RTN-807.md) | RTN-307, RTN-507, RTN-806 | base visual `b6325f4` preservada; reto circular y deploy/Supabase integrados; calidad y recorrido web verificados |
