@@ -69,7 +69,7 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | ID | Tarea | Estado | Owner | Depende de | Criterio de aceptación / evidencia |
 | --- | --- | --- | --- | --- | --- |
 | RTN-301 | Catálogo y reglas de puntos | PARCIAL | — | RTN-001 | cálculo puro documentado y testeado |
-| RTN-302 | Flujo manual de reciclaje | EN REVISIÓN | Codex · [claim](claims/RTN-302.md) | RTN-204, RTN-301 | Implementado en PR #4 con categoría, cantidad 1–50, comunidad obligatoria, preview y confirmación; typecheck/lint/test/export OK. Falta prueba manual con Supabase/cámara real |
+| RTN-302 | Flujo manual de reciclaje | EN REVISIÓN | Codex · [claim](claims/RTN-302.md) | RTN-204, RTN-301 | Implementado en PR #4/local con bypass de preview sin cuenta; typecheck/lint/test/export y `curl` local OK. Falta prueba manual con cámara real |
 | RTN-303 | RPC transaccional + ledgers | PENDIENTE | — | RTN-103, RTN-301 | cliente no controla puntos; ambos ledgers atómicos |
 | RTN-304 | Historial y detalle | PENDIENTE | — | RTN-303 | filtros y detalle auditables |
 | RTN-305 | Editar/eliminar con reversión | PENDIENTE | — | RTN-303 | user/community/misiones/rankings consistentes tras mutación |
