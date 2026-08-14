@@ -10,9 +10,7 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 
 ## Trabajo activo
 
-| Tarea | Owner | Rama | Lease hasta | Write set |
-| --- | --- | --- | --- | --- |
-| RTN-302 | Codex | `feat/RTN-302-recycling-flow` | 2026-08-15T03:10:22Z | Claim remoto activo; flujo de reciclaje/cámara sin solapamiento con RTN-501 |
+No hay claims activos. Antes de implementar una tarea, reservarla mediante el protocolo de [`claims/README.md`](claims/README.md).
 
 ## Completado
 
@@ -54,6 +52,7 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 | ID | Trabajo | Estado real |
 | --- | --- | --- |
 | RTN-101–106 | Auth/datos/organizaciones | Código listo: Supabase Auth, perfiles, organizaciones, membresías, solicitudes, roles y UI. Falta levantar Supabase local y recorrer el flujo completo |
+| RTN-302/701/702/703 | Reciclaje y barcode | PR #4/local en revisión: scanner/manual, lookup local/Open Food Facts, confirmación contra store demo y bypass de preview sin cuenta implementados; falta prueba manual cámara real/Android |
 | RTN-201–203 | Comunidades | UI/fixtures parciales; backend, errores y aceptación pendientes |
 | RTN-301/306/401 | Dominio | Reglas iniciales y 5 tests base; cobertura crítica todavía incompleta |
 | RTN-502/504 | Navegación/accesibilidad | Shell funcional e icono de reciclaje actualizado; revisión visual web/Android y auditoría integral pendientes |
@@ -64,10 +63,9 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 
 - Migraciones de reciclaje, comunidades y resto del dominio fuera de usuarios/organizaciones.
 - Prueba integrada de la migración/RLS de usuarios y organizaciones.
-- Flujo manual de reciclaje completo.
+- Verificación manual de cámara real en Android y navegador para PR #4.
 - Pantallas completas de ranking, actividad, misión, settings y sharing.
 - Exportación PNG.
-- Scanner barcode y proveedor Open Food Facts.
 - CI y suite completa de tests.
 - Deploy web (hosting real) y build Android en la nube (falta proyecto EAS y `eas build`); preview web y config reproducible ya verificados localmente.
 
@@ -146,6 +144,12 @@ Ejecutado el 2026-08-14:
 | `npm run lint` (RTN-009) | OK, sin warnings |
 | `npm test` (RTN-009) | OK; 5/5 tests existentes |
 | `git diff --check` (RTN-009) | OK |
+| `npm run typecheck` (post-merge RTN-302 + `origin/develop`) | OK |
+| `npm run lint` (post-merge RTN-302 + `origin/develop`) | OK, sin warnings |
+| `npm test` (post-merge RTN-302 + `origin/develop`) | OK; 10/10 tests |
+| `npm run web:export` (post-merge RTN-302 + `origin/develop`) | OK; 19 rutas estáticas exportadas a `dist/` |
+| `EXPO_PUBLIC_SKIP_AUTH_FOR_RECYCLE=true npm run web:export` | OK; `/recycle` exportado con bypass local |
+| `curl -I http://localhost:8090/recycle.html` | OK; `200 OK` desde servidor estático local |
 
 ## Registro de cambios de agentes
 
@@ -167,3 +171,4 @@ Ejecutado el 2026-08-14:
 | 2026-08-14 | Codex | RTN-511 | Retiró Ranking del sidebar de escritorio y los controles de Configuración/export semanal de Home; convirtió el logo en enlace a Inicio | Typecheck, lint, 5 tests y diff-check OK |
 | 2026-08-14 | Claude | RTN-802, RTN-803 | Agregó service worker/offline shell (`app/+html.tsx`, `public/sw.js`), corrigió esquema `app.json`, completó `eas.json` para build reproducible y conectó el proyecto EAS real (`@jupster/retorna-uc`); publicó plan en draft PR #7 y cerró en el mismo PR | expo-doctor 21/21, typecheck, lint, 5/5 tests, web:export, export servido y verificado, Lighthouse ejecutado; `eas build --platform android --profile preview` en curso; claim liberado |
 | 2026-08-14 | Codex | RTN-009 | Fusionó `origin/develop` en la branch visual y resolvió `docs/PROGRESS.md` combinando ambos historiales y evidencias | Sin archivos sin resolver; typecheck, lint, 5 tests y diff-check OK |
+| 2026-08-14 | Codex | RTN-302/701/702/703 | Implementó flujo de reciclaje con modo cámara/manual, lookup local/Open Food Facts, fallback de categoría, preview de impacto, confirmación contra store demo y bypass local sin cuenta | Typecheck, lint, 10 tests, export web y `curl` a `recycle.html` OK; falta prueba manual con cámara real/Android |

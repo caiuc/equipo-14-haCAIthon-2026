@@ -5,6 +5,7 @@ import React, { useEffect } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import { AppAuthProvider, useAppAuth } from '@/auth/AppAuthProvider';
+import { allowRecyclePreviewWithoutAuth } from '@/auth/preview';
 import { RetornaStoreProvider } from '@/data/store';
 import { RetornaMark } from '@/design/Logo';
 import { RetornaThemeProvider, useTheme } from '@/design/theme';
@@ -23,7 +24,8 @@ function RootNavigator() {
   const router = useRouter();
   const segments = useSegments();
   const firstSegment = segments[0];
-  const isPublic = firstSegment === undefined || firstSegment === 'sign-in' || firstSegment === 'sign-up';
+  const isRecyclePreview = allowRecyclePreviewWithoutAuth && firstSegment === 'recycle';
+  const isPublic = firstSegment === undefined || firstSegment === 'sign-in' || firstSegment === 'sign-up' || isRecyclePreview;
 
   useEffect(() => {
     if (!auth.isLoaded) return;
@@ -31,7 +33,7 @@ function RootNavigator() {
     if (auth.isSignedIn && (firstSegment === 'sign-in' || firstSegment === 'sign-up')) router.replace('/home');
   }, [auth.isLoaded, auth.isSignedIn, firstSegment, isPublic, router]);
 
-  if (!auth.isLoaded || (!auth.isSignedIn && !isPublic)) {
+  if (!isRecyclePreview && (!auth.isLoaded || (!auth.isSignedIn && !isPublic))) {
     return <View style={[styles.loading, { backgroundColor: colors.background }]}><RetornaMark size={58} /><ActivityIndicator color={colors.primary} /></View>;
   }
   return <>
