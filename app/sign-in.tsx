@@ -10,8 +10,9 @@ import {
   type LucideIcon,
 } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
+import { useVideoPlayer, VideoView } from 'expo-video';
 import { useState } from 'react';
-import { ImageBackground, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, TextInput, useWindowDimensions, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, TextInput, useWindowDimensions, View } from 'react-native';
 import { z } from 'zod';
 
 import { useAppAuth } from '@/auth/AppAuthProvider';
@@ -20,7 +21,7 @@ import { AppText, Button } from '@/design/components';
 import { useTheme } from '@/design/theme';
 import { radius, spacing } from '@/design/tokens';
 
-const campusImage = require('../assets/campus-uc.jpg');
+const campusVideo = require('../assets/puc-campus.mp4');
 
 const loginSchema = z.object({
   email: z.email('Ingresa un correo válido.'),
@@ -74,6 +75,11 @@ export default function SignInScreen() {
   const router = useRouter();
   const { width } = useWindowDimensions();
   const desktop = width >= 840;
+  const heroPlayer = useVideoPlayer(campusVideo, (player) => {
+    player.loop = true;
+    player.muted = true;
+    player.play();
+  });
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -106,10 +112,23 @@ export default function SignInScreen() {
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={[styles.root, { backgroundColor: colors.background }]}>
       <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
         <View style={styles.page}>
-          <ImageBackground source={campusImage} resizeMode="cover" style={styles.authBackdrop}>
+          <View style={styles.authBackdrop}>
+            <VideoView
+              accessible={false}
+              allowsPictureInPicture={false}
+              contentFit="cover"
+              nativeControls={false}
+              onFirstFrameRender={() => heroPlayer.play()}
+              player={heroPlayer}
+              playsInline
+              pointerEvents="none"
+              requiresLinearPlayback
+              style={styles.authVideo}
+              surfaceType="textureView"
+            />
             <View pointerEvents="none" style={styles.authOverlay} />
             <View style={[styles.authPanel, desktop && styles.authPanelDesktop]}>
-              <AuthScaleHero transparent />
+              <AuthScaleHero foregroundColor="#FFFFFF" transparent />
               <View style={[styles.formSide, desktop && styles.formSideDesktop]}>
                 <View style={styles.formHeader}>
                   <AppText variant="h1" style={styles.authText}>Vuelve a sumar</AppText>
@@ -125,7 +144,7 @@ export default function SignInScreen() {
                 <View style={styles.security}><LockKeyhole size={15} color="#FFFFFF" /><AppText variant="caption" style={[styles.authText, styles.securityText]}>El modo demo no necesita credenciales ni conexión externa.</AppText></View>
               </View>
             </View>
-          </ImageBackground>
+          </View>
 
           <View style={styles.landingContent}>
             <View style={styles.storySection}>
@@ -202,7 +221,8 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   scroll: { flexGrow: 1 },
   page: { width: '100%', gap: 80 },
-  authBackdrop: { width: '100%', overflow: 'hidden' },
+  authBackdrop: { width: '100%', overflow: 'hidden', backgroundColor: '#000000' },
+  authVideo: { position: 'absolute', inset: 0, width: '100%', height: '100%' },
   authOverlay: { position: 'absolute', inset: 0, backgroundColor: 'rgba(0, 0, 0, 0.68)' },
   authPanel: { width: '100%', maxWidth: 1180, alignSelf: 'center' },
   authPanelDesktop: { minHeight: 680, flexDirection: 'row' },

@@ -38,7 +38,7 @@ export default function HomeScreen() {
 
         <Card style={[styles.hero, { backgroundColor: colors.surfaceStrong, borderColor: colors.primary }]}>
           <View style={styles.heroTop}><View><AppText variant="eyebrow" style={{ color: colors.primary }}>Tu semana</AppText><AppText variant="display" style={{ color: colors.textOnStrong }}>{formatNumber(stats.weeklyPoints)} pts</AppText></View><View style={[styles.streak, { borderColor: colors.primary }]}><Flame size={18} color={colors.primary} fill={colors.primary} /><AppText variant="bodyStrong" style={{ color: colors.textOnStrong }}>{stats.currentStreak} días</AppText></View></View>
-          <View style={styles.heroStats}><View><AppText variant="caption" style={{ color: colors.textOnStrong }}>Ranking Ingeniería</AppText><AppText variant="h2" style={{ color: colors.textOnStrong }}>#{currentRank}</AppText></View><View style={styles.heroDivider} /><View><AppText variant="caption" style={{ color: colors.textOnStrong }}>Objetos este mes</AppText><AppText variant="h2" style={{ color: colors.textOnStrong }}>{stats.items}</AppText></View><View style={styles.heroDivider} /><View><AppText variant="caption" style={{ color: colors.textOnStrong }}>Impacto estimado</AppText><AppText variant="h2" style={{ color: colors.textOnStrong }}>{stats.estimatedKg} kg</AppText></View></View>
+          <View style={styles.heroStats}><View><AppText variant="caption" style={{ color: colors.textOnStrong }}>Ranking Ingeniería</AppText><AppText variant="h2" style={{ color: colors.textOnStrong }}>#{currentRank}</AppText></View><View style={[styles.heroDivider, { backgroundColor: colors.border }]} /><View><AppText variant="caption" style={{ color: colors.textOnStrong }}>Objetos este mes</AppText><AppText variant="h2" style={{ color: colors.textOnStrong }}>{stats.items}</AppText></View><View style={[styles.heroDivider, { backgroundColor: colors.border }]} /><View><AppText variant="caption" style={{ color: colors.textOnStrong }}>Impacto estimado</AppText><AppText variant="h2" style={{ color: colors.textOnStrong }}>{stats.estimatedKg} kg</AppText></View></View>
           <View style={styles.level}><View style={styles.progressLabels}><AppText variant="caption" style={{ color: colors.textOnStrong }}>Nivel {stats.level} · {stats.levelName}</AppText><AppText variant="caption" style={{ color: colors.textOnStrong }}>{stats.nextLevelAt - stats.points} pts para subir</AppText></View><ProgressBar value={levelProgress} color={colors.primary} /></View>
         </Card>
 
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   heroTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
   streak: { borderRadius: radius.pill, borderWidth: 1, paddingHorizontal: 12, paddingVertical: 7, flexDirection: 'row', gap: 7, alignItems: 'center' },
   heroStats: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  heroDivider: { width: 1, height: 38, backgroundColor: '#FFFFFF' },
+  heroDivider: { width: 1, height: 38 },
   level: { gap: spacing.sm },
   progressLabels: { flexDirection: 'row', justifyContent: 'space-between', gap: spacing.md },
   section: { gap: spacing.md },

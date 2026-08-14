@@ -55,7 +55,7 @@ function DesktopNav() {
           );
         })}
       </View>
-      <View style={[styles.pucPill, { backgroundColor: colors.surfaceStrong }]}>
+      <View style={[styles.pucPill, { backgroundColor: colors.surfaceStrong, borderColor: colors.border }]}>
         <AppText variant="eyebrow" style={{ color: colors.textOnStrong }}>Comunidad UC</AppText>
         <AppText variant="caption" style={{ color: colors.textOnStrong }}>Chile · Beta MVP</AppText>
       </View>
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   logoLink: { alignSelf: 'flex-start' },
   desktopLinks: { gap: 7, flex: 1 },
   desktopLink: { minHeight: 48, borderRadius: radius.md, paddingHorizontal: 14, flexDirection: 'row', alignItems: 'center', gap: 12 },
-  pucPill: { borderRadius: radius.lg, padding: spacing.lg, gap: 4 },
+  pucPill: { borderWidth: 1, borderRadius: radius.lg, padding: spacing.lg, gap: 4 },
   mobileNav: {
     position: 'absolute', left: 0, right: 0, bottom: 0, height: 78, borderTopWidth: 1,
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', paddingBottom: Platform.OS === 'ios' ? 12 : 5,
