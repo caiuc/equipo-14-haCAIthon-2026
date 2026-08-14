@@ -41,7 +41,7 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | RTN-006 | Triage de vulnerabilidades transitivas | PENDIENTE | — | RTN-001 | auditar advisories sin downgrades incompatibles; decisión y mitigación documentadas |
 | RTN-007 | Publicar setup inicial con Gitflow | COMPLETADA | Codex | RTN-001, RTN-002 | `develop` y rama de trabajo publicadas; commits convencionales; draft PR #1 |
 | RTN-008 | Protocolo de reserva de tareas y archivos | COMPLETADA | Codex | RTN-002 | plan PR #2; implementación y liberación del claim en PR #3; lease, write set, heartbeat y conflictos documentados |
-| RTN-009 | Reintegrar `develop` en branch visual | EN CURSO | Codex · [claim](claims/RTN-009.md) | RTN-008 | `origin/develop` integrado; conflictos resueltos preservando ambos historiales; verificaciones y push OK |
+| RTN-009 | Reintegrar `develop` en branch visual | COMPLETADA | — | RTN-008 | `origin/develop` integrado; conflicto de `PROGRESS` resuelto preservando RTN-509–511 y RTN-802/803; typecheck/lint/5 tests/diff OK; [evidencia](claims/RTN-009.md) |
 
 ### T1 — Auth y datos
 
@@ -127,7 +127,7 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | ID | Tarea | Estado | Owner | Depende de | Criterio de aceptación / evidencia |
 | --- | --- | --- | --- | --- | --- |
 | RTN-801 | Tests de dominio críticos | PARCIAL | — | RTN-301, RTN-401, RTN-601 | 5 tests base pasan; faltan ledger, ranking, misión y permisos |
-| RTN-802 | PWA instalable/offline shell | PARCIAL | — | RTN-001 | manifest/assets/export listos; faltan service worker y Lighthouse |
-| RTN-803 | EAS web + Android | PENDIENTE | — | RTN-001, RTN-004 | preview web y APK reproducibles |
+| RTN-802 | PWA instalable/offline shell | COMPLETADA | Claude · [claim](claims/RTN-802.md) | RTN-001 | manifest, assets, export, service worker y verificación (export servido + Lighthouse) listos |
+| RTN-803 | EAS web + Android | PARCIAL | — | RTN-001, RTN-004 | preview web reproducible; `app.json`/`eas.json` corregidos para build reproducible; falta proyecto EAS real y ejecutar `eas build --platform android` |
 | RTN-804 | Analítica con privacidad | PENDIENTE | — | RTN-001 | contrato + eventos críticos; no bloquea core |
 | RTN-805 | Performance mid-range Android | PENDIENTE | — | flujo core | listas/imágenes medidos y sin regresiones obvias |
