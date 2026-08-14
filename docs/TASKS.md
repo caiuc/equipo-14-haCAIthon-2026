@@ -96,6 +96,7 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | RTN-505 | Interfaz angular y acceso demo | COMPLETADA | — | RTN-101, RTN-501 | logo sin placa, radios globales en cero, auth “Tú → Planeta” responsive y botón demo con Martina; typecheck/lint/tests/diff OK; [evidencia](claims/RTN-505.md) |
 | RTN-506 | Paleta binaria y Home vertical | COMPLETADA | — | RTN-501, RTN-505 | negro/blanco/lima sin tonos soft; CTA reciclaje dominante y Home en una columna; typecheck/lint/tests/diff OK; [evidencia](claims/RTN-506.md) |
 | RTN-507 | Logo ampliado y frase de acceso | COMPLETADA | — | RTN-505 | wordmark 32 px, símbolo 50 px y frase sobre Tú→Planeta; typecheck/lint/diff OK; [evidencia](claims/RTN-507.md) |
+| RTN-508 | Retirar notificaciones de Inicio | RESERVADA | Codex · [claim](claims/RTN-508.md) | RTN-506 | encabezado sin control inerte; Configuración preservada |
 
 ### T6 — Misiones, social y sharing
 
