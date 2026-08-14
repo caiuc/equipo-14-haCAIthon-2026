@@ -2,7 +2,7 @@
 
 > **Obligatorio:** todo agente que cambie el repositorio debe actualizar este archivo en el mismo cambio. Ver [`../AGENTS.md`](../AGENTS.md).
 
-Última actualización: **2026-08-14 15:10 America/Santiago — Codex**
+Última actualización: **2026-08-14 15:12 America/Santiago — Codex**
 
 ## Resumen ejecutivo
 
