@@ -20,7 +20,7 @@ export function LeaderboardRows({ entries, kind = 'users', limit }: { entries: L
           <Pressable
             key={entry.id}
             onPress={() => kind === 'communities' ? router.push({ pathname: '/community/[id]', params: { id: entry.id } }) : undefined}
-            style={({ pressed }) => [styles.row, entry.isCurrent && { backgroundColor: colors.environmentalSoft }, pressed && { opacity: 0.7 }]}
+            style={({ pressed }) => [styles.row, entry.isCurrent && { borderColor: colors.primary, borderWidth: 2 }, pressed && { opacity: 0.7 }]}
           >
             <View style={styles.rankWrap}>
               <AppText variant={entry.rank <= 3 ? 'h3' : 'bodyStrong'} style={{ color: entry.rank <= 3 ? colors.primary : colors.textMuted }}>#{entry.rank}</AppText>

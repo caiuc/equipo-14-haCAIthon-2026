@@ -16,7 +16,7 @@ export function MissionCard({ state, mission, compact = false }: { state: AppSta
   return (
     <Pressable onPress={() => router.push({ pathname: '/mission/[id]', params: { id: mission.id } })} accessibilityRole="link">
       {({ pressed }) => (
-        <Card style={[styles.mission, { backgroundColor: colors.surfaceStrong, borderColor: colors.surfaceStrong, opacity: pressed ? 0.9 : 1 }, compact && styles.compact]}>
+        <Card style={[styles.mission, { backgroundColor: colors.surfaceStrong, borderColor: colors.border, opacity: pressed ? 0.82 : 1 }, compact && styles.compact]}>
           <View style={styles.missionTop}>
             <View style={styles.artwork}>
               <Flag size={34} color={colors.primary} strokeWidth={2} />
@@ -27,15 +27,15 @@ export function MissionCard({ state, mission, compact = false }: { state: AppSta
             </View>
             <ArrowRight size={20} color={colors.textOnStrong} />
           </View>
-          {!compact && <AppText style={{ color: colors.textOnStrong, opacity: 0.72 }}>{mission.description}</AppText>}
+          {!compact && <AppText style={{ color: colors.textOnStrong }}>{mission.description}</AppText>}
           <View style={styles.progressLabels}>
             <AppText variant="bodyStrong" style={{ color: colors.textOnStrong }}>{formatNumber(progress.value)} de {formatNumber(mission.target)}</AppText>
             <AppText variant="bodyStrong" style={{ color: colors.environmental }}>{Math.round(progress.percent)}%</AppText>
           </View>
           <ProgressBar value={progress.percent} color={colors.environmental} accessibilityLabel={`Progreso misión ${Math.round(progress.percent)} por ciento`} />
           <View style={styles.metaRow}>
-            <View style={styles.meta}><UsersRound size={15} color={colors.textOnStrong} /><AppText variant="caption" style={{ color: colors.textOnStrong, opacity: 0.74 }}>{progress.participatingCommunities} comunidades</AppText></View>
-            <View style={styles.meta}><Clock3 size={15} color={colors.textOnStrong} /><AppText variant="caption" style={{ color: colors.textOnStrong, opacity: 0.74 }}>{days} días restantes</AppText></View>
+            <View style={styles.meta}><UsersRound size={15} color={colors.textOnStrong} /><AppText variant="caption" style={{ color: colors.textOnStrong }}>{progress.participatingCommunities} comunidades</AppText></View>
+            <View style={styles.meta}><Clock3 size={15} color={colors.textOnStrong} /><AppText variant="caption" style={{ color: colors.textOnStrong }}>{days} días restantes</AppText></View>
           </View>
         </Card>
       )}

@@ -41,6 +41,8 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | RTN-006 | Triage de vulnerabilidades transitivas | PENDIENTE | — | RTN-001 | auditar advisories sin downgrades incompatibles; decisión y mitigación documentadas |
 | RTN-007 | Publicar setup inicial con Gitflow | COMPLETADA | Codex | RTN-001, RTN-002 | `develop` y rama de trabajo publicadas; commits convencionales; draft PR #1 |
 | RTN-008 | Protocolo de reserva de tareas y archivos | COMPLETADA | Codex | RTN-002 | plan PR #2; implementación y liberación del claim en PR #3; lease, write set, heartbeat y conflictos documentados |
+| RTN-009 | Reintegrar `develop` en branch visual | COMPLETADA | — | RTN-008 | `origin/develop` integrado; conflicto de `PROGRESS` resuelto preservando RTN-509–511 y RTN-802/803; typecheck/lint/5 tests/diff OK; [evidencia](claims/RTN-009.md) |
+| RTN-010 | Reintegración urgente de `develop` | COMPLETADA | — | RTN-009 | `origin/develop` integrado; único conflicto documental resuelto preservando ambos historiales; sin archivos sin resolver; [evidencia](claims/RTN-010.md) |
 
 ### T1 — Auth y datos
 
@@ -69,7 +71,7 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | ID | Tarea | Estado | Owner | Depende de | Criterio de aceptación / evidencia |
 | --- | --- | --- | --- | --- | --- |
 | RTN-301 | Catálogo y reglas de puntos | PARCIAL | — | RTN-001 | cálculo puro documentado y testeado |
-| RTN-302 | Flujo manual de reciclaje | PENDIENTE | — | RTN-204, RTN-301 | categoría, cantidad, una comunidad, preview y confirmación |
+| RTN-302 | Flujo manual de reciclaje | EN REVISIÓN | Codex · [claim](claims/RTN-302.md) | RTN-204, RTN-301 | Implementado en PR #4/local con bypass de preview sin cuenta; typecheck/lint/test/export y `curl` local OK. Falta prueba manual con cámara real |
 | RTN-303 | RPC transaccional + ledgers | PENDIENTE | — | RTN-103, RTN-301 | cliente no controla puntos; ambos ledgers atómicos |
 | RTN-304 | Historial y detalle | PENDIENTE | — | RTN-303 | filtros y detalle auditables |
 | RTN-305 | Editar/eliminar con reversión | PENDIENTE | — | RTN-303 | user/community/misiones/rankings consistentes tras mutación |
@@ -94,6 +96,14 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | RTN-503 | Estados loading/empty/error | PENDIENTE | — | RTN-501 | catálogo reutilizable y aplicado a flows críticos |
 | RTN-504 | Auditoría de accesibilidad | PENDIENTE | — | RTN-502 | teclado web, labels, contraste, targets y lector |
 | RTN-505 | Interfaz angular y acceso demo | COMPLETADA | — | RTN-101, RTN-501 | logo sin placa, radios globales en cero, auth “Tú → Planeta” responsive y botón demo con Martina; typecheck/lint/tests/diff OK; [evidencia](claims/RTN-505.md) |
+| RTN-506 | Paleta binaria y Home vertical | COMPLETADA | — | RTN-501, RTN-505 | negro/blanco/lima sin tonos soft; CTA reciclaje dominante y Home en una columna; typecheck/lint/tests/diff OK; [evidencia](claims/RTN-506.md) |
+| RTN-507 | Logo ampliado y frase de acceso | COMPLETADA | — | RTN-505 | wordmark 32 px, símbolo 50 px y frase sobre Tú→Planeta; typecheck/lint/diff OK; [evidencia](claims/RTN-507.md) |
+| RTN-508 | Retirar notificaciones de Inicio | COMPLETADA | — | RTN-506 | botón, indicador, import y estilos retirados; Configuración preservada; typecheck/lint/diff OK; [evidencia](claims/RTN-508.md) |
+| RTN-509 | Landing pública extendida | COMPLETADA | — | RTN-505, RTN-507 | acceso sin marco exterior; narrativa vertical responsive sobre registro, comunidad y progreso; modo demo preservado; typecheck/lint/5 tests/diff OK; [evidencia](claims/RTN-509.md) |
+| RTN-510 | Hero de acceso sobre fotografía | COMPLETADA | — | RTN-509 | fotografía provista a ancho completo cubre hero y formulario; overlay y controles de alto contraste; acceso responsive y funcional; typecheck/lint/5 tests/diff OK; [evidencia](claims/RTN-510.md) |
+| RTN-511 | Simplificar navegación e Inicio | COMPLETADA | — | RTN-502, RTN-506 | sidebar sin Ranking; Inicio sin Configuración ni export semanal; logo enlaza a Inicio; ranking de Home preservado; typecheck/lint/5 tests/diff OK; [evidencia](claims/RTN-511.md) |
+| RTN-512 | Video hero y contraste por tema | COMPLETADA | — | RTN-510, RTN-511 | MP4 hero autoplay/loop/mute sin controles; overlay legible; light mode blanco delimitado y dark mode negro; Expo 21/21, typecheck/lint/5 tests/export/diff OK; [evidencia](claims/RTN-512.md) |
+| RTN-513 | Autoplay del hero en Firefox | COMPLETADA | — | RTN-512 | reproducción reafirmada al renderizar el primer frame, después del montaje del elemento web; [evidencia](claims/RTN-513.md) |
 
 ### T6 — Misiones, social y sharing
 
@@ -110,9 +120,9 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 
 | ID | Tarea | Estado | Owner | Depende de | Criterio de aceptación / evidencia |
 | --- | --- | --- | --- | --- | --- |
-| RTN-701 | Contrato `ProductLookupProvider` | PENDIENTE | — | RTN-302 | proveedor reemplazable + fallback manual |
-| RTN-702 | Adaptador Open Food Facts | PENDIENTE | — | RTN-701 | fields mínimos, User-Agent y errores tratados |
-| RTN-703 | Scanner Expo Camera | PENDIENTE | — | RTN-701 | permisos, web/Android y barcode único |
+| RTN-701 | Contrato `ProductLookupProvider` | EN REVISIÓN | Codex · [claim](claims/RTN-302.md) | RTN-302 | Proveedor reemplazable, normalización y fallback manual implementados; tests de lookup OK |
+| RTN-702 | Adaptador Open Food Facts | EN REVISIÓN | Codex · [claim](claims/RTN-302.md) | RTN-701 | Consulta v2 con fields mínimos, User-Agent fuera de web, errores recuperables y catálogo local; tests OK |
+| RTN-703 | Scanner Expo Camera | EN REVISIÓN | Codex · [claim](claims/RTN-302.md) | RTN-701 | Permisos, visor, torch, vibración y bloqueo por barcode implementados; export web OK. Falta prueba manual Android/cámara real |
 | RTN-704 | Reglas estructuradas Chile | PENDIENTE | — | RTN-103 | incertidumbre, limpieza y manejo especial modelados |
 
 ### T8 — Calidad, PWA y deploy
@@ -120,8 +130,8 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | ID | Tarea | Estado | Owner | Depende de | Criterio de aceptación / evidencia |
 | --- | --- | --- | --- | --- | --- |
 | RTN-801 | Tests de dominio críticos | PARCIAL | — | RTN-301, RTN-401, RTN-601 | 5 tests base pasan; faltan ledger, ranking, misión y permisos |
-| RTN-802 | PWA instalable/offline shell | PARCIAL | — | RTN-001 | manifest/assets/export listos; faltan service worker y Lighthouse |
-| RTN-803 | EAS web + Android | PENDIENTE | — | RTN-001, RTN-004 | preview web y APK reproducibles |
+| RTN-802 | PWA instalable/offline shell | COMPLETADA | Claude · [claim](claims/RTN-802.md) | RTN-001 | manifest, assets, export, service worker y verificación (export servido + Lighthouse) listos |
+| RTN-803 | EAS web + Android | PARCIAL | — | RTN-001, RTN-004 | preview web reproducible; `app.json`/`eas.json` corregidos para build reproducible; falta proyecto EAS real y ejecutar `eas build --platform android` |
 | RTN-804 | Analítica con privacidad | PENDIENTE | — | RTN-001 | contrato + eventos críticos; no bloquea core |
 | RTN-805 | Performance mid-range Android | PENDIENTE | — | flujo core | listas/imágenes medidos y sin regresiones obvias |
 | RTN-806 | Supabase remoto + deploy Vercel | PARCIAL | Claude · [claim](claims/RTN-806.md) | RTN-101–106 | Proyecto Supabase remoto creado y migrado; deploy de producción en Vercel sirviendo todas las rutas; falta desactivar confirmación de correo en el dashboard de Supabase para validar el registro real end-to-end |

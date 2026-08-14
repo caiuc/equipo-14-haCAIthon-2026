@@ -2,7 +2,7 @@ import { Home, Recycle, Trophy, UserRound, UsersRound } from 'lucide-react-nativ
 import type { LucideIcon } from 'lucide-react-native';
 import { usePathname, useRouter } from 'expo-router';
 import React from 'react';
-import { Platform, Pressable, SafeAreaView, StyleSheet, useWindowDimensions, View, type ViewStyle } from 'react-native';
+import { Platform, Pressable, SafeAreaView, StyleSheet, useWindowDimensions, View } from 'react-native';
 
 import { AppText } from '@/design/components';
 import { RetornaLogo, RetornaMark } from '@/design/Logo';
@@ -16,6 +16,8 @@ const navItems: { label: string; path: '/home' | '/communities' | '/recycle' | '
   { label: 'Ranking', path: '/leaderboards', icon: Trophy },
   { label: 'Perfil', path: '/profile', icon: UserRound },
 ];
+
+const desktopNavItems = navItems.filter((item) => item.path !== '/leaderboards');
 
 export function AppShell({ children }: React.PropsWithChildren) {
   const { width } = useWindowDimensions();
@@ -38,9 +40,11 @@ function DesktopNav() {
   const router = useRouter();
   return (
     <View style={[styles.desktopNav, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-      <RetornaLogo />
+      <Pressable onPress={() => router.push('/home')} accessibilityRole="link" accessibilityLabel="Ir a Inicio" style={({ pressed }) => [styles.logoLink, pressed && { opacity: 0.72 }]}>
+        <RetornaLogo />
+      </Pressable>
       <View style={styles.desktopLinks}>
-        {navItems.map((item) => {
+        {desktopNavItems.map((item) => {
           const active = pathIsActive(pathname, item.path);
           const Icon = item.icon;
           return (
@@ -51,20 +55,20 @@ function DesktopNav() {
           );
         })}
       </View>
-      <View style={[styles.pucPill, { backgroundColor: colors.surfaceStrong }]}>
+      <View style={[styles.pucPill, { backgroundColor: colors.surfaceStrong, borderColor: colors.border }]}>
         <AppText variant="eyebrow" style={{ color: colors.textOnStrong }}>Comunidad UC</AppText>
-        <AppText variant="caption" style={{ color: colors.textOnStrong, opacity: 0.7 }}>Chile · Beta MVP</AppText>
+        <AppText variant="caption" style={{ color: colors.textOnStrong }}>Chile · Beta MVP</AppText>
       </View>
     </View>
   );
 }
 
 function MobileNav() {
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
   const pathname = usePathname();
   const router = useRouter();
   return (
-    <View style={[styles.mobileNav, { backgroundColor: colors.surface, borderColor: colors.border, shadowColor: isDark ? '#000' : '#244827' }]}>
+    <View style={[styles.mobileNav, { backgroundColor: colors.surface, borderColor: colors.border }]}>
       {navItems.map((item) => {
         const active = pathIsActive(pathname, item.path);
         const Icon = item.icon;
@@ -72,7 +76,7 @@ function MobileNav() {
         return (
           <Pressable key={item.path} onPress={() => router.push(item.path)} accessibilityRole="tab" accessibilityState={{ selected: active }} style={({ pressed }) => [styles.mobileLink, primary && styles.primaryMobileLink, pressed && { opacity: 0.72 }]}>
             {primary ? (
-              <View style={[styles.recycleButton, { backgroundColor: colors.primary }]}><Icon size={26} color="#17351B" strokeWidth={2.7} /></View>
+              <View style={[styles.recycleButton, { backgroundColor: colors.primary }]}><Icon size={26} color="#000000" strokeWidth={2.7} /></View>
             ) : <Icon size={21} color={active ? colors.primary : colors.textMuted} strokeWidth={active ? 2.7 : 2} />}
             <AppText variant="caption" style={{ fontSize: 10, color: primary || active ? colors.text : colors.textMuted }}>{item.label}</AppText>
           </Pressable>
@@ -100,13 +104,13 @@ const styles = StyleSheet.create({
   root: { flex: 1, flexDirection: 'row' },
   content: { flex: 1, minWidth: 0 },
   desktopNav: { width: 238, borderRightWidth: 1, padding: 24, paddingTop: 28, gap: 36 },
+  logoLink: { alignSelf: 'flex-start' },
   desktopLinks: { gap: 7, flex: 1 },
   desktopLink: { minHeight: 48, borderRadius: radius.md, paddingHorizontal: 14, flexDirection: 'row', alignItems: 'center', gap: 12 },
-  pucPill: { borderRadius: radius.lg, padding: spacing.lg, gap: 4 },
+  pucPill: { borderWidth: 1, borderRadius: radius.lg, padding: spacing.lg, gap: 4 },
   mobileNav: {
     position: 'absolute', left: 0, right: 0, bottom: 0, height: 78, borderTopWidth: 1,
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', paddingBottom: Platform.OS === 'ios' ? 12 : 5,
-    ...Platform.select({ ios: { shadowOpacity: 0.12, shadowRadius: 18, shadowOffset: { width: 0, height: -4 } }, android: { elevation: 16 }, web: { boxShadow: '0 -10px 30px rgba(36,72,39,.10)' } as ViewStyle }),
   },
   mobileLink: { flex: 1, height: 58, minWidth: 54, alignItems: 'center', justifyContent: 'center', gap: 4 },
   primaryMobileLink: { marginTop: -23 },
