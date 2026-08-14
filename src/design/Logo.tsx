@@ -21,12 +21,12 @@ export function RetornaLogo({ compact = false, inverted = false }: { compact?: b
   const { colors } = useTheme();
   return (
     <View style={styles.row} accessibilityRole="header">
-      <RetornaMark size={compact ? 34 : 40} inverted={inverted} />
+      <RetornaMark size={compact ? 38 : 50} inverted={inverted} />
       {!compact && <AppText variant="logo" style={{ color: inverted ? colors.textOnStrong : colors.text }}>retorna</AppText>}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  row: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  row: { flexDirection: 'row', alignItems: 'center', gap: 12 },
 });
