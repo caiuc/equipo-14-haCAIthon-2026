@@ -40,7 +40,7 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | RTN-005 | README principal de Retorna | COMPLETADA | Codex | RTN-002 | Inicio rápido y docs al comienzo; bases del hackathon preservadas debajo |
 | RTN-006 | Triage de vulnerabilidades transitivas | PENDIENTE | — | RTN-001 | auditar advisories sin downgrades incompatibles; decisión y mitigación documentadas |
 | RTN-007 | Publicar setup inicial con Gitflow | COMPLETADA | Codex | RTN-001, RTN-002 | `develop` y rama de trabajo publicadas; commits convencionales; draft PR #1 |
-| RTN-008 | Protocolo de reserva de tareas y archivos | EN CURSO | Codex · [claim](claims/RTN-008.md) | RTN-002 | plan commit visible, lease con vencimiento, write set, heartbeat y resolución de conflictos documentados |
+| RTN-008 | Protocolo de reserva de tareas y archivos | COMPLETADA | Codex | RTN-002 | plan PR #2; implementación y liberación del claim en PR #3; lease, write set, heartbeat y conflictos documentados |
 
 ### T1 — Auth y datos
 
