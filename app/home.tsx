@@ -31,7 +31,7 @@ export default function HomeScreen() {
           <View style={styles.headerActions}><Pressable accessibilityLabel="Notificaciones" style={[styles.iconButton, { backgroundColor: colors.surface }]}><Bell size={20} color={colors.text} /><View style={[styles.notificationDot, { backgroundColor: colors.primary }]} /></Pressable><Pressable onPress={() => router.push('/settings')} accessibilityLabel="Configuración" style={[styles.iconButton, { backgroundColor: colors.surface }]}><Settings size={20} color={colors.text} /></Pressable></View>
         </View>
 
-        <Pressable onPress={() => router.push('/recycle')} accessibilityRole="button" accessibilityLabel="Registrar reciclaje" style={({ pressed }) => [styles.recycleCta, { backgroundColor: colors.primary, borderColor: colors.primary, opacity: pressed ? 0.82 : 1 }]}>
+        <Pressable onPress={() => router.push('/circular-action')} accessibilityRole="button" accessibilityLabel="Abrir Reto Acción Circular" style={({ pressed }) => [styles.recycleCta, { backgroundColor: colors.primary, borderColor: colors.primary, opacity: pressed ? 0.82 : 1 }]}>
           <Recycle size={66} color="#000000" strokeWidth={1.8} />
           <AppText style={styles.recycleTitle}>Registrar reciclaje</AppText>
           <AppText style={styles.recycleDetail}>Escanea o ingresa manualmente lo que reciclaste.</AppText>
