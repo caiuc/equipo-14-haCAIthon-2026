@@ -89,10 +89,15 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 
 | ID | Tarea | Estado | Owner | Depende de | Criterio de aceptación / evidencia |
 | --- | --- | --- | --- | --- | --- |
-| RTN-501 | Tokens, logo y componentes base | PARCIAL | — | RTN-001 | light/dark, contraste, componentes y assets verificados |
+| RTN-501 | Tokens, logo y componentes base | COMPLETADA | — | RTN-001 | paleta lime/natural light-dark unificada; contraste principal 6.69:1 o superior; typecheck, lint, 5 tests y diff-check OK; [evidencia](claims/RTN-501.md) |
 | RTN-502 | Shell mobile/desktop | PARCIAL | — | RTN-501 | bottom nav móvil y rail desktop sin rutas rotas |
 | RTN-503 | Estados loading/empty/error | PENDIENTE | — | RTN-501 | catálogo reutilizable y aplicado a flows críticos |
 | RTN-504 | Auditoría de accesibilidad | PENDIENTE | — | RTN-502 | teclado web, labels, contraste, targets y lector |
+| RTN-505 | Interfaz angular y acceso demo | COMPLETADA | — | RTN-101, RTN-501 | logo sin placa, radios globales en cero, auth “Tú → Planeta” responsive y botón demo con Martina; typecheck/lint/tests/diff OK; [evidencia](claims/RTN-505.md) |
+| RTN-506 | Paleta binaria y Home vertical | COMPLETADA | — | RTN-501, RTN-505 | negro/blanco/lima sin tonos soft; CTA reciclaje dominante y Home en una columna; typecheck/lint/tests/diff OK; [evidencia](claims/RTN-506.md) |
+| RTN-507 | Logo ampliado y frase de acceso | COMPLETADA | — | RTN-505 | wordmark 32 px, símbolo 50 px y frase sobre Tú→Planeta; typecheck/lint/diff OK; [evidencia](claims/RTN-507.md) |
+| RTN-508 | Retirar notificaciones de Inicio | COMPLETADA | — | RTN-506 | botón, indicador, import y estilos retirados; Configuración preservada; typecheck/lint/diff OK; [evidencia](claims/RTN-508.md) |
+| RTN-509 | Landing pública extendida | COMPLETADA | — | RTN-505, RTN-507 | acceso sin marco exterior; narrativa vertical responsive sobre registro, comunidad y progreso; modo demo preservado; typecheck/lint/5 tests/diff OK; [evidencia](claims/RTN-509.md) |
 
 ### T6 — Misiones, social y sharing
 

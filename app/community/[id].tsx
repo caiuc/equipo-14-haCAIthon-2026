@@ -30,7 +30,7 @@ export default function CommunityDetailScreen() {
     <AppShell>
       <ScreenScroll contentContainerStyle={styles.screen}>
         <View style={styles.topActions}><Pressable onPress={() => router.back()} style={[styles.circleButton, { backgroundColor: colors.surface }]}><ArrowLeft color={colors.text} /></Pressable><View style={styles.actionGroup}><Pressable style={[styles.circleButton, { backgroundColor: colors.surface }]}><Share2 size={19} color={colors.text} /></Pressable><Pressable style={[styles.circleButton, { backgroundColor: colors.surface }]}><MoreHorizontal color={colors.text} /></Pressable></View></View>
-        <Card style={[styles.headerCard, { borderTopColor: community.accent }]}>
+        <Card style={[styles.headerCard, { borderTopColor: colors.primary }]}>
           <View style={styles.identity}><CommunityAvatar initials={community.initials} color={community.accent} size={76} /><View style={{ flex: 1, gap: 6 }}><View style={styles.nameRow}><AppText variant="h1">{community.name}</AppText>{community.visibility === 'private' && <LockKeyhole size={18} color={colors.textMuted} />}</View><View style={styles.tagRow}>{community.tags.map((tag) => <Pill key={tag} label={tag} />)}{role && <Pill label={role === 'owner' ? 'Propietaria' : role === 'admin' ? 'Admin' : 'Integrante'} tone="positive" />}</View></View></View>
           <AppText style={{ color: colors.textMuted, maxWidth: 760 }}>{community.description}</AppText>
           <View style={styles.communityStats}><View><AppText variant="metric">{formatNumber(totals.points)}</AppText><AppText variant="caption" style={{ color: colors.textMuted }}>puntos históricos</AppText></View><View><AppText variant="metric">#{rank}</AppText><AppText variant="caption" style={{ color: colors.textMuted }}>esta semana</AppText></View><View><AppText variant="metric">{formatNumber(community.memberCountBaseline + state.memberships.filter((item) => item.communityId === id).length)}</AppText><AppText variant="caption" style={{ color: colors.textMuted }}>integrantes</AppText></View><View><AppText variant="metric">{totals.estimatedKg} kg</AppText><AppText variant="caption" style={{ color: colors.textMuted }}>reciclaje estimado</AppText></View></View>
@@ -44,7 +44,7 @@ export default function CommunityDetailScreen() {
           </View>
           <View style={styles.sideColumn}>
             <View style={styles.section}><SectionHeader title="Ranking interno" actionLabel="Ver todos" onAction={() => router.push({ pathname: '/leaderboards', params: { communityId: id } })} /><Card style={{ padding: spacing.sm }}><LeaderboardRows entries={members} limit={6} /></Card></View>
-            <Card style={styles.trust}><View style={[styles.shield, { backgroundColor: colors.environmentalSoft }]}><ShieldCheck color={colors.environmental} /></View><View style={{ flex: 1 }}><AppText variant="bodyStrong">Competencia de buena fe</AppText><AppText variant="caption" style={{ color: colors.textMuted }}>Toda actividad queda visible y puede corregirse.</AppText></View></Card>
+            <Card style={styles.trust}><View style={styles.shield}><ShieldCheck color={colors.environmental} size={30} /></View><View style={{ flex: 1 }}><AppText variant="bodyStrong">Competencia de buena fe</AppText><AppText variant="caption" style={{ color: colors.textMuted }}>Toda actividad queda visible y puede corregirse.</AppText></View></Card>
           </View>
         </View>
       </ScreenScroll>
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: spacing.lg },
   topActions: { flexDirection: 'row', justifyContent: 'space-between' },
   actionGroup: { flexDirection: 'row', gap: spacing.sm },
-  circleButton: { width: 43, height: 43, borderRadius: 15, alignItems: 'center', justifyContent: 'center' },
+  circleButton: { width: 43, height: 43, alignItems: 'center', justifyContent: 'center' },
   headerCard: { borderTopWidth: 7, gap: spacing.xl },
   identity: { flexDirection: 'row', gap: spacing.lg, alignItems: 'center' },
   nameRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, flexWrap: 'wrap' },
@@ -69,5 +69,5 @@ const styles = StyleSheet.create({
   sideColumn: { flex: 0.8, minWidth: 300, gap: spacing.xxl },
   section: { gap: spacing.md },
   trust: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, padding: spacing.lg },
-  shield: { width: 44, height: 44, borderRadius: 15, alignItems: 'center', justifyContent: 'center' },
+  shield: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
 });

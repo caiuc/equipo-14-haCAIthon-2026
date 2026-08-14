@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   organizationCard: { flexGrow: 1, flexBasis: 300, maxWidth: 520, gap: spacing.lg },
   identity: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   memberState: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
-  message: { padding: spacing.md, borderRadius: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: spacing.md },
+  message: { padding: spacing.md, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: spacing.md },
   requests: { paddingVertical: spacing.sm },
   request: { minHeight: 72, flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: spacing.sm, paddingVertical: spacing.md, borderBottomWidth: 1 },
 });

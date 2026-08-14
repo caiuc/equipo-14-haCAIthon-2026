@@ -6,15 +6,13 @@ import { AppText } from './components';
 
 export function RetornaMark({ size = 34, inverted = false }: { size?: number; inverted?: boolean }) {
   const { colors } = useTheme();
-  const background = inverted ? colors.surface : colors.surfaceStrong;
   return (
     <Svg width={size} height={size} viewBox="0 0 64 64" accessibilityLabel="Símbolo Retorna">
-      <Path d="M0 16C0 7.16 7.16 0 16 0h32c8.84 0 16 7.16 16 16v32c0 8.84-7.16 16-16 16H16C7.16 64 0 56.84 0 48V16Z" fill={background} />
       <Path d="M18 22c7-8.7 20.6-9.3 28.5-1.7l-4.3 4.2c-5.5-5.1-14.5-4.7-19.5 1.3L18 22Z" fill={colors.primary} />
       <Path d="m45.4 15.6 2.5 11.7-11.7.5 9.2-12.2Z" fill={colors.primary} />
       <Path d="M46 42c-7 8.7-20.6 9.3-28.5 1.7l4.3-4.2c5.5 5.1 14.5 4.7 19.5-1.3L46 42Z" fill={colors.environmental} />
       <Path d="m18.6 48.4-2.5-11.7 11.7-.5-9.2 12.2Z" fill={colors.environmental} />
-      <Circle cx="32" cy="32" r="6.5" fill={inverted ? colors.surfaceStrong : colors.textOnStrong} />
+      <Circle cx="32" cy="32" r="5.5" fill={inverted ? colors.textOnStrong : colors.surfaceStrong} />
     </Svg>
   );
 }
@@ -23,12 +21,12 @@ export function RetornaLogo({ compact = false, inverted = false }: { compact?: b
   const { colors } = useTheme();
   return (
     <View style={styles.row} accessibilityRole="header">
-      <RetornaMark size={compact ? 34 : 40} inverted={inverted} />
+      <RetornaMark size={compact ? 38 : 50} inverted={inverted} />
       {!compact && <AppText variant="logo" style={{ color: inverted ? colors.textOnStrong : colors.text }}>retorna</AppText>}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  row: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  row: { flexDirection: 'row', alignItems: 'center', gap: 12 },
 });

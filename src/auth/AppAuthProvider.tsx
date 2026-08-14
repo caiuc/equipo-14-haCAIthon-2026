@@ -18,6 +18,7 @@ interface Registration extends Credentials {
 interface AppAuthValue {
   isLoaded: boolean;
   isSignedIn: boolean;
+  isDemoMode: boolean;
   configurationError?: string;
   session: Session | null;
   user: User | null;
@@ -26,6 +27,7 @@ interface AppAuthValue {
   identityEmail?: string;
   signIn: (credentials: Credentials) => Promise<void>;
   signUp: (registration: Registration) => Promise<void>;
+  enterDemo: () => void;
   signOut: () => Promise<void>;
   refreshProfile: () => Promise<void>;
 }
@@ -53,6 +55,7 @@ function fallbackProfile(user: User): AuthProfile {
 export function AppAuthProvider({ children }: React.PropsWithChildren) {
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<AuthProfile | null>(null);
+  const [isDemoMode, setIsDemoMode] = useState(false);
   const [isLoaded, setIsLoaded] = useState(!supabase);
 
   const loadProfile = useCallback(async (user: User | null) => {
@@ -116,25 +119,31 @@ export function AppAuthProvider({ children }: React.PropsWithChildren) {
   }, []);
 
   const signOut = useCallback(async () => {
+    if (isDemoMode) {
+      setIsDemoMode(false);
+      return;
+    }
     const client = requireSupabase();
     const { error } = await client.auth.signOut();
     if (error) throw new Error('No pudimos cerrar la sesión. Inténtalo nuevamente.');
-  }, []);
+  }, [isDemoMode]);
 
   const value = useMemo<AppAuthValue>(() => ({
     isLoaded,
-    isSignedIn: Boolean(session),
+    isSignedIn: Boolean(session) || isDemoMode,
+    isDemoMode,
     configurationError: supabaseConfigurationError,
     session,
     user: session?.user ?? null,
     profile,
-    identityName: profile?.display_name,
-    identityEmail: session?.user.email,
+    identityName: isDemoMode ? 'Martina Rojas' : profile?.display_name,
+    identityEmail: isDemoMode ? 'martina@demo.retorna.cl' : session?.user.email,
     signIn,
     signUp,
+    enterDemo: () => setIsDemoMode(true),
     signOut,
     refreshProfile: () => loadProfile(session?.user ?? null),
-  }), [isLoaded, loadProfile, profile, session, signIn, signOut, signUp]);
+  }), [isDemoMode, isLoaded, loadProfile, profile, session, signIn, signOut, signUp]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

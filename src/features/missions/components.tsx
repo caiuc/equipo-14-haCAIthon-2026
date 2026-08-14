@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 
 import { AppText, Card, Pill, ProgressBar } from '@/design/components';
 import { useTheme } from '@/design/theme';
-import { radius, spacing } from '@/design/tokens';
+import { spacing } from '@/design/tokens';
 import { challengeProgress, daysRemaining, formatNumber, missionProgress } from '@/domain/rules';
 import type { AppState, Challenge, Mission } from '@/domain/types';
 
@@ -16,11 +16,10 @@ export function MissionCard({ state, mission, compact = false }: { state: AppSta
   return (
     <Pressable onPress={() => router.push({ pathname: '/mission/[id]', params: { id: mission.id } })} accessibilityRole="link">
       {({ pressed }) => (
-        <Card style={[styles.mission, { backgroundColor: colors.surfaceStrong, borderColor: colors.surfaceStrong, opacity: pressed ? 0.9 : 1 }, compact && styles.compact]}>
+        <Card style={[styles.mission, { backgroundColor: colors.surfaceStrong, borderColor: colors.border, opacity: pressed ? 0.82 : 1 }, compact && styles.compact]}>
           <View style={styles.missionTop}>
-            <View style={[styles.artwork, { backgroundColor: colors.primary }]}>
-              <Flag size={24} color="#FFFFFF" strokeWidth={2.6} />
-              <View style={[styles.artCircle, { backgroundColor: colors.environmental }]} />
+            <View style={styles.artwork}>
+              <Flag size={34} color={colors.primary} strokeWidth={2} />
             </View>
             <View style={{ flex: 1, gap: 5 }}>
               <AppText variant="eyebrow" style={{ color: colors.primary }}>Misión de toda la UC</AppText>
@@ -28,15 +27,15 @@ export function MissionCard({ state, mission, compact = false }: { state: AppSta
             </View>
             <ArrowRight size={20} color={colors.textOnStrong} />
           </View>
-          {!compact && <AppText style={{ color: colors.textOnStrong, opacity: 0.72 }}>{mission.description}</AppText>}
+          {!compact && <AppText style={{ color: colors.textOnStrong }}>{mission.description}</AppText>}
           <View style={styles.progressLabels}>
             <AppText variant="bodyStrong" style={{ color: colors.textOnStrong }}>{formatNumber(progress.value)} de {formatNumber(mission.target)}</AppText>
             <AppText variant="bodyStrong" style={{ color: colors.environmental }}>{Math.round(progress.percent)}%</AppText>
           </View>
           <ProgressBar value={progress.percent} color={colors.environmental} accessibilityLabel={`Progreso misión ${Math.round(progress.percent)} por ciento`} />
           <View style={styles.metaRow}>
-            <View style={styles.meta}><UsersRound size={15} color={colors.textOnStrong} /><AppText variant="caption" style={{ color: colors.textOnStrong, opacity: 0.74 }}>{progress.participatingCommunities} comunidades</AppText></View>
-            <View style={styles.meta}><Clock3 size={15} color={colors.textOnStrong} /><AppText variant="caption" style={{ color: colors.textOnStrong, opacity: 0.74 }}>{days} días restantes</AppText></View>
+            <View style={styles.meta}><UsersRound size={15} color={colors.textOnStrong} /><AppText variant="caption" style={{ color: colors.textOnStrong }}>{progress.participatingCommunities} comunidades</AppText></View>
+            <View style={styles.meta}><Clock3 size={15} color={colors.textOnStrong} /><AppText variant="caption" style={{ color: colors.textOnStrong }}>{days} días restantes</AppText></View>
           </View>
         </Card>
       )}
@@ -52,13 +51,13 @@ export function ChallengeCard({ state, challenge, compact = false }: { state: Ap
     <Card style={[styles.challenge, compact && { padding: spacing.lg }]}>
       <View style={styles.challengeTop}>
         <View style={{ flex: 1, gap: 4 }}>
-          <AppText variant="eyebrow" style={{ color: community?.accent ?? colors.primary }}>{community?.name ?? 'Comunidad'}</AppText>
+          <AppText variant="eyebrow" style={{ color: colors.primary }}>{community?.name ?? 'Comunidad'}</AppText>
           <AppText variant="h3">{challenge.title}</AppText>
         </View>
         <Pill label={`${daysRemaining(challenge.endAt)} días`} />
       </View>
       {!compact && <AppText style={{ color: colors.textMuted }}>{challenge.description}</AppText>}
-      <ProgressBar value={progress.percent} color={community?.accent} />
+      <ProgressBar value={progress.percent} color={colors.primary} />
       <View style={styles.progressLabels}>
         <AppText variant="caption" style={{ color: colors.textMuted }}>{formatNumber(progress.value)} {challenge.unitLabel}</AppText>
         <AppText variant="caption" style={{ color: colors.textMuted }}>Faltan {formatNumber(progress.remaining)}</AppText>
@@ -71,8 +70,7 @@ const styles = StyleSheet.create({
   mission: { gap: spacing.lg, overflow: 'hidden' },
   compact: { padding: spacing.lg },
   missionTop: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
-  artwork: { width: 52, height: 52, borderRadius: radius.md, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
-  artCircle: { position: 'absolute', width: 22, height: 22, borderRadius: 11, right: -5, bottom: -4 },
+  artwork: { width: 52, height: 52, alignItems: 'center', justifyContent: 'center' },
   progressLabels: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   metaRow: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.lg },
   meta: { flexDirection: 'row', alignItems: 'center', gap: 6 },

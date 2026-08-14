@@ -27,7 +27,7 @@ export function FeedItem({ event, state }: { event: ActivityEvent; state: AppSta
   };
   return (
     <Pressable onPress={goToDetail} disabled={!event.recyclingActionId} style={({ pressed }) => [styles.row, pressed && { opacity: 0.72 }]}>
-      {actor ? <Avatar initials={actor.initials} color={actor.avatarColor} size={43} /> : <View style={[styles.icon, { backgroundColor: colors.surfaceMuted }]}><Icon size={20} color={colors.primary} /></View>}
+      {actor ? <Avatar initials={actor.initials} color={actor.avatarColor} size={43} /> : <View style={styles.icon}><Icon size={26} color={colors.primary} /></View>}
       <View style={{ flex: 1, minWidth: 0, gap: 2 }}>
         <AppText variant="bodyStrong">{event.title}</AppText>
         <AppText variant="caption" style={{ color: colors.textMuted }}>{event.detail}</AppText>
@@ -40,6 +40,6 @@ export function FeedItem({ event, state }: { event: ActivityEvent; state: AppSta
 
 const styles = StyleSheet.create({
   row: { flexDirection: 'row', gap: spacing.md, alignItems: 'flex-start', paddingVertical: spacing.md },
-  icon: { width: 43, height: 43, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
+  icon: { width: 43, height: 43, alignItems: 'center', justifyContent: 'center' },
   points: { borderRadius: radius.pill, paddingHorizontal: 9, paddingVertical: 5 },
 });
