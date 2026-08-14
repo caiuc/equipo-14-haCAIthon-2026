@@ -2,7 +2,7 @@
 
 > **Obligatorio:** todo agente que cambie el repositorio debe actualizar este archivo en el mismo cambio. Ver [`../AGENTS.md`](../AGENTS.md).
 
-Última actualización: **2026-08-14 14:34 America/Santiago — Codex**
+Última actualización: **2026-08-14 14:37 America/Santiago — Codex**
 
 ## Resumen ejecutivo
 
@@ -12,7 +12,7 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 
 | Tarea | Owner | Rama | Lease hasta | Write set |
 | --- | --- | --- | --- | --- |
-| RTN-008 | Codex | `docs/RTN-008-agent-task-leases` | 2026-08-15T02:34:08Z | Gobernanza y documentación multiagente; ver `docs/claims/RTN-008.md` |
+| RTN-008 | Codex | `docs/RTN-008-complete-task-leases` | 2026-08-15T02:34:08Z | Gobernanza y documentación multiagente; [claim](claims/RTN-008.md), plan PR #2 fusionado |
 
 ## Completado
 
@@ -33,7 +33,7 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 - TypeScript, lint, 5 tests de dominio y export web verificados.
 - README y `CONTRIBUTING.md` preparados para onboarding del repositorio.
 - Rama de integración `develop` y rama `chore/RTN-001-initial-setup` publicadas.
-- Draft PR abierto contra `develop`: `https://github.com/caiuc/equipo-14-haCAIthon-2026/pull/1`.
+- Setup inicial fusionado en `develop`: `https://github.com/caiuc/equipo-14-haCAIthon-2026/pull/1`.
 
 “Completado” aquí significa que el artefacto fue escrito; las capacidades marcadas `EN CURSO` en `TASKS.md` aún requieren aceptación/verificación antes de considerarse listas.
 

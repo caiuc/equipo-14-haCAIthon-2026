@@ -5,12 +5,20 @@
 ## Leyenda
 
 - `PENDIENTE`: no iniciado.
+- `RESERVADA`: plan commit pusheado, lease activo e implementación aún no iniciada.
 - `EN CURSO`: tiene owner activo; no tomar sin coordinación.
+- `EN REVISIÓN`: criterios cumplidos y PR esperando integración.
 - `PARCIAL`: existe trabajo previo, pero no tiene owner activo y puede retomarse.
 - `BLOQUEADA`: requiere dependencia o decisión externa documentada.
 - `COMPLETADA`: cumple aceptación y tiene evidencia.
 
 Todos los agentes deben actualizar este archivo al tomar/cerrar una tarea y también actualizar [`PROGRESS.md`](PROGRESS.md).
+
+## Reserva obligatoria
+
+Antes de implementar, el owner crea un claim desde [`claims/TEMPLATE.md`](claims/TEMPLATE.md), declara rama/lease/write set, hace un plan commit, lo pushea y abre un draft PR. La fila debe enlazar el claim mientras esté `RESERVADA`, `EN CURSO`, `BLOQUEADA` o `EN REVISIÓN`.
+
+El owner se expresa como `Agente · [claim](claims/RTN-###.md)`. Claims vencidos siguen bloqueados hasta completar el protocolo de takeover.
 
 ## Orden y tracks
 
@@ -32,7 +40,7 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | RTN-005 | README principal de Retorna | COMPLETADA | Codex | RTN-002 | Inicio rápido y docs al comienzo; bases del hackathon preservadas debajo |
 | RTN-006 | Triage de vulnerabilidades transitivas | PENDIENTE | — | RTN-001 | auditar advisories sin downgrades incompatibles; decisión y mitigación documentadas |
 | RTN-007 | Publicar setup inicial con Gitflow | COMPLETADA | Codex | RTN-001, RTN-002 | `develop` y rama de trabajo publicadas; commits convencionales; draft PR #1 |
-| RTN-008 | Protocolo de reserva de tareas y archivos | EN CURSO | Codex · `docs/RTN-008-agent-task-leases` | RTN-002 | plan commit visible, lease con vencimiento, write set, heartbeat y resolución de conflictos documentados |
+| RTN-008 | Protocolo de reserva de tareas y archivos | EN CURSO | Codex · [claim](claims/RTN-008.md) | RTN-002 | plan commit visible, lease con vencimiento, write set, heartbeat y resolución de conflictos documentados |
 
 ### T1 — Auth y datos
 
