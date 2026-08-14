@@ -134,3 +134,4 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | RTN-803 | EAS web + Android | PARCIAL | — | RTN-001, RTN-004 | preview web reproducible; `app.json`/`eas.json` corregidos para build reproducible; falta proyecto EAS real y ejecutar `eas build --platform android` |
 | RTN-804 | Analítica con privacidad | PENDIENTE | — | RTN-001 | contrato + eventos críticos; no bloquea core |
 | RTN-805 | Performance mid-range Android | PENDIENTE | — | flujo core | listas/imágenes medidos y sin regresiones obvias |
+| RTN-806 | Supabase remoto + deploy Vercel | PARCIAL | Claude · [claim](claims/RTN-806.md) | RTN-101–106 | Proyecto Supabase remoto creado y migrado; deploy de producción en Vercel sirviendo todas las rutas; falta desactivar confirmación de correo en el dashboard de Supabase para validar el registro real end-to-end |

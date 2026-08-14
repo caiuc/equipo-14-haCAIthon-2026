@@ -18,10 +18,18 @@ const nativeStorage = {
   removeItem: (key: string) => SecureStore.deleteItemAsync(key),
 };
 
+// expo export --platform web pre-renders routes in Node, where `window` does not
+// exist; AsyncStorage's web adapter touches it eagerly, so guard for SSR there.
+const ssrSafeWebStorage = {
+  getItem: (key: string) => (typeof window === 'undefined' ? Promise.resolve(null) : AsyncStorage.getItem(key)),
+  setItem: (key: string, value: string) => (typeof window === 'undefined' ? Promise.resolve() : AsyncStorage.setItem(key, value)),
+  removeItem: (key: string) => (typeof window === 'undefined' ? Promise.resolve() : AsyncStorage.removeItem(key)),
+};
+
 export const supabase: SupabaseClient<Database> | null = supabaseUrl && supabaseKey
   ? createClient<Database>(supabaseUrl, supabaseKey, {
       auth: {
-        storage: Platform.OS === 'web' ? AsyncStorage : nativeStorage,
+        storage: Platform.OS === 'web' ? ssrSafeWebStorage : nativeStorage,
         autoRefreshToken: true,
         persistSession: true,
         detectSessionInUrl: Platform.OS === 'web',
