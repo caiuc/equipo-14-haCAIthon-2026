@@ -2,7 +2,7 @@
 
 > **Obligatorio:** todo agente que cambie el repositorio debe actualizar este archivo en el mismo cambio. Ver [`../AGENTS.md`](../AGENTS.md).
 
-Última actualización: **2026-08-14 14:39 America/Santiago — Codex**
+Última actualización: **2026-08-14 15:10 America/Santiago — Codex**
 
 ## Resumen ejecutivo
 
@@ -10,7 +10,9 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 
 ## Trabajo activo
 
-No hay claims activos. Antes de implementar una tarea, reservarla mediante el protocolo de [`claims/README.md`](claims/README.md).
+| ID | Owner | Rama | Claim | Lease | Write set |
+| --- | --- | --- | --- | --- | --- |
+| RTN-302/701/702/703 | Codex | `feat/RTN-302-recycling-flow` | [`docs/claims/RTN-302.md`](claims/RTN-302.md) | 2026-08-15T03:10:22Z | `app/recycle.tsx`, `src/features/recycling/**`, `src/services/barcode/**` |
 
 ## Completado
 
