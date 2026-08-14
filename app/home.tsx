@@ -1,4 +1,4 @@
-import { ArrowUpRight, Bell, ChevronRight, Flame, Recycle, Settings, Sparkles, Trophy } from 'lucide-react-native';
+import { ArrowUpRight, ChevronRight, Flame, Recycle, Settings, Sparkles, Trophy } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
 
@@ -28,7 +28,7 @@ export default function HomeScreen() {
       <ScreenScroll contentContainerStyle={styles.screen}>
         <View style={styles.header}>
           <View style={styles.identity}><Avatar initials={user.initials} color={user.avatarColor} size={48} /><View><AppText variant="caption" style={{ color: colors.textMuted }}>{user.campus ?? 'Tu espacio en Retorna'}</AppText><AppText variant="h2">Hola, {user.displayName.split(' ')[0]}</AppText></View></View>
-          <View style={styles.headerActions}><Pressable accessibilityLabel="Notificaciones" style={[styles.iconButton, { backgroundColor: colors.surface }]}><Bell size={20} color={colors.text} /><View style={[styles.notificationDot, { backgroundColor: colors.primary }]} /></Pressable><Pressable onPress={() => router.push('/settings')} accessibilityLabel="Configuración" style={[styles.iconButton, { backgroundColor: colors.surface }]}><Settings size={20} color={colors.text} /></Pressable></View>
+          <Pressable onPress={() => router.push('/settings')} accessibilityLabel="Configuración" style={[styles.iconButton, { backgroundColor: colors.surface }]}><Settings size={20} color={colors.text} /></Pressable>
         </View>
 
         <Pressable onPress={() => router.push('/recycle')} accessibilityRole="button" accessibilityLabel="Registrar reciclaje" style={({ pressed }) => [styles.recycleCta, { backgroundColor: colors.primary, borderColor: colors.primary, opacity: pressed ? 0.82 : 1 }]}>
@@ -59,9 +59,7 @@ const styles = StyleSheet.create({
   screen: { maxWidth: 860, width: '100%', alignSelf: 'center', paddingTop: 22, gap: spacing.xxxl },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: spacing.md },
   identity: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
-  headerActions: { flexDirection: 'row', gap: spacing.sm },
   iconButton: { width: 43, height: 43, alignItems: 'center', justifyContent: 'center' },
-  notificationDot: { width: 7, height: 7, borderRadius: 4, position: 'absolute', right: 10, top: 9 },
   recycleCta: { minHeight: 250, width: '100%', borderWidth: 2, padding: spacing.xxxl, alignItems: 'center', justifyContent: 'center', gap: spacing.md },
   recycleTitle: { color: '#000000', fontSize: 34, lineHeight: 39, fontWeight: '900', letterSpacing: -1.2, textAlign: 'center', textTransform: 'uppercase' },
   recycleDetail: { color: '#000000', fontWeight: '700', textAlign: 'center' },
