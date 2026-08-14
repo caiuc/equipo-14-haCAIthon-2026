@@ -94,6 +94,7 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | RTN-503 | Estados loading/empty/error | PENDIENTE | — | RTN-501 | catálogo reutilizable y aplicado a flows críticos |
 | RTN-504 | Auditoría de accesibilidad | PENDIENTE | — | RTN-502 | teclado web, labels, contraste, targets y lector |
 | RTN-505 | Interfaz angular y acceso demo | COMPLETADA | — | RTN-101, RTN-501 | logo sin placa, radios globales en cero, auth “Tú → Planeta” responsive y botón demo con Martina; typecheck/lint/tests/diff OK; [evidencia](claims/RTN-505.md) |
+| RTN-506 | Paleta binaria y Home vertical | RESERVADA | Codex · [claim](claims/RTN-506.md) | RTN-501, RTN-505 | negro/blanco/lima sin tonos soft; CTA reciclaje primero y feed Home en una columna |
 
 ### T6 — Misiones, social y sharing
 
