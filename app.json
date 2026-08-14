@@ -1,0 +1,62 @@
+{
+  "expo": {
+    "name": "Retorna",
+    "slug": "retorna-uc",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "retorna",
+    "userInterfaceStyle": "automatic",
+    "icon": "./assets/icon.png",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "cl.retorna.app"
+    },
+    "android": {
+      "package": "cl.retorna.app",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0B1628"
+      },
+      "permissions": [
+        "android.permission.CAMERA"
+      ]
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Permite que Retorna use la cámara para leer códigos de barra.",
+          "recordAudioAndroid": false,
+          "barcodeScannerEnabled": true
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#0B1628",
+          "image": "./assets/splash.png",
+          "imageWidth": 180
+        }
+      ],
+      "expo-video"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "7bf96a5f-0ec7-40c1-853f-4ea36c22f410"
+      }
+    },
+    "owner": "jupster"
+  }
+}
