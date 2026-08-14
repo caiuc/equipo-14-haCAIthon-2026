@@ -93,6 +93,7 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | RTN-502 | Shell mobile/desktop | PARCIAL | — | RTN-501 | bottom nav móvil y rail desktop sin rutas rotas |
 | RTN-503 | Estados loading/empty/error | PENDIENTE | — | RTN-501 | catálogo reutilizable y aplicado a flows críticos |
 | RTN-504 | Auditoría de accesibilidad | PENDIENTE | — | RTN-502 | teclado web, labels, contraste, targets y lector |
+| RTN-505 | Interfaz angular y acceso demo | RESERVADA | Codex · [claim](claims/RTN-505.md) | RTN-101, RTN-501 | logo transparente, componentes cuadrados, auth escalonado y sesión seed sin Supabase |
 
 ### T6 — Misiones, social y sharing
 
