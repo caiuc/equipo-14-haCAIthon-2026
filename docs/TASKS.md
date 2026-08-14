@@ -101,6 +101,7 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | RTN-509 | Landing pública extendida | COMPLETADA | — | RTN-505, RTN-507 | acceso sin marco exterior; narrativa vertical responsive sobre registro, comunidad y progreso; modo demo preservado; typecheck/lint/5 tests/diff OK; [evidencia](claims/RTN-509.md) |
 | RTN-510 | Hero de acceso sobre fotografía | COMPLETADA | — | RTN-509 | fotografía provista a ancho completo cubre hero y formulario; overlay y controles de alto contraste; acceso responsive y funcional; typecheck/lint/5 tests/diff OK; [evidencia](claims/RTN-510.md) |
 | RTN-511 | Simplificar navegación e Inicio | COMPLETADA | — | RTN-502, RTN-506 | sidebar sin Ranking; Inicio sin Configuración ni export semanal; logo enlaza a Inicio; ranking de Home preservado; typecheck/lint/5 tests/diff OK; [evidencia](claims/RTN-511.md) |
+| RTN-512 | Video hero y contraste por tema | EN CURSO | Codex · [claim](claims/RTN-512.md) | RTN-510, RTN-511 | video hero autoplay/loop sin controles; overlay legible; light mode con superficies blancas delimitadas y dark mode negro |
 
 ### T6 — Misiones, social y sharing
 

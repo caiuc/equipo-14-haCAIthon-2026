@@ -2,7 +2,7 @@
 
 > **Obligatorio:** todo agente que cambie el repositorio debe actualizar este archivo en el mismo cambio. Ver [`../AGENTS.md`](../AGENTS.md).
 
-Última actualización: **2026-08-14 16:42 America/Santiago — Codex**
+Última actualización: **2026-08-14 16:50 America/Santiago — Codex**
 
 ## Resumen ejecutivo
 
@@ -13,6 +13,7 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 | Tarea | Owner | Rama | Lease hasta | Write set |
 | --- | --- | --- | --- | --- |
 | RTN-302 | Codex | `feat/RTN-302-recycling-flow` | 2026-08-15T03:10:22Z | Claim remoto activo; flujo de reciclaje/cámara sin solapamiento con RTN-501 |
+| RTN-512 | Codex | `fix/RTN-508-remove-home-notifications` | 2026-08-15T04:49:56Z | `app/sign-in.tsx`, auth/logo/tokens, asset video y dependencia `expo-video`; sin solapamiento con RTN-302 |
 
 ## Completado
 
