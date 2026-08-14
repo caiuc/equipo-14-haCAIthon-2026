@@ -2,7 +2,7 @@
 
 > **Obligatorio:** todo agente que cambie el repositorio debe actualizar este archivo en el mismo cambio. Ver [`../AGENTS.md`](../AGENTS.md).
 
-Última actualización: **2026-08-14 16:26 America/Santiago — Codex**
+Última actualización: **2026-08-14 16:31 America/Santiago — Codex**
 
 ## Resumen ejecutivo
 
@@ -13,7 +13,6 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 | Tarea | Owner | Rama | Lease hasta | Write set |
 | --- | --- | --- | --- | --- |
 | RTN-302 | Codex | `feat/RTN-302-recycling-flow` | 2026-08-15T03:10:22Z | Claim remoto activo; flujo de reciclaje/cámara sin solapamiento con RTN-501 |
-| RTN-510 | Codex | `fix/RTN-508-remove-home-notifications` | 2026-08-15T04:25:54Z | `app/sign-in.tsx`, `src/auth/AuthScaleHero.tsx`, `assets/campus-uc.jpg`; rama actual preservada |
 
 ## Completado
 
@@ -30,6 +29,7 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 - Logo Retorna ampliado y frase “El cambio empieza contigo” agregada sobre Tú→Planeta en login/registro.
 - Control inerte de notificaciones retirado del encabezado de Inicio.
 - Landing de acceso liberada de su marco exterior y ampliada con contenido vertical sobre registro, comunidades, desafíos y progreso.
+- Hero y formulario de acceso integrados sobre la fotografía de campus entregada, a ancho completo y con overlay oscuro de alto contraste.
 - Primer borrador de shell responsive.
 - Primer borrador visual de onboarding, Home y Comunidades.
 - Gobernanza multiagente: `AGENTS.md` y documentación `/docs`.
@@ -119,6 +119,10 @@ Ejecutado el 2026-08-14:
 | `npm run lint` (RTN-509) | OK, sin warnings |
 | `npm test` (RTN-509) | OK; 5/5 tests existentes |
 | `git diff --check` (RTN-509) | OK |
+| `npm run typecheck` (RTN-510) | OK |
+| `npm run lint` (RTN-510) | OK, sin warnings |
+| `npm test` (RTN-510) | OK; 5/5 tests existentes |
+| `git diff --check` (RTN-510) | OK |
 
 ## Registro de cambios de agentes
 
@@ -136,3 +140,4 @@ Ejecutado el 2026-08-14:
 | 2026-08-14 | Codex | RTN-508 | Retiró campana, indicador y estilos de notificaciones de Inicio; preservó Configuración | Typecheck, lint y diff-check OK |
 | 2026-08-14 | Codex | RTN-507 | Amplió el logo Retorna y agregó “El cambio empieza contigo” sobre el hero Tú→Planeta | Typecheck, lint y diff-check OK |
 | 2026-08-14 | Codex | RTN-509 | Quitó el marco exterior del acceso y sumó una landing vertical responsive con explicación del flujo, capacidades y CTA demo | Typecheck, lint, 5 tests y diff-check OK; revisión visual local queda a cargo del usuario |
+| 2026-08-14 | Codex | RTN-510 | Llevó la fotografía provista a todo el ancho del hero de acceso, oscureció el fondo y adaptó formulario/textos a blanco y lima | Typecheck, lint, 5 tests y diff-check OK; revisión visual local queda a cargo del usuario |
