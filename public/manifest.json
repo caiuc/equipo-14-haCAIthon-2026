@@ -1,0 +1,15 @@
+{
+  "short_name": "Retorna",
+  "name": "Retorna — Reciclaje en comunidad",
+  "description": "Recicla, aporta a tu comunidad UC y sube en el ranking.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F5F7F2",
+  "theme_color": "#0B1628",
+  "lang": "es-CL",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
