@@ -53,18 +53,18 @@ function DesktopNav() {
       </View>
       <View style={[styles.pucPill, { backgroundColor: colors.surfaceStrong }]}>
         <AppText variant="eyebrow" style={{ color: colors.textOnStrong }}>Comunidad UC</AppText>
-        <AppText variant="caption" style={{ color: colors.textOnStrong, opacity: 0.7 }}>Chile · Beta MVP</AppText>
+        <AppText variant="caption" style={{ color: colors.textOnStrong }}>Chile · Beta MVP</AppText>
       </View>
     </View>
   );
 }
 
 function MobileNav() {
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
   const pathname = usePathname();
   const router = useRouter();
   return (
-    <View style={[styles.mobileNav, { backgroundColor: colors.surface, borderColor: colors.border, shadowColor: isDark ? '#000' : '#244827' }]}>
+    <View style={[styles.mobileNav, { backgroundColor: colors.surface, borderColor: colors.border, shadowColor: '#000000' }]}>
       {navItems.map((item) => {
         const active = pathIsActive(pathname, item.path);
         const Icon = item.icon;
@@ -72,7 +72,7 @@ function MobileNav() {
         return (
           <Pressable key={item.path} onPress={() => router.push(item.path)} accessibilityRole="tab" accessibilityState={{ selected: active }} style={({ pressed }) => [styles.mobileLink, primary && styles.primaryMobileLink, pressed && { opacity: 0.72 }]}>
             {primary ? (
-              <View style={[styles.recycleButton, { backgroundColor: colors.primary }]}><Icon size={26} color="#17351B" strokeWidth={2.7} /></View>
+              <View style={[styles.recycleButton, { backgroundColor: colors.primary }]}><Icon size={26} color="#000000" strokeWidth={2.7} /></View>
             ) : <Icon size={21} color={active ? colors.primary : colors.textMuted} strokeWidth={active ? 2.7 : 2} />}
             <AppText variant="caption" style={{ fontSize: 10, color: primary || active ? colors.text : colors.textMuted }}>{item.label}</AppText>
           </Pressable>

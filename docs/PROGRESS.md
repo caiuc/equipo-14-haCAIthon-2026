@@ -2,7 +2,7 @@
 
 > **Obligatorio:** todo agente que cambie el repositorio debe actualizar este archivo en el mismo cambio. Ver [`../AGENTS.md`](../AGENTS.md).
 
-Última actualización: **2026-08-14 15:56 America/Santiago — Codex**
+Última actualización: **2026-08-14 16:01 America/Santiago — Codex**
 
 ## Resumen ejecutivo
 
@@ -13,7 +13,6 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 | Tarea | Owner | Rama | Lease hasta | Write set |
 | --- | --- | --- | --- | --- |
 | RTN-302 | Codex | `feat/RTN-302-recycling-flow` | 2026-08-15T03:10:22Z | Claim remoto activo; flujo de reciclaje/cámara sin solapamiento con RTN-501 |
-| RTN-506 | Codex | `feat/RTN-506-monochrome-home-feed` | 2026-08-15T03:56:20Z | Paleta negro/blanco/lima y Home vertical; ver [`claims/RTN-506.md`](claims/RTN-506.md) |
 
 ## Completado
 
@@ -24,7 +23,8 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 - Fixtures realistas en español de Chile.
 - Primer borrador de tokens, temas, logo SVG y componentes base.
 - Auth propia Supabase, perfil y organizaciones implementados en código.
-- Identidad visual unificada en verde lima: tokens light/dark, componentes, formularios y navegación de reciclaje.
+- Identidad visual unificada en verde lima sobre blanco/negro puros: tokens light/dark, componentes, formularios y navegación de reciclaje.
+- Home simplificado a feed vertical, con “Registrar reciclaje” como primer CTA dominante.
 - Lenguaje visual angular: logo transparente, tarjetas/controles sin radios ni sombras, auth escalonado y acceso demo local con Martina.
 - Primer borrador de shell responsive.
 - Primer borrador visual de onboarding, Home y Comunidades.
@@ -101,6 +101,10 @@ Ejecutado el 2026-08-14:
 | `npm run lint` (RTN-505) | OK, sin warnings |
 | `npm test` (RTN-505) | OK; 5/5 tests existentes |
 | `git diff --check` (RTN-505) | OK |
+| `npm run typecheck` (RTN-506) | OK |
+| `npm run lint` (RTN-506) | OK, sin warnings |
+| `npm test` (RTN-506) | OK; 5/5 tests existentes |
+| `git diff --check` (RTN-506) | OK |
 
 ## Registro de cambios de agentes
 
@@ -114,3 +118,4 @@ Ejecutado el 2026-08-14:
 | 2026-08-14 | Codex | RTN-008 | Publicó el plan en PR #2 y completó el protocolo de claims en PR #3 tras un merge temprano del plan | Enlaces Markdown locales y `git diff --check` OK; claim liberado |
 | 2026-08-14 | Codex | RTN-501/502 | Unificó acentos en verde lima, superficies naturales y sombras bosque; retiró selectores multicolor y cambió el `+` central por flechas de reciclaje | Typecheck, lint, 5 tests, diff-check y contraste principal 6.69:1+ OK; revisión visual local queda a cargo del usuario |
 | 2026-08-14 | Codex | RTN-505 | Eliminó placas/radios/sombras, liberó el logo, reconstruyó login y registro con escala Tú→Planeta y agregó acceso seed sin Supabase | Typecheck, lint, 5 tests y diff-check OK; revisión visual local queda a cargo del usuario |
+| 2026-08-14 | Codex | RTN-506 | Redujo la UI a blanco/negro/lima y convirtió Home en una columna con CTA de reciclaje primero | Typecheck, lint, 5 tests y diff-check OK; revisión visual local queda a cargo del usuario |
