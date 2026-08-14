@@ -74,6 +74,7 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | RTN-304 | Historial y detalle | PENDIENTE | — | RTN-303 | filtros y detalle auditables |
 | RTN-305 | Editar/eliminar con reversión | PENDIENTE | — | RTN-303 | user/community/misiones/rankings consistentes tras mutación |
 | RTN-306 | Señales antiabuso de buena fe | PARCIAL | — | RTN-301 | límites suaves definidos; persistencia/admin pendientes |
+| RTN-307 | Reto Acción Circular autocontenido | COMPLETADA | — | RTN-301 | `/circular-action`; 4 acciones; evidencia opcional demo; XP, participación e impacto no confirmado separados; 4 tests, export y recorrido web; [evidencia](claims/RTN-307.md) |
 
 ### T4 — Competencia
 
@@ -127,4 +128,4 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | RTN-804 | Analítica con privacidad | PENDIENTE | — | RTN-001 | contrato + eventos críticos; no bloquea core |
 | RTN-805 | Performance mid-range Android | PENDIENTE | — | flujo core | listas/imágenes medidos y sin regresiones obvias |
 | RTN-806 | Supabase remoto + deploy Vercel | PARCIAL | Claude · [claim](claims/RTN-806.md) | RTN-101–106 | Proyecto Supabase remoto creado y migrado; deploy de producción en Vercel sirviendo todas las rutas; falta desactivar confirmación de correo en el dashboard de Supabase para validar el registro real end-to-end |
-| RTN-807 | Integración frontend, Acción Circular y Supabase | EN CURSO | Codex · [claim](claims/RTN-807.md) | RTN-307, RTN-507, RTN-806 | base visual `b6325f4` preservada; reto circular y deploy/Supabase integrados; calidad y recorrido web verificados |
+| RTN-807 | Integración frontend, Acción Circular y Supabase | COMPLETADA | — | RTN-307, RTN-507, RTN-806 | base visual `b6325f4` preservada; reto circular y deploy/Supabase integrados; 9 tests, export y recorrido web; [evidencia](claims/RTN-807.md) |

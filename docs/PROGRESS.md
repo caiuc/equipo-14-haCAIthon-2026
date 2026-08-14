@@ -2,7 +2,7 @@
 
 > **Obligatorio:** todo agente que cambie el repositorio debe actualizar este archivo en el mismo cambio. Ver [`../AGENTS.md`](../AGENTS.md).
 
-Última actualización: **2026-08-14 16:05 America/Santiago — Codex**
+Última actualización: **2026-08-14 16:10 America/Santiago — Codex**
 
 ## Resumen ejecutivo
 
@@ -13,7 +13,6 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 | Tarea | Owner | Rama | Lease hasta | Write set |
 | --- | --- | --- | --- | --- |
 | RTN-302 | Codex | `feat/RTN-302-recycling-flow` | 2026-08-15T03:10:22Z | Claim remoto activo; flujo de reciclaje/cámara sin solapamiento con RTN-501 |
-| RTN-807 | Codex | `feat/RTN-807-integrate-circular-supabase` | 2026-08-15T04:05:18Z | Integra RTN-307 y RTN-806 sobre base visual exacta `b6325f4`; no toca RTN-302 |
 
 ## Completado
 
@@ -28,6 +27,7 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 - Home simplificado a feed vertical, con “Registrar reciclaje” como primer CTA dominante.
 - Lenguaje visual angular: logo transparente, tarjetas/controles sin radios ni sombras, auth escalonado y acceso demo local con Martina.
 - Logo Retorna ampliado y frase “El cambio empieza contigo” agregada sobre Tú→Planeta en login/registro.
+- Reto Acción Circular integrado sobre el frontend aprobado: Home conserva su composición y su CTA abre el flujo autónomo sin QR.
 - Primer borrador de shell responsive.
 - Primer borrador visual de onboarding, Home y Comunidades.
 - Gobernanza multiagente: `AGENTS.md` y documentación `/docs`.
@@ -114,6 +114,12 @@ Ejecutado el 2026-08-14:
 | `npm run typecheck` (RTN-507) | OK |
 | `npm run lint` (RTN-507) | OK, sin warnings |
 | `git diff --check` (RTN-507) | OK |
+| `npm run typecheck` + `npm run lint` (RTN-807) | OK, sin errores ni warnings |
+| `npm test` (RTN-807) | OK; 9/9 tests, incluidos 4 del reto circular |
+| `npm run web:export` (RTN-807) | OK; 20 rutas estáticas; fix SSR de RTN-806 integrado |
+| Comparación con `b6325f4` (RTN-807) | OK; frontend visual preservado; Home cambia sólo destino/label accesible del CTA |
+| Recorrido web (RTN-807) | OK; sign-in → modo demo → Home → `/circular-action`, sin errores de consola |
+| `git diff --check` (RTN-807) | OK |
 
 ## Registro de cambios de agentes
 
@@ -130,3 +136,4 @@ Ejecutado el 2026-08-14:
 | 2026-08-14 | Codex | RTN-506 | Redujo la UI a blanco/negro/lima y convirtió Home en una columna con CTA de reciclaje primero | Typecheck, lint, 5 tests y diff-check OK; revisión visual local queda a cargo del usuario |
 | 2026-08-14 | Codex | RTN-507 | Amplió el logo Retorna y agregó “El cambio empieza contigo” sobre el hero Tú→Planeta | Typecheck, lint y diff-check OK |
 | 2026-08-14 | Claude | RTN-806 | Creó el proyecto Supabase remoto y aplicó la migración; corrigió el SSR de `src/data/supabase.ts` y agregó `public/vercel.json`; desplegó producción en Vercel | Typecheck, lint, 5 tests, `web:export` y verificación en navegador (sin 404, sin errores de consola) OK; registro real bloqueado por confirmación de correo del proyecto Supabase Cloud, ver bloqueo 6 |
+| 2026-08-14 | Codex | RTN-807 | Tomó `b6325f4` como base, integró RTN-806 y agregó RTN-307 sin retroceder el frontend; conectó el CTA de Home al reto | Typecheck, lint, 9 tests, export de 20 rutas, diff-check y recorrido web sin errores de consola |
