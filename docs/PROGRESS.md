@@ -2,7 +2,7 @@
 
 > **Obligatorio:** todo agente que cambie el repositorio debe actualizar este archivo en el mismo cambio. Ver [`../AGENTS.md`](../AGENTS.md).
 
-Última actualización: **2026-08-14 16:10 America/Santiago — Codex**
+Última actualización: **2026-08-14 16:19 America/Santiago — Codex**
 
 ## Resumen ejecutivo
 
@@ -13,6 +13,7 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 | Tarea | Owner | Rama | Lease hasta | Write set |
 | --- | --- | --- | --- | --- |
 | RTN-302 | Codex | `feat/RTN-302-recycling-flow` | 2026-08-15T03:10:22Z | Claim remoto activo; flujo de reciclaje/cámara sin solapamiento con RTN-501 |
+| RTN-807 | Codex | `feat/RTN-807-integrate-circular-supabase` | 2026-08-15T04:19:00Z | Retiro total de RTN-307 y reconciliación del PR #14 con el `develop` vigente |
 
 ## Completado
 

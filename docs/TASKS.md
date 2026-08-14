@@ -128,4 +128,4 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | RTN-804 | Analítica con privacidad | PENDIENTE | — | RTN-001 | contrato + eventos críticos; no bloquea core |
 | RTN-805 | Performance mid-range Android | PENDIENTE | — | flujo core | listas/imágenes medidos y sin regresiones obvias |
 | RTN-806 | Supabase remoto + deploy Vercel | PARCIAL | Claude · [claim](claims/RTN-806.md) | RTN-101–106 | Proyecto Supabase remoto creado y migrado; deploy de producción en Vercel sirviendo todas las rutas; falta desactivar confirmación de correo en el dashboard de Supabase para validar el registro real end-to-end |
-| RTN-807 | Integración frontend, Acción Circular y Supabase | COMPLETADA | — | RTN-307, RTN-507, RTN-806 | base visual `b6325f4` preservada; reto circular y deploy/Supabase integrados; 9 tests, export y recorrido web; [evidencia](claims/RTN-807.md) |
+| RTN-807 | Integración frontend y Supabase; retiro de Acción Circular | EN CURSO | Codex · [claim](claims/RTN-807.md) | RTN-507, RTN-806 | retirar RTN-307, restaurar `/recycle`, integrar `origin/develop` y dejar PR #14 sin conflictos |
