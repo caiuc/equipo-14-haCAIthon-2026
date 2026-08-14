@@ -2,7 +2,7 @@
 
 > **Obligatorio:** todo agente que cambie el repositorio debe actualizar este archivo en el mismo cambio. Ver [`../AGENTS.md`](../AGENTS.md).
 
-Última actualización: **2026-08-14 14:34 America/Santiago — Codex**
+Última actualización: **2026-08-14 15:11 America/Santiago — Codex**
 
 ## Resumen ejecutivo
 
@@ -17,12 +17,12 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 ## Completado
 
 - Análisis y plan de producto/técnico inicial.
-- Selección documentada de Expo universal + Clerk + Supabase Postgres.
+- Selección documentada de Expo universal + Supabase Auth/Postgres.
 - Estructura base `app/` y `src/`.
 - Primer borrador de tipos y reglas puras de dominio.
 - Fixtures realistas en español de Chile.
 - Primer borrador de tokens, temas, logo SVG y componentes base.
-- Primer borrador de auth adaptable Clerk/modo demo.
+- Auth propia Supabase, perfil y organizaciones implementados en código.
 - Primer borrador de shell responsive.
 - Primer borrador visual de onboarding, Home y Comunidades.
 - Gobernanza multiagente: `AGENTS.md` y documentación `/docs`.
@@ -41,7 +41,7 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 
 | ID | Trabajo | Estado real |
 | --- | --- | --- |
-| RTN-101 | Auth | Adaptador escrito; Clerk real no probado |
+| RTN-101–106 | Auth/datos/organizaciones | Código listo: Supabase Auth, perfiles, organizaciones, membresías, solicitudes, roles y UI. Falta levantar Supabase local y recorrer el flujo completo |
 | RTN-201–203 | Comunidades | UI/fixtures parciales; backend, errores y aceptación pendientes |
 | RTN-301/306/401 | Dominio | Reglas iniciales y 5 tests base; cobertura crítica todavía incompleta |
 | RTN-501/502 | Diseño/nav | Componentes iniciales; revisión web/Android pendiente |
@@ -50,10 +50,10 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 
 ## No iniciado
 
-- Migraciones y funciones de Supabase.
-- RLS y validación real con JWT Clerk.
+- Migraciones de reciclaje, comunidades y resto del dominio fuera de usuarios/organizaciones.
+- Prueba integrada de la migración/RLS de usuarios y organizaciones.
 - Flujo manual de reciclaje completo.
-- Pantallas completas de ranking, perfil, actividad, misión, settings y sharing.
+- Pantallas completas de ranking, actividad, misión, settings y sharing.
 - Exportación PNG.
 - Scanner barcode y proveedor Open Food Facts.
 - CI y suite completa de tests.
@@ -61,15 +61,15 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 
 ## Bloqueos y riesgos conocidos
 
-1. `npm audit --omit=dev` reporta 38 vulnerabilidades en el árbol productivo (18 moderadas, 20 altas, 0 críticas). Varias sugerencias automáticas intentan bajar Expo/React Native/Clerk a versiones incompatibles; no se ejecutó `npm audit fix --force`. RTN-003 debe incorporar un triage consciente.
-2. Clerk real y Supabase no fueron configurados ni probados; el build verificado usa el modo demo.
+1. El resultado previo de `npm audit --omit=dev` quedó obsoleto tras retirar Clerk; RTN-006 debe repetir el triage sin usar `--force`.
+2. Supabase Auth, migración y seed quedaron implementados pero no se ejecutaron contra una instancia local en esta intervención. Auth y organizaciones no ofrecen fallback demo intencionalmente.
 3. Las rutas pendientes existen como placeholders intencionales, pero sus capacidades aún no están implementadas.
 4. Los totales base en fixtures sirven para demo visual; no representan el ledger productivo futuro.
 5. No hubo verificación visual en Android ni auditoría de accesibilidad/Lighthouse.
 
 ## Próximo paso recomendado
 
-Completar **RTN-003 (CI)** y **RTN-006 (triage de dependencias)**. Después pueden repartirse en paralelo RTN-102/103 (backend), RTN-501/502 (revisión visual) y RTN-201/202 (comunidades), respetando sus dependencias y owners.
+Para cerrar RTN-101–106, levantar Supabase, ejecutar `supabase db reset`, copiar URL/key a `.env` y recorrer registro → organizaciones → solicitud/aprobación. Mantener esa validación breve y orientada al showcase.
 
 ## Verificación del setup
 
@@ -85,6 +85,9 @@ Ejecutado el 2026-08-14:
 | `npm run web:export` | OK; 17 rutas estáticas exportadas a `dist/` |
 | `CI=1 npx expo start --web --port 8089` + `curl` | OK; servidor Metro respondió HTML en `/` |
 | `git diff --check` | OK |
+| `npm run typecheck` (RTN-101–106) | OK |
+| `npm run lint` (RTN-101–106) | OK, sin warnings |
+| `npm test` (RTN-101–106) | OK; 5/5 tests existentes |
 
 ## Registro de cambios de agentes
 
@@ -94,3 +97,4 @@ Ejecutado el 2026-08-14:
 | 2026-08-14 | Codex | RTN-002 | Agregó reglas obligatorias, Gitflow, Conventional Commits, backlog y tracking | Pendiente revisión final de enlaces |
 | 2026-08-14 | Codex | RTN-001, 002, 004, 005, 801, 802 | Estabilizó dependencias/assets/rutas, agregó tests y cerró setup/documentación | Expo check, typecheck, lint, 5 tests, export web y diff-check OK |
 | 2026-08-14 | Codex | RTN-007 | Publicó `develop`, 4 commits convencionales y draft PR #1 desde `chore/RTN-001-initial-setup` | Push remoto y PR contra `develop` confirmados |
+| 2026-08-14 | Codex | RTN-101–106 | Retiró Clerk; agregó Supabase Auth, perfil real, organizaciones, membresías, solicitudes, roles, migración, seed y UI | Typecheck, lint, 5 tests y diff-check OK; Supabase local no ejecutado; sin verificación web adicional por indicación del usuario |

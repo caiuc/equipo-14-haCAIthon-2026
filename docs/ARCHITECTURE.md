@@ -10,14 +10,14 @@ Este documento describe la arquitectura objetivo. El estado implementado y verif
 - React Native + Expo SDK 57.
 - Expo Router para Android y web.
 - React Native Web para compartir UI y lógica.
-- TanStack Query para estado remoto; Context/reducer sólo para preferencias y modo demo.
+- TanStack Query para estado remoto; Context/reducer sólo para preferencias y capacidades demostrativas pendientes de backend.
 - Zod para validación de fronteras y reglas puras en `src/domain`.
 
 Estructura inicial:
 
 ```text
 app/                    rutas Expo Router
-src/auth/               adaptación Clerk / demo
+src/auth/               sesión y autenticación Supabase
 src/data/               datos, repositorios y fixtures
 src/design/             tokens y componentes base
 src/domain/             tipos y reglas sin React
@@ -31,7 +31,7 @@ docs/                   gobernanza y arquitectura
 ## Backend objetivo
 
 - Supabase Postgres como fuente de verdad relacional.
-- Clerk como proveedor de identidad externo.
+- Supabase Auth para identidad email/contraseña y sesión.
 - RLS para lecturas/escrituras directas permitidas.
 - Funciones RPC transaccionales para registrar, editar y eliminar reciclajes.
 - Storage para avatares, comunidades y arte de misiones.
@@ -50,10 +50,18 @@ recycling_action
 
 ## Autenticación
 
-- Clerk maneja email, Google y sesión persistente.
-- `profiles` mantiene identidad de producto separada del usuario Clerk.
-- Supabase valida JWT de Clerk mediante Third-Party Auth.
-- El modo demo existe para desarrollo y feria; no reemplaza autorización productiva.
+- Supabase Auth maneja registro, login, hashing y sesión persistente por email/contraseña.
+- `profiles` mantiene la identidad de producto separada de `auth.users`; un trigger crea el perfil al registrar una cuenta.
+- Postgres aplica RLS con el JWT Supabase y `auth.uid()`.
+- La sesión usa `SecureStore` en native y AsyncStorage en web.
+- Para este MVP no hay confirmación de email, recuperación, MFA, login social ni fallback demo en auth.
+
+## Organizaciones
+
+- Una persona puede tener múltiples membresías y un rol distinto (`member`, `admin`, `owner`) en cada organización.
+- Crear una organización asigna al creador como `owner` en una única función SQL.
+- Unirse crea una solicitud `pending`; un `owner` o `admin` puede aceptarla o rechazarla desde la interfaz.
+- Auth, perfiles, organizaciones, membresías y solicitudes usan datos persistidos. Los fixtures continúan sólo en features fuera de este alcance.
 
 ## Datos y consistencia
 
@@ -78,4 +86,4 @@ cp .env.example .env
 npm run web
 ```
 
-Sin credenciales y con `EXPO_PUBLIC_DEMO_MODE=true`, la app debe usar fixtures locales. El modo productivo requerirá Clerk y Supabase configurados.
+Auth, perfiles y organizaciones requieren Supabase configurado. En local, `supabase start` y `supabase db reset` aplican la migración y los seeds; la URL y publishable/anon key impresas por la CLI se copian a `.env`.

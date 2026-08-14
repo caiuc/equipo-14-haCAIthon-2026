@@ -150,16 +150,16 @@ export function calculateStreak(actions: RecyclingAction[], userId: string, now 
 
 export function getUserStats(state: AppState, userId: string): UserStats {
   const ownActions = state.actions.filter((item) => item.userId === userId && !item.deletedAt);
-  const points = ownActions.reduce((sum, item) => sum + item.points, 0) + (userId === state.currentUserId ? 312 : profileBaseline(userId));
+  const points = ownActions.reduce((sum, item) => sum + item.points, 0) + profileBaseline(userId);
   const level = levelForPoints(points);
   const streak = calculateStreak(state.actions, userId);
   return {
     points,
-    weeklyPoints: ownActions.filter((item) => actionMatchesPeriod(item, 'week')).reduce((sum, item) => sum + item.points, 0) + (userId === state.currentUserId ? 74 : 0),
-    monthlyPoints: ownActions.filter((item) => actionMatchesPeriod(item, 'month')).reduce((sum, item) => sum + item.points, 0) + (userId === state.currentUserId ? 198 : 0),
-    items: ownActions.reduce((sum, item) => sum + item.quantity, 0) + (userId === state.currentUserId ? 31 : 0),
-    estimatedKg: round(ownActions.reduce((sum, item) => sum + item.estimatedKg, 0) + (userId === state.currentUserId ? 5.8 : 0), 1),
-    estimatedCo2Kg: round(ownActions.reduce((sum, item) => sum + item.estimatedCo2Kg, 0) + (userId === state.currentUserId ? 9.4 : 0), 1),
+    weeklyPoints: ownActions.filter((item) => actionMatchesPeriod(item, 'week')).reduce((sum, item) => sum + item.points, 0),
+    monthlyPoints: ownActions.filter((item) => actionMatchesPeriod(item, 'month')).reduce((sum, item) => sum + item.points, 0),
+    items: ownActions.reduce((sum, item) => sum + item.quantity, 0),
+    estimatedKg: round(ownActions.reduce((sum, item) => sum + item.estimatedKg, 0), 1),
+    estimatedCo2Kg: round(ownActions.reduce((sum, item) => sum + item.estimatedCo2Kg, 0), 1),
     ...level,
     ...streak,
   };
@@ -193,14 +193,13 @@ export function buildUserLeaderboard(state: AppState, period: Period, communityI
         (action) => action.userId === profile.id && (!communityId || action.communityId === communityId) && actionMatchesPeriod(action, period),
       );
       const fallback = period === 'all' ? profileBaseline(profile.id) : period === 'month' ? Math.round(profileBaseline(profile.id) * 0.48) : Math.round(profileBaseline(profile.id) * 0.19);
-      const currentFallback = profile.id === state.currentUserId ? (period === 'all' ? 312 : period === 'month' ? 198 : 74) : fallback;
       return {
         id: profile.id,
         name: profile.displayName,
         subtitle: profile.affiliation,
         initials: profile.initials,
         color: profile.avatarColor,
-        points: matching.reduce((sum, action) => sum + action.points, 0) + currentFallback,
+        points: matching.reduce((sum, action) => sum + action.points, 0) + fallback,
         items: matching.reduce((sum, action) => sum + action.quantity, 0),
         rank: 0,
         isCurrent: profile.id === state.currentUserId,

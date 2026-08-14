@@ -1,64 +1,142 @@
-import { ClerkProvider, useAuth, useClerk, useUser } from '@clerk/expo';
-import { useHostedAuth } from '@clerk/expo/hosted-auth';
-import { tokenCache } from '@clerk/expo/token-cache';
-import React, { createContext, useContext, useMemo, useState } from 'react';
+import type { Session, User } from '@supabase/supabase-js';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+
+import type { Database } from '@/data/database.types';
+import { requireSupabase, supabase, supabaseConfigurationError } from '@/data/supabase';
+
+export type AuthProfile = Database['public']['Tables']['profiles']['Row'];
+
+interface Credentials {
+  email: string;
+  password: string;
+}
+
+interface Registration extends Credentials {
+  displayName: string;
+}
 
 interface AppAuthValue {
   isLoaded: boolean;
   isSignedIn: boolean;
-  isDemo: boolean;
+  configurationError?: string;
+  session: Session | null;
+  user: User | null;
+  profile: AuthProfile | null;
   identityName?: string;
   identityEmail?: string;
-  signIn: () => Promise<void>;
-  signUp: () => Promise<void>;
+  signIn: (credentials: Credentials) => Promise<void>;
+  signUp: (registration: Registration) => Promise<void>;
   signOut: () => Promise<void>;
+  refreshProfile: () => Promise<void>;
 }
 
 const AuthContext = createContext<AppAuthValue | null>(null);
-const clerkKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
-const forceDemo = process.env.EXPO_PUBLIC_DEMO_MODE === 'true';
-export const isDemoAuth = forceDemo || !clerkKey;
 
-function DemoAuthProvider({ children }: React.PropsWithChildren) {
-  const [signedIn, setSignedIn] = useState(false);
-  const value = useMemo<AppAuthValue>(() => ({
-    isLoaded: true,
-    isSignedIn: signedIn,
-    isDemo: true,
-    identityName: signedIn ? 'Martina Rojas' : undefined,
-    identityEmail: signedIn ? 'martina.rojas@uc.cl' : undefined,
-    signIn: async () => setSignedIn(true),
-    signUp: async () => setSignedIn(true),
-    signOut: async () => setSignedIn(false),
-  }), [signedIn]);
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
-
-function ClerkBridge({ children }: React.PropsWithChildren) {
-  const { isLoaded, isSignedIn } = useAuth();
-  const { user } = useUser();
-  const clerk = useClerk();
-  const { startHostedAuth } = useHostedAuth();
-  const value = useMemo<AppAuthValue>(() => ({
-    isLoaded,
-    isSignedIn: Boolean(isSignedIn),
-    isDemo: false,
-    identityName: user?.fullName ?? undefined,
-    identityEmail: user?.primaryEmailAddress?.emailAddress,
-    signIn: async () => { await startHostedAuth({ mode: 'sign-in' }); },
-    signUp: async () => { await startHostedAuth({ mode: 'sign-up' }); },
-    signOut: async () => { await clerk.signOut(); },
-  }), [clerk, isLoaded, isSignedIn, startHostedAuth, user]);
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+function fallbackProfile(user: User): AuthProfile {
+  const displayName = typeof user.user_metadata.display_name === 'string'
+    ? user.user_metadata.display_name
+    : user.email?.split('@')[0] ?? 'Usuario Retorna';
+  const initials = displayName.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]?.toUpperCase()).join('') || 'RT';
+  return {
+    id: user.id,
+    username: user.email?.split('@')[0] ?? user.id.slice(0, 8),
+    display_name: displayName,
+    initials,
+    avatar_color: '#FF6246',
+    bio: null,
+    affiliation: null,
+    campus: null,
+    created_at: user.created_at,
+  };
 }
 
 export function AppAuthProvider({ children }: React.PropsWithChildren) {
-  if (isDemoAuth) return <DemoAuthProvider>{children}</DemoAuthProvider>;
-  return (
-    <ClerkProvider publishableKey={clerkKey!} tokenCache={tokenCache}>
-      <ClerkBridge>{children}</ClerkBridge>
-    </ClerkProvider>
-  );
+  const [session, setSession] = useState<Session | null>(null);
+  const [profile, setProfile] = useState<AuthProfile | null>(null);
+  const [isLoaded, setIsLoaded] = useState(!supabase);
+
+  const loadProfile = useCallback(async (user: User | null) => {
+    if (!user || !supabase) {
+      setProfile(null);
+      return;
+    }
+    const { data, error } = await supabase.from('profiles').select('*').eq('id', user.id).maybeSingle();
+    if (error) throw new Error('No pudimos cargar tu perfil. Inténtalo nuevamente.');
+    setProfile(data ?? fallbackProfile(user));
+  }, []);
+
+  useEffect(() => {
+    if (!supabase) {
+      return;
+    }
+    let active = true;
+    void supabase.auth.getSession().then(async ({ data, error }) => {
+      if (!active) return;
+      if (error) throw error;
+      setSession(data.session);
+      await loadProfile(data.session?.user ?? null);
+    }).catch(() => {
+      if (active) {
+        setSession(null);
+        setProfile(null);
+      }
+    }).finally(() => {
+      if (active) setIsLoaded(true);
+    });
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+      if (!active) return;
+      setSession(nextSession);
+      void loadProfile(nextSession?.user ?? null).finally(() => setIsLoaded(true));
+    });
+    return () => {
+      active = false;
+      listener.subscription.unsubscribe();
+    };
+  }, [loadProfile]);
+
+  const signIn = useCallback(async ({ email, password }: Credentials) => {
+    const client = requireSupabase();
+    const { error } = await client.auth.signInWithPassword({ email: email.trim().toLocaleLowerCase('es-CL'), password });
+    if (error) throw new Error(error.status === 400 ? 'El correo o la contraseña no son correctos.' : 'No pudimos iniciar sesión. Inténtalo nuevamente.');
+  }, []);
+
+  const signUp = useCallback(async ({ displayName, email, password }: Registration) => {
+    const client = requireSupabase();
+    const { data, error } = await client.auth.signUp({
+      email: email.trim().toLocaleLowerCase('es-CL'),
+      password,
+      options: { data: { display_name: displayName.trim() } },
+    });
+    if (error) {
+      if (error.status === 422 || error.message.toLowerCase().includes('registered')) throw new Error('Ya existe una cuenta con ese correo.');
+      throw new Error('No pudimos crear la cuenta. Revisa los datos e inténtalo nuevamente.');
+    }
+    if (!data.session) throw new Error('La cuenta fue creada, pero el proyecto Supabase exige confirmar correo. Desactiva esa opción para este MVP.');
+  }, []);
+
+  const signOut = useCallback(async () => {
+    const client = requireSupabase();
+    const { error } = await client.auth.signOut();
+    if (error) throw new Error('No pudimos cerrar la sesión. Inténtalo nuevamente.');
+  }, []);
+
+  const value = useMemo<AppAuthValue>(() => ({
+    isLoaded,
+    isSignedIn: Boolean(session),
+    configurationError: supabaseConfigurationError,
+    session,
+    user: session?.user ?? null,
+    profile,
+    identityName: profile?.display_name,
+    identityEmail: session?.user.email,
+    signIn,
+    signUp,
+    signOut,
+    refreshProfile: () => loadProfile(session?.user ?? null),
+  }), [isLoaded, loadProfile, profile, session, signIn, signOut, signUp]);
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export function useAppAuth() {

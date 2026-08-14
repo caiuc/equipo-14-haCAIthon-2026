@@ -38,11 +38,12 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 
 | ID | Tarea | Estado | Owner | Depende de | Criterio de aceptación / evidencia |
 | --- | --- | --- | --- | --- | --- |
-| RTN-101 | Adaptador Clerk + modo demo | PARCIAL | — | RTN-001 | email/Google productivo configurables; demo explícita; sesión persistente validada |
-| RTN-102 | Proyecto Supabase y tipos generados | PENDIENTE | — | RTN-001 | CLI local, config, tipos y conexión documentados |
-| RTN-103 | Esquema relacional inicial | PENDIENTE | — | RTN-102 | migración reproducible con organizaciones, perfiles, comunidades y acciones |
-| RTN-104 | RLS Clerk y permisos base | PENDIENTE | — | RTN-103 | tests de acceso propio/ajeno/admin |
-| RTN-105 | Seed SQL demo | PENDIENTE | — | RTN-103 | datos ficticios marcados y reproducibles |
+| RTN-101 | Auth propia con Supabase Auth | PARCIAL | — | RTN-001 | Registro/login/logout, sesión persistente y protección listos; typecheck/lint OK. Falta probar contra Supabase local |
+| RTN-102 | Proyecto Supabase y tipos generados | PARCIAL | — | RTN-001 | Config, cliente y tipos escritos; falta ejecutar la conexión local |
+| RTN-103 | Esquema relacional de usuarios y organizaciones | PARCIAL | — | RTN-102 | Migración escrita con perfiles, organizaciones, membresías y solicitudes; falta aplicarla localmente |
+| RTN-104 | RLS y permisos base | PARCIAL | — | RTN-103 | Políticas y funciones owner/admin/member escritas; sin prueba integrada por alcance de showcase |
+| RTN-105 | Seed SQL de desarrollo | PARCIAL | — | RTN-103 | Usuarios de desarrollo, organizaciones, roles y solicitud escritos; falta ejecutar `db reset` |
+| RTN-106 | Perfil y organizaciones funcionales | PARCIAL | — | RTN-101, RTN-104 | UI conectada al repositorio real; typecheck/lint OK. Falta prueba con base local |
 
 ### T2 — Comunidades
 

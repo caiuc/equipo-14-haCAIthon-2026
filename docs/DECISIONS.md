@@ -10,11 +10,11 @@
 
 ## ADR-002 — Clerk + Supabase Postgres
 
-- **Estado:** aceptada como arquitectura objetivo; integración pendiente
+- **Estado:** superada parcialmente por ADR-006 para autenticación
 - **Fecha:** 2026-08-14
 - **Decisión:** Clerk autentica; Supabase aporta Postgres, RLS, Storage y Realtime.
 - **Motivo:** el dominio es relacional y necesita transacciones/ledgers auditables; Supabase admite JWT de Clerk.
-- **Consecuencia:** perfiles de producto se separan de identidades Clerk. Puntos y permisos se calculan en servidor.
+- **Consecuencia:** se conserva Supabase Postgres; la parte de identidad Clerk ya no aplica al MVP actual.
 
 ## ADR-003 — Modo demo detrás de contrato
 
@@ -38,3 +38,11 @@
 - **Fecha:** 2026-08-14
 - **Decisión:** logo y sistema visual se definen con tokens/SVG/componentes.
 - **Motivo:** nitidez y consistencia entre web y Android, sin depender de bitmaps generados.
+
+## ADR-006 — Autenticación propia sobre Supabase Auth
+
+- **Estado:** aceptada
+- **Fecha:** 2026-08-14
+- **Decisión:** usar Supabase Auth con email/contraseña para registro, login, logout y sesión persistente; no ejecutar ni configurar Clerk.
+- **Motivo:** Supabase ya forma parte del stack y resuelve credenciales y sesión sin sumar otro proveedor al showcase.
+- **Consecuencia:** auth, perfiles y organizaciones requieren Supabase; la confirmación de email queda desactivada y no se agregan recuperación, MFA ni login social en esta etapa.
