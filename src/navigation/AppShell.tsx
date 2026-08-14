@@ -17,6 +17,8 @@ const navItems: { label: string; path: '/home' | '/communities' | '/recycle' | '
   { label: 'Perfil', path: '/profile', icon: UserRound },
 ];
 
+const desktopNavItems = navItems.filter((item) => item.path !== '/leaderboards');
+
 export function AppShell({ children }: React.PropsWithChildren) {
   const { width } = useWindowDimensions();
   const desktop = width >= 900;
@@ -38,9 +40,11 @@ function DesktopNav() {
   const router = useRouter();
   return (
     <View style={[styles.desktopNav, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-      <RetornaLogo />
+      <Pressable onPress={() => router.push('/home')} accessibilityRole="link" accessibilityLabel="Ir a Inicio" style={({ pressed }) => [styles.logoLink, pressed && { opacity: 0.72 }]}>
+        <RetornaLogo />
+      </Pressable>
       <View style={styles.desktopLinks}>
-        {navItems.map((item) => {
+        {desktopNavItems.map((item) => {
           const active = pathIsActive(pathname, item.path);
           const Icon = item.icon;
           return (
@@ -100,6 +104,7 @@ const styles = StyleSheet.create({
   root: { flex: 1, flexDirection: 'row' },
   content: { flex: 1, minWidth: 0 },
   desktopNav: { width: 238, borderRightWidth: 1, padding: 24, paddingTop: 28, gap: 36 },
+  logoLink: { alignSelf: 'flex-start' },
   desktopLinks: { gap: 7, flex: 1 },
   desktopLink: { minHeight: 48, borderRadius: radius.md, paddingHorizontal: 14, flexDirection: 'row', alignItems: 'center', gap: 12 },
   pucPill: { borderRadius: radius.lg, padding: spacing.lg, gap: 4 },
