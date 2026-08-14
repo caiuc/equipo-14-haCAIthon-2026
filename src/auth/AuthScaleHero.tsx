@@ -38,5 +38,5 @@ const styles = StyleSheet.create({
   scale: { width: '100%', maxWidth: 590, gap: 1 },
   level: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: spacing.lg },
   word: { fontWeight: '900', letterSpacing: -3.2 },
-  footer: { maxWidth: 390, opacity: 0.72, fontSize: 15 },
+  footer: { maxWidth: 390, fontSize: 15 },
 });
