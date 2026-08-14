@@ -41,6 +41,7 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | RTN-006 | Triage de vulnerabilidades transitivas | PENDIENTE | — | RTN-001 | auditar advisories sin downgrades incompatibles; decisión y mitigación documentadas |
 | RTN-007 | Publicar setup inicial con Gitflow | COMPLETADA | Codex | RTN-001, RTN-002 | `develop` y rama de trabajo publicadas; commits convencionales; draft PR #1 |
 | RTN-008 | Protocolo de reserva de tareas y archivos | COMPLETADA | Codex | RTN-002 | plan PR #2; implementación y liberación del claim en PR #3; lease, write set, heartbeat y conflictos documentados |
+| RTN-009 | Reintegrar `develop` en branch visual | EN CURSO | Codex · [claim](claims/RTN-009.md) | RTN-008 | `origin/develop` integrado; conflictos resueltos preservando ambos historiales; verificaciones y push OK |
 
 ### T1 — Auth y datos
 
