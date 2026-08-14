@@ -1,6 +1,6 @@
 import { CameraView, useCameraPermissions, type BarcodeScanningResult } from 'expo-camera';
-import { Camera, Flashlight, Keyboard, RotateCcw } from 'lucide-react-native';
-import { useCallback, useRef, useState } from 'react';
+import { Camera, Flashlight, Keyboard } from 'lucide-react-native';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, Vibration, View } from 'react-native';
 
 import { AppText, Button } from '@/design/components';
@@ -9,30 +9,35 @@ import { radius, spacing } from '@/design/tokens';
 import { normalizeBarcode } from '@/services/barcode/productLookup';
 
 const BARCODE_TYPES = ['ean13', 'ean8', 'upc_a', 'upc_e'] as const;
+const REPEAT_SCAN_COOLDOWN_MS = 1800;
+const CAPTURE_FLASH_MS = 900;
 
 export function CameraScanner({
-  locked,
   onBarcode,
   onManualFallback,
-  onReset,
 }: {
-  locked?: boolean;
   onBarcode: (barcode: string) => void;
   onManualFallback: () => void;
-  onReset?: () => void;
 }) {
   const { colors } = useTheme();
   const [permission, requestPermission] = useCameraPermissions();
   const [torchEnabled, setTorchEnabled] = useState(false);
+  const [justScanned, setJustScanned] = useState(false);
   const lastScan = useRef<{ barcode: string; at: number } | undefined>(undefined);
+  const flashTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+  useEffect(() => () => clearTimeout(flashTimer.current), []);
 
   const handleBarcodeScanned = useCallback((result: BarcodeScanningResult) => {
     const barcode = normalizeBarcode(result.data);
     if (!barcode) return;
     const now = Date.now();
-    if (lastScan.current?.barcode === barcode && now - lastScan.current.at < 1800) return;
+    if (lastScan.current?.barcode === barcode && now - lastScan.current.at < REPEAT_SCAN_COOLDOWN_MS) return;
     lastScan.current = { barcode, at: now };
     Vibration.vibrate(60);
+    setJustScanned(true);
+    clearTimeout(flashTimer.current);
+    flashTimer.current = setTimeout(() => setJustScanned(false), CAPTURE_FLASH_MS);
     onBarcode(barcode);
   }, [onBarcode]);
 
@@ -69,13 +74,13 @@ export function CameraScanner({
         style={StyleSheet.absoluteFill}
         facing="back"
         enableTorch={torchEnabled}
-        onBarcodeScanned={locked ? undefined : handleBarcodeScanned}
+        onBarcodeScanned={handleBarcodeScanned}
         barcodeScannerSettings={{ barcodeTypes: [...BARCODE_TYPES] }}
       />
       <View style={styles.overlay}>
         <View style={styles.topBar}>
           <View style={[styles.statusPill, { backgroundColor: colors.scrim }]}>
-            <AppText variant="caption" style={{ color: '#FFFFFF' }}>{locked ? 'Código capturado' : 'Busca el código de barras'}</AppText>
+            <AppText variant="caption" style={{ color: '#FFFFFF' }}>{justScanned ? 'Código agregado' : 'Escanea todos los códigos que quieras'}</AppText>
           </View>
           <Pressable
             accessibilityRole="button"
@@ -87,13 +92,12 @@ export function CameraScanner({
           </Pressable>
         </View>
         <View style={styles.frameWrap}>
-          <View style={[styles.frame, { borderColor: locked ? colors.environmental : '#FFFFFF' }]}>
-            <View style={[styles.scanLine, { backgroundColor: locked ? colors.environmental : colors.primary }]} />
+          <View style={[styles.frame, { borderColor: justScanned ? colors.environmental : '#FFFFFF' }]}>
+            <View style={[styles.scanLine, { backgroundColor: justScanned ? colors.environmental : colors.primary }]} />
           </View>
         </View>
         <View style={styles.bottomBar}>
           <Button label="Manual" variant="dark" compact icon={Keyboard} onPress={onManualFallback} />
-          {locked && <Button label="Escanear otro" variant="dark" compact icon={RotateCcw} onPress={onReset} />}
         </View>
       </View>
     </View>

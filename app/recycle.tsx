@@ -1,23 +1,34 @@
 import { useRouter } from 'expo-router';
-import { AlertCircle, CheckCircle2, ChevronRight, Keyboard, Minus, Plus, ScanBarcode, Search, UsersRound } from 'lucide-react-native';
+import { AlertCircle, CheckCircle2, ChevronRight, Keyboard, Minus, PackageSearch, Plus, ScanBarcode, Search, Trash2, UsersRound } from 'lucide-react-native';
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, Modal, Pressable, StyleSheet, TextInput, useWindowDimensions, View } from 'react-native';
+import { ActivityIndicator, Image, Modal, Pressable, StyleSheet, TextInput, useWindowDimensions, View } from 'react-native';
 
 import { useRetornaStore } from '@/data/store';
-import { AppText, Button, Card, EmptyState, ScreenScroll, SegmentedControl } from '@/design/components';
+import { AppText, Button, Card, EmptyState, Pill, ScreenScroll, SegmentedControl } from '@/design/components';
 import { useTheme } from '@/design/theme';
 import { radius, spacing } from '@/design/tokens';
 import { calculateActionImpact, formatNumber } from '@/domain/rules';
-import type { RecyclingAction } from '@/domain/types';
+import type { RecyclingCategory } from '@/domain/types';
 import { CameraScanner } from '@/features/recycling/CameraScanner';
 import { CategorySelector } from '@/features/recycling/CategorySelector';
-import { ImpactPreview } from '@/features/recycling/ImpactPreview';
-import { ProductCard } from '@/features/recycling/ProductCard';
 import { createProductLookupProvider, normalizeBarcode, type ScannedProduct } from '@/services/barcode/productLookup';
 import { AppShell } from '@/navigation/AppShell';
 
 type RecycleMode = 'scanner' | 'manual';
 type LookupStatus = 'idle' | 'loading' | 'found' | 'not_found' | 'invalid' | 'error';
+
+interface CartItem {
+  id: string;
+  barcode?: string;
+  product?: ScannedProduct;
+  categoryId: string;
+  quantity: number;
+}
+
+interface SubmitSummary {
+  points: number;
+  itemCount: number;
+}
 
 export default function RecycleRoute() {
   const router = useRouter();
@@ -32,39 +43,53 @@ export default function RecycleRoute() {
   const [mode, setMode] = useState<RecycleMode>('scanner');
   const [selectedCategoryId, setSelectedCategoryId] = useState(firstCategoryId);
   const [selectedCommunityId, setSelectedCommunityId] = useState('');
-  const [quantity, setQuantity] = useState(1);
   const [note, setNote] = useState('');
   const [manualBarcode, setManualBarcode] = useState('');
-  const [activeBarcode, setActiveBarcode] = useState<string>();
   const [lookupStatus, setLookupStatus] = useState<LookupStatus>('idle');
   const [lookupMessage, setLookupMessage] = useState<string>();
-  const [product, setProduct] = useState<ScannedProduct>();
+  const [items, setItems] = useState<CartItem[]>([]);
   const [submitError, setSubmitError] = useState<string>();
-  const [successAction, setSuccessAction] = useState<RecyclingAction>();
+  const [successSummary, setSuccessSummary] = useState<SubmitSummary>();
 
   const selectedCategory = state.categories.find((item) => item.id === selectedCategoryId) ?? state.categories[0];
   const selectedCategoryEffectiveId = selectedCategory?.id;
   const preferredCommunity = joinedCommunities.find((item) => item.id === state.lastCommunityId) ?? joinedCommunities[0];
   const selectedCommunity = joinedCommunities.find((item) => item.id === selectedCommunityId) ?? preferredCommunity;
-  const submitImpact = selectedCategory ? calculateActionImpact(selectedCategory, quantity) : undefined;
-  const canSubmit = Boolean(hydrated && selectedCategory && selectedCommunity && quantity >= 1 && quantity <= 50);
+  const categoryById = useMemo(() => new Map(state.categories.map((category) => [category.id, category])), [state.categories]);
+  const totals = useMemo(() => items.reduce((acc, item) => {
+    const category = categoryById.get(item.categoryId);
+    if (!category) return acc;
+    const impact = calculateActionImpact(category, item.quantity);
+    return {
+      points: acc.points + impact.points,
+      kg: acc.kg + impact.estimatedKg,
+      co2: acc.co2 + impact.estimatedCo2Kg,
+      quantity: acc.quantity + item.quantity,
+    };
+  }, { points: 0, kg: 0, co2: 0, quantity: 0 }), [items, categoryById]);
+  const canSubmit = Boolean(hydrated && selectedCommunity && items.length > 0 && items.every((item) => item.quantity >= 1 && item.quantity <= 50));
 
-  const resetProduct = useCallback(() => {
-    lookupRequestId.current += 1;
-    setActiveBarcode(undefined);
-    setLookupStatus('idle');
-    setLookupMessage(undefined);
-    setProduct(undefined);
-    setManualBarcode('');
-  }, []);
+  const addScannedItem = useCallback((product: ScannedProduct) => {
+    const categoryId = product.categoryId && categoryById.has(product.categoryId) ? product.categoryId : firstCategoryId;
+    setItems((current) => {
+      const existing = current.find((item) => item.barcode === product.barcode);
+      if (existing) {
+        return current.map((item) => (item.barcode === product.barcode ? { ...item, quantity: Math.min(50, item.quantity + 1) } : item));
+      }
+      return [...current, { id: product.barcode, barcode: product.barcode, product, categoryId, quantity: 1 }];
+    });
+  }, [categoryById, firstCategoryId]);
+
+  const addManualItem = useCallback(() => {
+    if (!selectedCategory) return;
+    setItems((current) => [...current, { id: `manual-${Date.now()}`, categoryId: selectedCategory.id, quantity: 1 }]);
+  }, [selectedCategory]);
 
   const lookupBarcode = useCallback(async (input: string) => {
     const barcode = normalizeBarcode(input);
     setSubmitError(undefined);
-    setProduct(undefined);
 
     if (!barcode) {
-      setActiveBarcode(undefined);
       setLookupStatus('invalid');
       setLookupMessage('Ingresa un código EAN o UPC válido.');
       return;
@@ -72,7 +97,6 @@ export default function RecycleRoute() {
 
     const requestId = lookupRequestId.current + 1;
     lookupRequestId.current = requestId;
-    setActiveBarcode(barcode);
     setLookupStatus('loading');
     setLookupMessage(undefined);
 
@@ -81,53 +105,47 @@ export default function RecycleRoute() {
 
     if (result.status === 'found') {
       setLookupStatus('found');
-      setProduct(result.product);
-      setLookupMessage(undefined);
-      setManualBarcode(result.product.barcode);
-      if (result.product.categoryId && state.categories.some((category) => category.id === result.product.categoryId)) {
-        setSelectedCategoryId(result.product.categoryId);
-      }
+      setLookupMessage(`Agregado: ${result.product.name}`);
+      addScannedItem(result.product);
+      setManualBarcode('');
       return;
     }
 
-    setProduct(undefined);
     setLookupStatus(result.status);
     setLookupMessage(result.message);
-    setManualBarcode(barcode);
-  }, [lookupProvider, state.categories]);
+  }, [lookupProvider, addScannedItem]);
 
-  const updateQuantity = (delta: number) => {
-    setQuantity((current) => Math.max(1, Math.min(50, current + delta)));
+  const updateItemQuantity = (id: string, delta: number) => {
+    setItems((current) => current.map((item) => (item.id === id ? { ...item, quantity: Math.max(1, Math.min(50, item.quantity + delta)) } : item)));
   };
 
-  const updateManualBarcode = (value: string) => {
-    setManualBarcode(value);
-    if (activeBarcode && normalizeBarcode(value) !== activeBarcode) {
-      lookupRequestId.current += 1;
-      setActiveBarcode(undefined);
-      setLookupStatus('idle');
-      setLookupMessage(undefined);
-      setProduct(undefined);
-    }
+  const removeItem = (id: string) => {
+    setItems((current) => current.filter((item) => item.id !== id));
   };
 
   const submit = () => {
     setSubmitError(undefined);
-    if (!selectedCategory || !selectedCommunity) {
-      setSubmitError('Selecciona una categoría y una comunidad receptora.');
+    if (!selectedCommunity || !items.length) {
+      setSubmitError('Escanea o agrega al menos un material y elige una comunidad receptora.');
       return;
     }
 
     try {
-      const recorded = recordRecycling({
-        categoryId: selectedCategory.id,
-        communityId: selectedCommunity.id,
-        quantity,
-        note: note.trim() || undefined,
-        source: activeBarcode ? 'barcode' : 'manual',
-        barcode: activeBarcode,
-      });
-      setSuccessAction(recorded);
+      let totalPoints = 0;
+      for (const item of items) {
+        const category = categoryById.get(item.categoryId);
+        if (!category) continue;
+        const recorded = recordRecycling({
+          categoryId: category.id,
+          communityId: selectedCommunity.id,
+          quantity: item.quantity,
+          note: note.trim() || undefined,
+          source: item.barcode ? 'barcode' : 'manual',
+          barcode: item.barcode,
+        });
+        totalPoints += recorded.points;
+      }
+      setSuccessSummary({ points: totalPoints, itemCount: items.length });
       setNote('');
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : 'No pudimos registrar el reciclaje.');
@@ -196,10 +214,8 @@ export default function RecycleRoute() {
               />
               {mode === 'scanner' ? (
                 <CameraScanner
-                  locked={lookupStatus === 'loading' || Boolean(activeBarcode && lookupStatus !== 'invalid')}
-                  onBarcode={lookupBarcode}
+                  onBarcode={(barcode) => void lookupBarcode(barcode)}
                   onManualFallback={() => setMode('manual')}
-                  onReset={resetProduct}
                 />
               ) : (
                 <View style={[styles.manualPanel, { backgroundColor: colors.surfaceMuted }]}>
@@ -216,7 +232,7 @@ export default function RecycleRoute() {
               <View style={styles.barcodeSearch}>
                 <TextInput
                   value={manualBarcode}
-                  onChangeText={updateManualBarcode}
+                  onChangeText={setManualBarcode}
                   keyboardType="number-pad"
                   placeholder="Código de barras opcional"
                   placeholderTextColor={colors.textMuted}
@@ -237,14 +253,36 @@ export default function RecycleRoute() {
               {lookupMessage && <LookupNotice tone={lookupStatus === 'error' || lookupStatus === 'invalid' ? 'danger' : 'neutral'} message={lookupMessage} />}
             </Card>
 
-            {product && <ProductCard product={product} category={selectedCategory} onClear={resetProduct} />}
-
             <Card style={styles.sectionCard}>
               <View style={styles.sectionTitle}>
                 <ScanBarcode size={20} color={colors.primary} />
-                <AppText variant="h2">Categoría</AppText>
+                <AppText variant="h2">Material para agregar manualmente</AppText>
               </View>
               <CategorySelector categories={state.categories} selectedId={selectedCategoryEffectiveId} onSelect={setSelectedCategoryId} />
+              <Button label="Agregar a la lista" icon={Plus} variant="secondary" onPress={addManualItem} disabled={!selectedCategory} />
+            </Card>
+
+            <Card style={styles.sectionCard}>
+              <View style={styles.sectionTitle}>
+                <PackageSearch size={20} color={colors.primary} />
+                <AppText variant="h2">Materiales escaneados ({items.length})</AppText>
+              </View>
+              {items.length ? (
+                <View style={{ gap: spacing.md }}>
+                  {items.map((item) => (
+                    <CartRow
+                      key={item.id}
+                      item={item}
+                      category={categoryById.get(item.categoryId)}
+                      onIncrement={() => updateItemQuantity(item.id, 1)}
+                      onDecrement={() => updateItemQuantity(item.id, -1)}
+                      onRemove={() => removeItem(item.id)}
+                    />
+                  ))}
+                </View>
+              ) : (
+                <AppText style={{ color: colors.textMuted }}>Escanea o agrega materiales para verlos aquí.</AppText>
+              )}
             </Card>
           </View>
 
@@ -289,33 +327,22 @@ export default function RecycleRoute() {
             <Card style={styles.sectionCard}>
               <View style={styles.sectionTitle}>
                 <Plus size={20} color={colors.primary} />
-                <AppText variant="h2">Cantidad</AppText>
+                <AppText variant="h2">Resumen</AppText>
               </View>
-              <View style={styles.quantityRow}>
-                <Pressable
-                  accessibilityRole="button"
-                  accessibilityLabel="Disminuir cantidad"
-                  onPress={() => updateQuantity(-1)}
-                  disabled={quantity <= 1}
-                  style={({ pressed }) => [styles.stepButton, { backgroundColor: colors.surfaceMuted, opacity: quantity <= 1 ? 0.45 : pressed ? 0.75 : 1 }]}
-                >
-                  <Minus size={22} color={colors.text} />
-                </Pressable>
-                <View style={[styles.quantityValue, { borderColor: colors.border }]}>
-                  <AppText variant="display">{quantity}</AppText>
+              <View style={[styles.summaryRow, { borderColor: colors.border, backgroundColor: colors.surfaceMuted }]}>
+                <View style={styles.summaryMetric}>
+                  <AppText variant="display">{items.length}</AppText>
+                  <AppText variant="caption" style={{ color: colors.textMuted }}>materiales</AppText>
+                </View>
+                <View style={styles.summaryMetric}>
+                  <AppText variant="display">{totals.quantity}</AppText>
                   <AppText variant="caption" style={{ color: colors.textMuted }}>unidades</AppText>
                 </View>
-                <Pressable
-                  accessibilityRole="button"
-                  accessibilityLabel="Aumentar cantidad"
-                  onPress={() => updateQuantity(1)}
-                  disabled={quantity >= 50}
-                  style={({ pressed }) => [styles.stepButton, { backgroundColor: colors.surfaceMuted, opacity: quantity >= 50 ? 0.45 : pressed ? 0.75 : 1 }]}
-                >
-                  <Plus size={22} color={colors.text} />
-                </Pressable>
+                <View style={styles.summaryMetric}>
+                  <AppText variant="display" style={{ color: colors.environmental }}>+{formatNumber(totals.points)}</AppText>
+                  <AppText variant="caption" style={{ color: colors.textMuted }}>puntos</AppText>
+                </View>
               </View>
-              <ImpactPreview category={selectedCategory} quantity={quantity} />
               <TextInput
                 value={note}
                 onChangeText={setNote}
@@ -328,7 +355,7 @@ export default function RecycleRoute() {
               />
               {submitError && <LookupNotice tone="danger" message={submitError} />}
               <Button
-                label={submitImpact ? `Confirmar +${formatNumber(submitImpact.points)} pts` : 'Confirmar reciclaje'}
+                label={items.length ? `Confirmar +${formatNumber(totals.points)} pts` : 'Confirmar reciclaje'}
                 icon={CheckCircle2}
                 onPress={submit}
                 disabled={!canSubmit}
@@ -338,17 +365,83 @@ export default function RecycleRoute() {
         </View>
       </ScreenScroll>
       <SuccessModal
-        action={successAction}
+        summary={successSummary}
         communityName={selectedCommunity?.name}
-        onClose={() => setSuccessAction(undefined)}
+        onClose={() => setSuccessSummary(undefined)}
         onReset={() => {
-          setSuccessAction(undefined);
-          resetProduct();
-          setQuantity(1);
+          setSuccessSummary(undefined);
+          setItems([]);
           setMode('scanner');
         }}
       />
     </AppShell>
+  );
+}
+
+function CartRow({
+  item,
+  category,
+  onIncrement,
+  onDecrement,
+  onRemove,
+}: {
+  item: CartItem;
+  category?: RecyclingCategory;
+  onIncrement: () => void;
+  onDecrement: () => void;
+  onRemove: () => void;
+}) {
+  const { colors } = useTheme();
+  const impact = category ? calculateActionImpact(category, item.quantity) : undefined;
+  return (
+    <View style={[styles.cartRow, { borderColor: colors.border, backgroundColor: colors.surface }]}>
+      {item.product?.imageUrl ? (
+        <Image source={{ uri: item.product.imageUrl }} style={[styles.cartImage, { backgroundColor: colors.surfaceMuted }]} resizeMode="cover" />
+      ) : (
+        <View style={[styles.cartImage, styles.cartImageFallback, { backgroundColor: colors.surfaceMuted }]}>
+          <PackageSearch size={22} color={colors.textMuted} />
+        </View>
+      )}
+      <View style={{ flex: 1, minWidth: 0, gap: 3 }}>
+        <AppText variant="bodyStrong" numberOfLines={1}>{item.product?.name ?? category?.name ?? 'Material'}</AppText>
+        <View style={styles.pills}>
+          {category && <Pill label={category.shortName} tone="positive" />}
+          {item.barcode && <Pill label={item.barcode} tone="neutral" />}
+        </View>
+        {impact && <AppText variant="caption" style={{ color: colors.textMuted }}>+{formatNumber(impact.points)} pts · {formatNumber(impact.estimatedKg, 2)} kg</AppText>}
+      </View>
+      <View style={styles.cartActions}>
+        <View style={styles.cartStepper}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Disminuir cantidad"
+            onPress={onDecrement}
+            disabled={item.quantity <= 1}
+            style={({ pressed }) => [styles.cartStepButton, { backgroundColor: colors.surfaceMuted, opacity: item.quantity <= 1 ? 0.45 : pressed ? 0.75 : 1 }]}
+          >
+            <Minus size={16} color={colors.text} />
+          </Pressable>
+          <AppText variant="bodyStrong" style={styles.cartQuantity}>{item.quantity}</AppText>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Aumentar cantidad"
+            onPress={onIncrement}
+            disabled={item.quantity >= 50}
+            style={({ pressed }) => [styles.cartStepButton, { backgroundColor: colors.surfaceMuted, opacity: item.quantity >= 50 ? 0.45 : pressed ? 0.75 : 1 }]}
+          >
+            <Plus size={16} color={colors.text} />
+          </Pressable>
+        </View>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Quitar material"
+          onPress={onRemove}
+          style={({ pressed }) => [styles.cartRemove, { backgroundColor: colors.surfaceMuted, opacity: pressed ? 0.7 : 1 }]}
+        >
+          <Trash2 size={16} color={colors.danger} />
+        </Pressable>
+      </View>
+    </View>
   );
 }
 
@@ -364,18 +457,18 @@ function LookupNotice({ message, tone }: { message: string; tone: 'neutral' | 'd
 }
 
 function SuccessModal({
-  action,
+  summary,
   communityName,
   onClose,
   onReset,
 }: {
-  action?: RecyclingAction;
+  summary?: SubmitSummary;
   communityName?: string;
   onClose: () => void;
   onReset: () => void;
 }) {
   const { colors } = useTheme();
-  if (!action) return null;
+  if (!summary) return null;
   return (
     <Modal transparent visible animationType="fade" onRequestClose={onClose}>
       <View style={[styles.modalBackdrop, { backgroundColor: colors.scrim }]}>
@@ -385,10 +478,10 @@ function SuccessModal({
           </View>
           <AppText variant="h1" style={{ textAlign: 'center' }}>Reciclaje registrado</AppText>
           <AppText style={{ color: colors.textMuted, textAlign: 'center' }}>
-            Sumaste {formatNumber(action.points)} puntos a {communityName ?? 'tu comunidad'} con {action.quantity} {action.quantity === 1 ? 'unidad' : 'unidades'}.
+            Sumaste {formatNumber(summary.points)} puntos a {communityName ?? 'tu comunidad'} con {summary.itemCount} {summary.itemCount === 1 ? 'material' : 'materiales'}.
           </AppText>
           <View style={styles.modalActions}>
-            <Button label="Registrar otro" icon={Plus} onPress={onReset} />
+            <Button label="Registrar más" icon={Plus} onPress={onReset} />
             <Button label="Listo" variant="secondary" onPress={onClose} />
           </View>
         </Card>
@@ -520,24 +613,63 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  quantityRow: {
+  summaryRow: {
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    borderWidth: 1,
+    borderRadius: radius.lg,
+    padding: spacing.lg,
     gap: spacing.md,
   },
-  stepButton: {
+  summaryMetric: {
+    flex: 1,
+    gap: 3,
+  },
+  cartRow: {
+    flexDirection: 'row',
+    gap: spacing.md,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: radius.md,
+    padding: spacing.md,
+  },
+  cartImage: {
     width: 54,
     height: 54,
-    borderRadius: 18,
+    borderRadius: radius.md,
+  },
+  cartImageFallback: {
     alignItems: 'center',
     justifyContent: 'center',
   },
-  quantityValue: {
-    flex: 1,
-    minHeight: 94,
-    borderRadius: radius.lg,
-    borderWidth: 1,
+  pills: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing.sm,
+  },
+  cartActions: {
+    alignItems: 'center',
+    gap: spacing.sm,
+  },
+  cartStepper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+  },
+  cartStepButton: {
+    width: 30,
+    height: 30,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cartQuantity: {
+    minWidth: 20,
+    textAlign: 'center',
+  },
+  cartRemove: {
+    width: 30,
+    height: 30,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
   },
