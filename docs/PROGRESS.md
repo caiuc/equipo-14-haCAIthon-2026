@@ -40,6 +40,9 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 - Rama de integración `develop` y rama `chore/RTN-001-initial-setup` publicadas.
 - Setup inicial fusionado en `develop`: `https://github.com/caiuc/equipo-14-haCAIthon-2026/pull/1`.
 - Protocolo de task leases: plan remoto, write set, heartbeat, expiración, takeover y liberación documentados en [`claims/README.md`](claims/README.md).
+- Proyecto Supabase remoto `retorna` creado (`bhjplveltcqocbhfmbhn`, sa-east-1) y migración de usuarios/organizaciones aplicada; trigger `handle_new_user` verificado con una inserción SQL directa.
+- Fix de SSR en `src/data/supabase.ts` (el export estático fallaba con `window is not defined` al pre-renderizar rutas en Node) y `public/vercel.json` con `cleanUrls`/rewrites para que las rutas dinámicas no devuelvan 404 en Vercel.
+- Deploy de producción publicado en Vercel: `https://dist-five-pearl-95.vercel.app` (proyecto `retorna`, cuenta personal `benjamintaito-7391`).
 
 “Completado” aquí significa que el artefacto fue escrito; las capacidades marcadas `EN CURSO` en `TASKS.md` aún requieren aceptación/verificación antes de considerarse listas.
 
@@ -72,6 +75,7 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 3. Las rutas pendientes existen como placeholders intencionales, pero sus capacidades aún no están implementadas.
 4. Los totales base en fixtures sirven para demo visual; no representan el ledger productivo futuro.
 5. No hubo verificación visual en Android ni auditoría de accesibilidad/Lighthouse.
+6. El proyecto Supabase Cloud exige confirmación de correo por defecto (a diferencia de `supabase/config.toml`, que sólo aplica a `supabase start` local); no hay herramienta MCP para cambiar la config de Auth. Falta desactivar manualmente "Confirm email" en `https://supabase.com/dashboard/project/bhjplveltcqocbhfmbhn/auth/providers` antes de que el registro real funcione end-to-end en producción.
 
 ## Próximo paso recomendado
 
@@ -125,3 +129,4 @@ Ejecutado el 2026-08-14:
 | 2026-08-14 | Codex | RTN-505 | Eliminó placas/radios/sombras, liberó el logo, reconstruyó login y registro con escala Tú→Planeta y agregó acceso seed sin Supabase | Typecheck, lint, 5 tests y diff-check OK; revisión visual local queda a cargo del usuario |
 | 2026-08-14 | Codex | RTN-506 | Redujo la UI a blanco/negro/lima y convirtió Home en una columna con CTA de reciclaje primero | Typecheck, lint, 5 tests y diff-check OK; revisión visual local queda a cargo del usuario |
 | 2026-08-14 | Codex | RTN-507 | Amplió el logo Retorna y agregó “El cambio empieza contigo” sobre el hero Tú→Planeta | Typecheck, lint y diff-check OK |
+| 2026-08-14 | Claude | RTN-806 | Creó el proyecto Supabase remoto y aplicó la migración; corrigió el SSR de `src/data/supabase.ts` y agregó `public/vercel.json`; desplegó producción en Vercel | Typecheck, lint, 5 tests, `web:export` y verificación en navegador (sin 404, sin errores de consola) OK; registro real bloqueado por confirmación de correo del proyecto Supabase Cloud, ver bloqueo 6 |
