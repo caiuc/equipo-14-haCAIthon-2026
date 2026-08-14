@@ -69,7 +69,7 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 | ID | Tarea | Estado | Owner | Depende de | Criterio de aceptación / evidencia |
 | --- | --- | --- | --- | --- | --- |
 | RTN-301 | Catálogo y reglas de puntos | PARCIAL | — | RTN-001 | cálculo puro documentado y testeado |
-| RTN-302 | Flujo manual de reciclaje | RESERVADA | Codex · [claim](claims/RTN-302.md) | RTN-204, RTN-301 | categoría, cantidad, una comunidad, preview y confirmación |
+| RTN-302 | Flujo manual de reciclaje | EN CURSO | Codex · [claim](claims/RTN-302.md) | RTN-204, RTN-301 | categoría, cantidad, una comunidad, preview y confirmación |
 | RTN-303 | RPC transaccional + ledgers | PENDIENTE | — | RTN-103, RTN-301 | cliente no controla puntos; ambos ledgers atómicos |
 | RTN-304 | Historial y detalle | PENDIENTE | — | RTN-303 | filtros y detalle auditables |
 | RTN-305 | Editar/eliminar con reversión | PENDIENTE | — | RTN-303 | user/community/misiones/rankings consistentes tras mutación |
@@ -114,9 +114,9 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 
 | ID | Tarea | Estado | Owner | Depende de | Criterio de aceptación / evidencia |
 | --- | --- | --- | --- | --- | --- |
-| RTN-701 | Contrato `ProductLookupProvider` | RESERVADA | Codex · [claim](claims/RTN-302.md) | RTN-302 | proveedor reemplazable + fallback manual |
-| RTN-702 | Adaptador Open Food Facts | RESERVADA | Codex · [claim](claims/RTN-302.md) | RTN-701 | fields mínimos, User-Agent y errores tratados |
-| RTN-703 | Scanner Expo Camera | RESERVADA | Codex · [claim](claims/RTN-302.md) | RTN-701 | permisos, web/Android y barcode único |
+| RTN-701 | Contrato `ProductLookupProvider` | EN CURSO | Codex · [claim](claims/RTN-302.md) | RTN-302 | proveedor reemplazable + fallback manual |
+| RTN-702 | Adaptador Open Food Facts | EN CURSO | Codex · [claim](claims/RTN-302.md) | RTN-701 | fields mínimos, User-Agent y errores tratados |
+| RTN-703 | Scanner Expo Camera | EN CURSO | Codex · [claim](claims/RTN-302.md) | RTN-701 | permisos, web/Android y barcode único |
 | RTN-704 | Reglas estructuradas Chile | PENDIENTE | — | RTN-103 | incertidumbre, limpieza y manejo especial modelados |
 
 ### T8 — Calidad, PWA y deploy
