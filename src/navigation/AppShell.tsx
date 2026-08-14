@@ -2,7 +2,7 @@ import { Home, Recycle, Trophy, UserRound, UsersRound } from 'lucide-react-nativ
 import type { LucideIcon } from 'lucide-react-native';
 import { usePathname, useRouter } from 'expo-router';
 import React from 'react';
-import { Platform, Pressable, SafeAreaView, StyleSheet, useWindowDimensions, View, type ViewStyle } from 'react-native';
+import { Platform, Pressable, SafeAreaView, StyleSheet, useWindowDimensions, View } from 'react-native';
 
 import { AppText } from '@/design/components';
 import { RetornaLogo, RetornaMark } from '@/design/Logo';
@@ -64,7 +64,7 @@ function MobileNav() {
   const pathname = usePathname();
   const router = useRouter();
   return (
-    <View style={[styles.mobileNav, { backgroundColor: colors.surface, borderColor: colors.border, shadowColor: '#000000' }]}>
+    <View style={[styles.mobileNav, { backgroundColor: colors.surface, borderColor: colors.border }]}>
       {navItems.map((item) => {
         const active = pathIsActive(pathname, item.path);
         const Icon = item.icon;
@@ -106,7 +106,6 @@ const styles = StyleSheet.create({
   mobileNav: {
     position: 'absolute', left: 0, right: 0, bottom: 0, height: 78, borderTopWidth: 1,
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', paddingBottom: Platform.OS === 'ios' ? 12 : 5,
-    ...Platform.select({ ios: { shadowOpacity: 0.12, shadowRadius: 18, shadowOffset: { width: 0, height: -4 } }, android: { elevation: 16 }, web: { boxShadow: '0 -10px 30px rgba(36,72,39,.10)' } as ViewStyle }),
   },
   mobileLink: { flex: 1, height: 58, minWidth: 54, alignItems: 'center', justifyContent: 'center', gap: 4 },
   primaryMobileLink: { marginTop: -23 },

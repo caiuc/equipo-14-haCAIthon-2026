@@ -31,7 +31,7 @@ import { useTheme } from './theme';
 type TextVariant = 'logo' | 'display' | 'h1' | 'h2' | 'h3' | 'body' | 'bodyStrong' | 'caption' | 'eyebrow' | 'metric';
 
 const textVariants: Record<TextVariant, TextStyle> = {
-  logo: { fontSize: 25, lineHeight: 28, fontWeight: '900', letterSpacing: -1.2 },
+  logo: { fontSize: 32, lineHeight: 36, fontWeight: '900', letterSpacing: -1.5 },
   display: { fontSize: 38, lineHeight: 41, fontWeight: '900', letterSpacing: -1.7 },
   h1: { fontSize: 30, lineHeight: 34, fontWeight: '900', letterSpacing: -1.1 },
   h2: { fontSize: 22, lineHeight: 27, fontWeight: '800', letterSpacing: -0.5 },
