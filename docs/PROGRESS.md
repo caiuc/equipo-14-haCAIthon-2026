@@ -130,6 +130,9 @@ Ejecutado el 2026-08-14:
 | Servir `dist/` y verificar HTML (RTN-802/803) | OK; `<link rel="manifest">`, `<meta name="theme-color">` y registro de `/sw.js` presentes; `sw.js`/`manifest.json`/`offline.html` responden 200 |
 | Lighthouse sobre `dist/` servido (RTN-802/803) | performance 0.53, accessibility 0.95, best-practices 1.0; categoría PWA no existe en Lighthouse ≥10, instalabilidad verificada a mano |
 | `git diff --check` (RTN-802/803) | OK |
+| `npm run typecheck` (post-merge RTN-302 + `origin/develop`) | OK |
+| `npm run lint` (post-merge RTN-302 + `origin/develop`) | OK, sin warnings |
+| `npm test` (post-merge RTN-302 + `origin/develop`) | OK; 10/10 tests |
 
 ## Registro de cambios de agentes
 
@@ -148,3 +151,4 @@ Ejecutado el 2026-08-14:
 | 2026-08-14 | Codex | RTN-507 | Amplió el logo Retorna y agregó “El cambio empieza contigo” sobre el hero Tú→Planeta | Typecheck, lint y diff-check OK |
 | 2026-08-14 | Codex | RTN-509 | Quitó el marco exterior del acceso y sumó una landing vertical responsive con explicación del flujo, capacidades y CTA demo | Typecheck, lint, 5 tests y diff-check OK; revisión visual local queda a cargo del usuario |
 | 2026-08-14 | Claude | RTN-802, RTN-803 | Agregó service worker/offline shell (`app/+html.tsx`, `public/sw.js`), corrigió esquema `app.json`, completó `eas.json` para build reproducible y conectó el proyecto EAS real (`@jupster/retorna-uc`); publicó plan en draft PR #7 y cerró en el mismo PR | expo-doctor 21/21, typecheck, lint, 5/5 tests, web:export, export servido y verificado, Lighthouse ejecutado; `eas build --platform android --profile preview` en curso; claim liberado |
+| 2026-08-14 | Codex | RTN-302/701/702/703 | Sincronizó `origin/develop` tras PR #6, resolvió `docs/PROGRESS.md` y replanificó el trabajo restante | Typecheck, lint y 10 tests OK; merge commit local aún no pusheado |
