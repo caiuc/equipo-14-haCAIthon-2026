@@ -2,7 +2,7 @@
 
 > **Obligatorio:** todo agente que cambie el repositorio debe actualizar este archivo en el mismo cambio. Ver [`../AGENTS.md`](../AGENTS.md).
 
-Última actualización: **2026-08-14 15:11 America/Santiago — Codex**
+Última actualización: **2026-08-14 15:34 America/Santiago — Claude**
 
 ## Resumen ejecutivo
 
@@ -10,7 +10,9 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 
 ## Trabajo activo
 
-No hay claims activos. Antes de implementar una tarea, reservarla mediante el protocolo de [`claims/README.md`](claims/README.md).
+| ID | Owner | Rama | Claim | Lease | Write set |
+| --- | --- | --- | --- | --- | --- |
+| RTN-802/803 | Claude | `feat/RTN-802-pwa-android-shell` | [`docs/claims/RTN-802.md`](claims/RTN-802.md) | 2026-08-15T03:34:24Z | `app.json`, `eas.json`, `app/+html.tsx`, `public/sw.js`, `public/manifest.json` |
 
 ## Completado
 
