@@ -110,6 +110,6 @@ const styles = StyleSheet.create({
   },
   mobileLink: { flex: 1, height: 58, minWidth: 54, alignItems: 'center', justifyContent: 'center', gap: 4 },
   primaryMobileLink: { marginTop: -23 },
-  recycleButton: { width: 53, height: 53, borderRadius: 19, alignItems: 'center', justifyContent: 'center' },
+  recycleButton: { width: 53, height: 53, alignItems: 'center', justifyContent: 'center' },
   publicHeader: { height: 72, borderBottomWidth: 1, flexDirection: 'row', alignItems: 'center', paddingHorizontal: spacing.xl, gap: 9 },
 });

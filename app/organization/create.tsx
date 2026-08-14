@@ -63,12 +63,12 @@ function Field({ label, children }: React.PropsWithChildren<{ label: string }>) 
 const styles = StyleSheet.create({
   screen: { maxWidth: 720, width: '100%', alignSelf: 'center', paddingTop: 20 },
   header: { flexDirection: 'row', alignItems: 'center', gap: spacing.lg },
-  back: { width: 44, height: 44, borderRadius: 15, alignItems: 'center', justifyContent: 'center' },
+  back: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
   form: { gap: spacing.xl },
   field: { gap: spacing.sm },
   input: { borderWidth: 1, minHeight: 52, borderRadius: radius.md, paddingHorizontal: spacing.lg, fontSize: 16, outlineStyle: 'none' } as never,
   multiline: { minHeight: 112, paddingTop: spacing.md, textAlignVertical: 'top' },
   identity: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, borderRadius: radius.md, padding: spacing.md },
-  accent: { width: 46, height: 46, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
+  accent: { width: 46, height: 46, alignItems: 'center', justifyContent: 'center' },
   message: { borderRadius: radius.md, padding: spacing.md },
 });

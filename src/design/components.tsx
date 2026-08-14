@@ -13,7 +13,6 @@ import {
 import React from 'react';
 import {
   ActivityIndicator,
-  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -50,7 +49,7 @@ export function AppText({ variant = 'body', style, ...props }: TextProps & { var
 }
 
 export function Card({ style, children, ...props }: ViewProps) {
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
   return (
     <View
       {...props}
@@ -59,7 +58,6 @@ export function Card({ style, children, ...props }: ViewProps) {
         {
           backgroundColor: colors.surface,
           borderColor: colors.border,
-          shadowColor: isDark ? '#000000' : '#244827',
         },
         style,
       ]}
@@ -142,7 +140,7 @@ export function CommunityAvatar({ initials, color, size = 48 }: { initials: stri
   const { colors } = useTheme();
   void color;
   return (
-    <View style={[styles.communityAvatar, { width: size, height: size, borderRadius: Math.round(size * 0.32), backgroundColor: colors.primary }]}>
+    <View style={[styles.communityAvatar, { width: size, height: size, borderRadius: size / 2, backgroundColor: colors.primary }]}>
       <AppText variant={size > 52 ? 'h3' : 'caption'} style={{ color: '#17351B', fontWeight: '900' }}>{initials}</AppText>
     </View>
   );
@@ -199,7 +197,7 @@ export function EmptyState({ title, detail, icon: Icon = Sparkles, action }: { t
   const { colors } = useTheme();
   return (
     <Card style={styles.emptyState}>
-      <View style={[styles.emptyIcon, { backgroundColor: colors.environmentalSoft }]}><Icon color={colors.environmental} size={25} /></View>
+      <View style={styles.emptyIcon}><Icon color={colors.environmental} size={32} /></View>
       <AppText variant="h3" style={{ textAlign: 'center' }}>{title}</AppText>
       <AppText style={{ color: colors.textMuted, textAlign: 'center', maxWidth: 380 }}>{detail}</AppText>
       {action}
@@ -224,7 +222,7 @@ export function CategoryBadge({ category, selected = false, onPress }: { categor
   const Icon = categoryIcons[category.icon];
   return (
     <Pressable onPress={onPress} accessibilityRole={onPress ? 'button' : undefined} accessibilityState={{ selected }} style={[styles.categoryBadge, { borderColor: selected ? colors.primary : colors.border, backgroundColor: selected ? colors.environmentalSoft : colors.surface }]}>
-      <View style={[styles.categoryIcon, { backgroundColor: colors.environmentalSoft }]}><Icon size={22} color={colors.primary} strokeWidth={2.2} /></View>
+      <View style={styles.categoryIcon}><Icon size={28} color={colors.primary} strokeWidth={2.2} /></View>
       <AppText variant="caption" numberOfLines={2} style={{ textAlign: 'center', color: selected ? colors.text : colors.textMuted }}>{category.shortName}</AppText>
     </Pressable>
   );
@@ -235,11 +233,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: radius.lg,
     padding: spacing.xl,
-    ...Platform.select({
-      ios: { shadowOpacity: 0.06, shadowRadius: 18, shadowOffset: { width: 0, height: 7 } },
-      android: { elevation: 2 },
-      web: { boxShadow: '0 8px 28px rgba(36, 72, 39, 0.08)' } as ViewStyle,
-    }),
   },
   button: { minHeight: 48, borderRadius: radius.md, paddingHorizontal: spacing.xl, flexDirection: 'row', gap: spacing.sm, alignItems: 'center', justifyContent: 'center', borderWidth: 1 },
   buttonCompact: { minHeight: 38, paddingHorizontal: spacing.md, borderRadius: radius.sm },
@@ -249,10 +242,10 @@ const styles = StyleSheet.create({
   pill: { borderRadius: radius.pill, paddingHorizontal: 10, paddingVertical: 5, alignSelf: 'flex-start' },
   sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: spacing.md },
   segmented: { padding: 4, borderRadius: radius.md, flexDirection: 'row', alignSelf: 'stretch' },
-  segment: { flex: 1, minHeight: 38, paddingHorizontal: 8, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
+  segment: { flex: 1, minHeight: 38, paddingHorizontal: 8, borderRadius: radius.sm, alignItems: 'center', justifyContent: 'center' },
   screenContent: { padding: spacing.lg, paddingBottom: 112, gap: spacing.xl },
   emptyState: { alignItems: 'center', gap: spacing.md, paddingVertical: spacing.xxxl },
-  emptyIcon: { width: 52, height: 52, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
+  emptyIcon: { width: 52, height: 52, alignItems: 'center', justifyContent: 'center' },
   categoryBadge: { width: 88, minHeight: 100, borderWidth: 1.5, borderRadius: radius.md, padding: spacing.sm, gap: spacing.sm, alignItems: 'center', justifyContent: 'center' },
-  categoryIcon: { width: 42, height: 42, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
+  categoryIcon: { width: 42, height: 42, alignItems: 'center', justifyContent: 'center' },
 });

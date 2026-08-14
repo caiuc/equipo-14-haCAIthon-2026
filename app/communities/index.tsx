@@ -29,7 +29,7 @@ export default function CommunitiesScreen() {
 
         <View style={styles.section}><SectionHeader title={query ? `Resultados (${filtered.length})` : 'En movimiento ahora'} actionLabel={!query ? 'Ranking completo' : undefined} onAction={() => router.push('/leaderboards')} />{discover.length || query ? <View style={[styles.communityGrid, width >= 700 && styles.communityGridDesktop]}>{(query ? filtered : discover).map((community) => <View key={community.id} style={width >= 700 ? styles.gridItem : undefined}><CommunityCard community={community} state={state} /></View>)}</View> : <EmptyState title="No encontramos esa comunidad" detail="Prueba con el nombre de una facultad, campus o agrupación." icon={Search} />}</View>
 
-        {!query && <View style={[styles.invite, { backgroundColor: colors.surfaceStrong }]}><View style={[styles.inviteIcon, { backgroundColor: colors.environmental }]}><Sparkles color="#17351B" /></View><View style={{ flex: 1 }}><AppText variant="h3" style={{ color: colors.textOnStrong }}>¿Tienes un código privado?</AppText><AppText style={{ color: colors.textOnStrong, opacity: 0.68 }}>Úsalo para entrar al grupo de tu clase, club o amistades.</AppText></View><Button label="Ingresar código" variant="secondary" compact /></View>}
+        {!query && <View style={[styles.invite, { backgroundColor: colors.surfaceStrong }]}><View style={styles.inviteIcon}><Sparkles color={colors.primary} size={32} /></View><View style={{ flex: 1 }}><AppText variant="h3" style={{ color: colors.textOnStrong }}>¿Tienes un código privado?</AppText><AppText style={{ color: colors.textOnStrong, opacity: 0.68 }}>Úsalo para entrar al grupo de tu clase, club o amistades.</AppText></View><Button label="Ingresar código" variant="secondary" compact /></View>}
       </ScreenScroll>
     </AppShell>
   );
@@ -45,5 +45,5 @@ const styles = StyleSheet.create({
   communityGridDesktop: { flexDirection: 'row', flexWrap: 'wrap' },
   gridItem: { width: '48.8%', minWidth: 310 },
   invite: { borderRadius: radius.lg, padding: spacing.xl, flexDirection: 'row', alignItems: 'center', gap: spacing.lg },
-  inviteIcon: { width: 48, height: 48, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
+  inviteIcon: { width: 48, height: 48, alignItems: 'center', justifyContent: 'center' },
 });

@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { useAppAuth } from '@/auth/AppAuthProvider';
+import { useRetornaStore } from '@/data/store';
 import { AppText, Avatar, Button, Card, CommunityAvatar, EmptyState, Pill, ScreenScroll, SectionHeader } from '@/design/components';
 import { useTheme } from '@/design/theme';
 import { spacing } from '@/design/tokens';
@@ -13,6 +14,7 @@ import { AppShell } from '@/navigation/AppShell';
 export default function ProfileRoute() {
   const { colors } = useTheme();
   const auth = useAppAuth();
+  const { state } = useRetornaStore();
   const organizations = useOrganizations();
   const router = useRouter();
   const [loggingOut, setLoggingOut] = useState(false);
@@ -20,7 +22,18 @@ export default function ProfileRoute() {
   const memberships = useMemo(() => organizations.memberships.filter((item) => item.user_id === auth.user?.id), [auth.user?.id, organizations.memberships]);
   const joined = memberships.map((membership) => ({ membership, organization: organizations.organizations.find((item) => item.id === membership.organization_id) })).filter((item) => item.organization !== undefined);
   const canManage = memberships.some((membership) => membership.role === 'owner' || membership.role === 'admin');
-  const profile = auth.profile;
+  const demoProfile = state.profiles.find((item) => item.id === state.currentUserId);
+  const profile = auth.profile ?? (auth.isDemoMode && demoProfile ? {
+    id: demoProfile.id,
+    username: demoProfile.username,
+    display_name: demoProfile.displayName,
+    initials: demoProfile.initials,
+    avatar_color: demoProfile.avatarColor,
+    bio: demoProfile.bio ?? null,
+    affiliation: demoProfile.affiliation ?? null,
+    campus: demoProfile.campus ?? null,
+    created_at: demoProfile.createdAt,
+  } : null);
 
   const logout = async () => {
     setLoggingOut(true);
@@ -35,19 +48,19 @@ export default function ProfileRoute() {
     }
   };
 
-  if (!auth.user || !profile) return <AppShell><View style={styles.center}><AppText variant="h2">Cargando tu perfil…</AppText></View></AppShell>;
+  if (!profile) return <AppShell><View style={styles.center}><AppText variant="h2">Cargando tu perfil…</AppText></View></AppShell>;
 
   return <AppShell><ScreenScroll contentContainerStyle={styles.screen}>
     <Card style={styles.identityCard}>
       <Avatar initials={profile.initials} color={profile.avatar_color} size={78} />
       <View style={styles.identityText}><AppText variant="h1">{profile.display_name}</AppText><AppText variant="bodyStrong" style={{ color: colors.primary }}>@{profile.username}</AppText>{profile.bio && <AppText style={{ color: colors.textMuted }}>{profile.bio}</AppText>}</View>
-      <Pill label="Cuenta activa" tone="positive" />
+      <Pill label={auth.isDemoMode ? 'Perfil demo' : 'Cuenta activa'} tone="positive" />
     </Card>
 
     <View style={styles.columns}>
       <View style={styles.mainColumn}>
         <View style={styles.section}><SectionHeader title="Información de tu cuenta" /><Card style={styles.details}>
-          <Detail icon={Mail} label="Correo" value={auth.user.email ?? 'Sin correo disponible'} />
+          <Detail icon={Mail} label="Correo" value={auth.identityEmail ?? auth.user?.email ?? 'Sin correo disponible'} />
           {profile.affiliation && <Detail icon={Building2} label="Afiliación" value={profile.affiliation} />}
           {profile.campus && <Detail icon={MapPin} label="Campus" value={profile.campus} />}
           <Detail icon={CalendarDays} label="En Retorna desde" value={new Intl.DateTimeFormat('es-CL', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(profile.created_at))} />
@@ -80,7 +93,7 @@ export default function ProfileRoute() {
 
 function Detail({ icon: Icon, label, value }: { icon: typeof Mail; label: string; value: string }) {
   const { colors } = useTheme();
-  return <View style={styles.detail}><View style={[styles.detailIcon, { backgroundColor: colors.surfaceMuted }]}><Icon size={18} color={colors.textMuted} /></View><View style={{ flex: 1 }}><AppText variant="caption" style={{ color: colors.textMuted }}>{label}</AppText><AppText variant="bodyStrong">{value}</AppText></View></View>;
+  return <View style={styles.detail}><View style={styles.detailIcon}><Icon size={22} color={colors.primary} /></View><View style={{ flex: 1 }}><AppText variant="caption" style={{ color: colors.textMuted }}>{label}</AppText><AppText variant="bodyStrong">{value}</AppText></View></View>;
 }
 
 function Capability({ icon: Icon, title, detail }: { icon: typeof UsersRound; title: string; detail: string }) {
@@ -103,10 +116,10 @@ const styles = StyleSheet.create({
   section: { gap: spacing.md },
   details: { gap: spacing.lg },
   detail: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
-  detailIcon: { width: 40, height: 40, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
+  detailIcon: { width: 40, height: 40, alignItems: 'center', justifyContent: 'center' },
   organizationList: { gap: spacing.md },
   organization: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, padding: spacing.lg },
   actions: { gap: spacing.lg },
   capability: { flexDirection: 'row', alignItems: 'flex-start', gap: spacing.md },
-  message: { borderRadius: 16, padding: spacing.md },
+  message: { padding: spacing.md },
 });

@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 
 import { AppText, Card, Pill, ProgressBar } from '@/design/components';
 import { useTheme } from '@/design/theme';
-import { radius, spacing } from '@/design/tokens';
+import { spacing } from '@/design/tokens';
 import { challengeProgress, daysRemaining, formatNumber, missionProgress } from '@/domain/rules';
 import type { AppState, Challenge, Mission } from '@/domain/types';
 
@@ -18,9 +18,8 @@ export function MissionCard({ state, mission, compact = false }: { state: AppSta
       {({ pressed }) => (
         <Card style={[styles.mission, { backgroundColor: colors.surfaceStrong, borderColor: colors.surfaceStrong, opacity: pressed ? 0.9 : 1 }, compact && styles.compact]}>
           <View style={styles.missionTop}>
-            <View style={[styles.artwork, { backgroundColor: colors.primary }]}>
-              <Flag size={24} color="#17351B" strokeWidth={2.6} />
-              <View style={[styles.artCircle, { backgroundColor: colors.environmental }]} />
+            <View style={styles.artwork}>
+              <Flag size={34} color={colors.primary} strokeWidth={2} />
             </View>
             <View style={{ flex: 1, gap: 5 }}>
               <AppText variant="eyebrow" style={{ color: colors.primary }}>Misión de toda la UC</AppText>
@@ -71,8 +70,7 @@ const styles = StyleSheet.create({
   mission: { gap: spacing.lg, overflow: 'hidden' },
   compact: { padding: spacing.lg },
   missionTop: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
-  artwork: { width: 52, height: 52, borderRadius: radius.md, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
-  artCircle: { position: 'absolute', width: 22, height: 22, borderRadius: 11, right: -5, bottom: -4 },
+  artwork: { width: 52, height: 52, alignItems: 'center', justifyContent: 'center' },
   progressLabels: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   metaRow: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.lg },
   meta: { flexDirection: 'row', alignItems: 'center', gap: 6 },
