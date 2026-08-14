@@ -14,25 +14,25 @@ const levels: { label: string; icon: LucideIcon }[] = [
   { label: 'Planeta', icon: Globe2 },
 ];
 
-export function AuthScaleHero() {
+export function AuthScaleHero({ transparent = false, foregroundColor }: { transparent?: boolean; foregroundColor?: string }) {
   const { colors } = useTheme();
   const { width } = useWindowDimensions();
   const desktop = width >= 840;
   const fontSizes = desktop ? [42, 57, 75, 94, 112] : [34, 43, 53, 63, 73];
   const iconSizes = desktop ? [24, 30, 38, 48, 58] : [20, 24, 28, 33, 39];
 
-  return <View style={[styles.hero, { backgroundColor: colors.surfaceStrong }]}>
-    <RetornaLogo inverted />
+  return <View style={[styles.hero, { backgroundColor: transparent ? 'transparent' : colors.surfaceStrong }]}>
+    <RetornaLogo foregroundColor={foregroundColor} inverted />
     <View style={styles.message}>
       <AppText variant="h3" style={{ color: colors.primary, textTransform: 'uppercase' }}>El cambio empieza contigo</AppText>
       <View style={styles.scale} accessibilityLabel="Tu impacto crece desde ti hasta el planeta">
         {levels.map(({ label, icon: Icon }, index) => <View key={label} style={styles.level}>
-          <AppText numberOfLines={1} style={[styles.word, { color: colors.textOnStrong, fontSize: fontSizes[index], lineHeight: Math.round(fontSizes[index]! * 0.94) }]}>{label}</AppText>
+          <AppText numberOfLines={1} style={[styles.word, { color: foregroundColor ?? colors.textOnStrong, fontSize: fontSizes[index], lineHeight: Math.round(fontSizes[index]! * 0.94) }]}>{label}</AppText>
           <Icon color={colors.primary} size={iconSizes[index]} strokeWidth={1.7} />
         </View>)}
       </View>
     </View>
-    <AppText style={[styles.footer, { color: colors.textOnStrong }]}>Un gesto individual puede mover una comunidad completa.</AppText>
+    <AppText style={[styles.footer, { color: foregroundColor ?? colors.textOnStrong }]}>Un gesto individual puede mover una comunidad completa.</AppText>
   </View>;
 }
 

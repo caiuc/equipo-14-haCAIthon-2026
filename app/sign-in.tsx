@@ -10,6 +10,7 @@ import {
   type LucideIcon,
 } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
+import { useVideoPlayer, VideoView } from 'expo-video';
 import { useState } from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, TextInput, useWindowDimensions, View } from 'react-native';
 import { z } from 'zod';
@@ -19,6 +20,8 @@ import { AuthScaleHero } from '@/auth/AuthScaleHero';
 import { AppText, Button } from '@/design/components';
 import { useTheme } from '@/design/theme';
 import { radius, spacing } from '@/design/tokens';
+
+const campusVideo = require('../assets/puc-campus.mp4');
 
 const loginSchema = z.object({
   email: z.email('Ingresa un correo válido.'),
@@ -72,6 +75,11 @@ export default function SignInScreen() {
   const router = useRouter();
   const { width } = useWindowDimensions();
   const desktop = width >= 840;
+  const heroPlayer = useVideoPlayer(campusVideo, (player) => {
+    player.loop = true;
+    player.muted = true;
+    player.play();
+  });
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -104,61 +112,79 @@ export default function SignInScreen() {
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={[styles.root, { backgroundColor: colors.background }]}>
       <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
         <View style={styles.page}>
-          <View style={[styles.authPanel, desktop && styles.authPanelDesktop]}>
-            <AuthScaleHero />
-            <View style={[styles.formSide, desktop && styles.formSideDesktop]}>
-              <View style={styles.formHeader}>
-                <AppText variant="h1">Vuelve a sumar</AppText>
-                <AppText style={{ color: colors.textMuted }}>Ingresa con el correo y contraseña de tu cuenta.</AppText>
+          <View style={styles.authBackdrop}>
+            <VideoView
+              accessible={false}
+              allowsPictureInPicture={false}
+              contentFit="cover"
+              nativeControls={false}
+              onFirstFrameRender={() => heroPlayer.play()}
+              player={heroPlayer}
+              playsInline
+              pointerEvents="none"
+              requiresLinearPlayback
+              style={styles.authVideo}
+              surfaceType="textureView"
+            />
+            <View pointerEvents="none" style={styles.authOverlay} />
+            <View style={[styles.authPanel, desktop && styles.authPanelDesktop]}>
+              <AuthScaleHero foregroundColor="#FFFFFF" transparent />
+              <View style={[styles.formSide, desktop && styles.formSideDesktop]}>
+                <View style={styles.formHeader}>
+                  <AppText variant="h1" style={styles.authText}>Vuelve a sumar</AppText>
+                  <AppText style={styles.authText}>Ingresa con el correo y contraseña de tu cuenta.</AppText>
+                </View>
+                {auth.configurationError && <View style={[styles.message, styles.authMessage]}><AppText variant="caption" style={styles.authText}>Supabase no está conectado. Puedes recorrer la plataforma usando los datos locales del modo demo.</AppText></View>}
+                {error && <View style={[styles.message, styles.authMessage]} accessibilityRole="alert"><AppText variant="caption" style={styles.authText}>{error}</AppText></View>}
+                <AuthInput inverted label="Correo" icon={<Mail size={18} color="#FFFFFF" />} value={email} onChangeText={setEmail} placeholder="nombre@uc.cl" keyboardType="email-address" autoCapitalize="none" autoComplete="email" />
+                <AuthInput inverted label="Contraseña" icon={<LockKeyhole size={18} color="#FFFFFF" />} value={password} onChangeText={setPassword} placeholder="Tu contraseña" secureTextEntry autoComplete="current-password" />
+                <Button label="Iniciar sesión" icon={ArrowRight} onPress={() => void enter()} loading={loading} disabled={Boolean(auth.configurationError)} />
+                <Button label="Entrar en modo demo" icon={Play} variant="dark" onPress={enterDemo} style={styles.authSecondaryButton} />
+                <Pressable onPress={() => router.push('/sign-up')} accessibilityRole="link" style={styles.createLink}><AppText style={styles.authText}>¿Primera vez?</AppText><AppText variant="bodyStrong" style={{ color: colors.primary }}>Crear cuenta</AppText></Pressable>
+                <View style={styles.security}><LockKeyhole size={15} color="#FFFFFF" /><AppText variant="caption" style={[styles.authText, styles.securityText]}>El modo demo no necesita credenciales ni conexión externa.</AppText></View>
               </View>
-              {auth.configurationError && <View style={[styles.message, { backgroundColor: colors.surfaceMuted }]}><AppText variant="caption" style={{ color: colors.textMuted }}>Supabase no está conectado. Puedes recorrer la plataforma usando los datos locales del modo demo.</AppText></View>}
-              {error && <View style={[styles.message, { backgroundColor: colors.dangerSoft }]} accessibilityRole="alert"><AppText variant="caption" style={{ color: colors.danger }}>{error}</AppText></View>}
-              <AuthInput label="Correo" icon={<Mail size={18} color={colors.textMuted} />} value={email} onChangeText={setEmail} placeholder="nombre@uc.cl" keyboardType="email-address" autoCapitalize="none" autoComplete="email" />
-              <AuthInput label="Contraseña" icon={<LockKeyhole size={18} color={colors.textMuted} />} value={password} onChangeText={setPassword} placeholder="Tu contraseña" secureTextEntry autoComplete="current-password" />
-              <Button label="Iniciar sesión" icon={ArrowRight} onPress={() => void enter()} loading={loading} disabled={Boolean(auth.configurationError)} />
-              <Button label="Entrar en modo demo" icon={Play} variant="secondary" onPress={enterDemo} />
-              <Pressable onPress={() => router.push('/sign-up')} accessibilityRole="link" style={styles.createLink}><AppText style={{ color: colors.textMuted }}>¿Primera vez?</AppText><AppText variant="bodyStrong" style={{ color: colors.primary }}>Crear cuenta</AppText></Pressable>
-              <View style={styles.security}><LockKeyhole size={15} color={colors.textMuted} /><AppText variant="caption" style={{ color: colors.textMuted, flex: 1 }}>El modo demo no necesita credenciales ni conexión externa.</AppText></View>
             </View>
           </View>
 
-          <View style={styles.storySection}>
-            <View style={[styles.storyLead, desktop && styles.storyLeadDesktop]}>
-              <View style={styles.storyTitle}>
-                <AppText variant="eyebrow" style={{ color: colors.primary }}>Una acción. Cinco escalas.</AppText>
-                <AppText variant="display" style={styles.displayTitle}>Tu reciclaje no termina en el contenedor.</AppText>
+          <View style={styles.landingContent}>
+            <View style={styles.storySection}>
+              <View style={[styles.storyLead, desktop && styles.storyLeadDesktop]}>
+                <View style={styles.storyTitle}>
+                  <AppText variant="eyebrow" style={{ color: colors.primary }}>Una acción. Cinco escalas.</AppText>
+                  <AppText variant="display" style={styles.displayTitle}>Tu reciclaje no termina en el contenedor.</AppText>
+                </View>
+                <AppText style={styles.storyCopy}>
+                  Retorna convierte acciones cotidianas en progreso visible. Lo que registras construye tu hábito,
+                  aporta a tu comunidad y hace más fácil avanzar hacia una meta común.
+                </AppText>
               </View>
-              <AppText style={styles.storyCopy}>
-                Retorna convierte acciones cotidianas en progreso visible. Lo que registras construye tu hábito,
-                aporta a tu comunidad y hace más fácil avanzar hacia una meta común.
-              </AppText>
+
+              <View style={[styles.steps, desktop && styles.stepsDesktop]}>
+                {steps.map((step) => <LandingStep key={step.number} {...step} />)}
+              </View>
             </View>
 
-            <View style={[styles.steps, desktop && styles.stepsDesktop]}>
-              {steps.map((step) => <LandingStep key={step.number} {...step} />)}
+            <View style={[styles.platformSection, { backgroundColor: colors.surfaceStrong, borderColor: colors.textOnStrong }]}>
+              <View style={styles.platformHeader}>
+                <AppText variant="eyebrow" style={{ color: colors.primary }}>Hecho para avanzar en conjunto</AppText>
+                <AppText variant="display" style={{ color: colors.textOnStrong, maxWidth: 650 }}>Lo simple también puede mover una comunidad.</AppText>
+              </View>
+              <View style={[styles.featureGrid, desktop && styles.featureGridDesktop]}>
+                {platformFeatures.map((feature) => <PlatformFeature key={feature.title} {...feature} desktop={desktop} />)}
+              </View>
             </View>
+
+            <View style={[styles.demoSection, desktop && styles.demoSectionDesktop, { backgroundColor: colors.primary }]}>
+              <View style={styles.demoCopy}>
+                <AppText variant="eyebrow" style={styles.blackText}>Conoce Retorna hoy</AppText>
+                <AppText variant="display" style={styles.blackText}>Empieza por un objeto.</AppText>
+                <AppText style={[styles.blackText, styles.demoDetail]}>Explora el flujo completo con datos locales. No necesitas una cuenta ni conectar Supabase.</AppText>
+              </View>
+              <Button label="Explorar modo demo" icon={Play} variant="dark" onPress={enterDemo} style={styles.demoButton} />
+            </View>
+
+            <AppText variant="caption" style={[styles.footer, { borderColor: colors.border }]}>RETORNA · TU HÁBITO, TU COMUNIDAD, TU PLANETA</AppText>
           </View>
-
-          <View style={[styles.platformSection, { backgroundColor: colors.surfaceStrong, borderColor: colors.textOnStrong }]}>
-            <View style={styles.platformHeader}>
-              <AppText variant="eyebrow" style={{ color: colors.primary }}>Hecho para avanzar en conjunto</AppText>
-              <AppText variant="display" style={{ color: colors.textOnStrong, maxWidth: 650 }}>Lo simple también puede mover una comunidad.</AppText>
-            </View>
-            <View style={[styles.featureGrid, desktop && styles.featureGridDesktop]}>
-              {platformFeatures.map((feature) => <PlatformFeature key={feature.title} {...feature} desktop={desktop} />)}
-            </View>
-          </View>
-
-          <View style={[styles.demoSection, desktop && styles.demoSectionDesktop, { backgroundColor: colors.primary }]}>
-            <View style={styles.demoCopy}>
-              <AppText variant="eyebrow" style={styles.blackText}>Conoce Retorna hoy</AppText>
-              <AppText variant="display" style={styles.blackText}>Empieza por un objeto.</AppText>
-              <AppText style={[styles.blackText, styles.demoDetail]}>Explora el flujo completo con datos locales. No necesitas una cuenta ni conectar Supabase.</AppText>
-            </View>
-            <Button label="Explorar modo demo" icon={Play} variant="dark" onPress={enterDemo} style={styles.demoButton} />
-          </View>
-
-          <AppText variant="caption" style={[styles.footer, { borderColor: colors.border }]}>RETORNA · TU HÁBITO, TU COMUNIDAD, TU PLANETA</AppText>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -185,25 +211,34 @@ function PlatformFeature({ icon: Icon, title, detail, desktop }: { icon: LucideI
   </View>;
 }
 
-function AuthInput({ label, icon, ...props }: React.ComponentProps<typeof TextInput> & { label: string; icon: React.ReactNode }) {
+function AuthInput({ label, icon, inverted = false, ...props }: React.ComponentProps<typeof TextInput> & { label: string; icon: React.ReactNode; inverted?: boolean }) {
   const { colors } = useTheme();
-  return <View style={styles.inputGroup}><AppText variant="caption">{label}</AppText><View style={[styles.inputWrap, { borderColor: colors.border, backgroundColor: colors.surface }]}>{icon}<TextInput {...props} placeholderTextColor={colors.textMuted} style={[styles.input, { color: colors.text }]} accessibilityLabel={label} /></View></View>;
+  const foreground = inverted ? '#FFFFFF' : colors.text;
+  return <View style={styles.inputGroup}><AppText variant="caption" style={{ color: foreground }}>{label}</AppText><View style={[styles.inputWrap, { borderColor: inverted ? '#FFFFFF' : colors.border, backgroundColor: inverted ? 'rgba(0, 0, 0, 0.5)' : colors.surface }]}>{icon}<TextInput {...props} placeholderTextColor={foreground} style={[styles.input, { color: foreground }]} accessibilityLabel={label} /></View></View>;
 }
 
 const styles = StyleSheet.create({
   root: { flex: 1 },
-  scroll: { flexGrow: 1, alignItems: 'center', padding: spacing.lg, paddingBottom: 0 },
-  page: { width: '100%', maxWidth: 1180, gap: 80 },
-  authPanel: { width: '100%' },
+  scroll: { flexGrow: 1 },
+  page: { width: '100%', gap: 80 },
+  authBackdrop: { width: '100%', overflow: 'hidden', backgroundColor: '#000000' },
+  authVideo: { position: 'absolute', inset: 0, width: '100%', height: '100%' },
+  authOverlay: { position: 'absolute', inset: 0, backgroundColor: 'rgba(0, 0, 0, 0.68)' },
+  authPanel: { width: '100%', maxWidth: 1180, alignSelf: 'center' },
   authPanelDesktop: { minHeight: 680, flexDirection: 'row' },
+  landingContent: { width: '100%', maxWidth: 1212, alignSelf: 'center', paddingHorizontal: spacing.lg, gap: 80 },
   formSide: { padding: spacing.xxxl, gap: spacing.xl },
   formSideDesktop: { flex: 0.88, padding: 48, justifyContent: 'center' },
   formHeader: { gap: spacing.sm, marginBottom: spacing.md },
+  authText: { color: '#FFFFFF' },
+  authMessage: { backgroundColor: 'rgba(0, 0, 0, 0.72)', borderColor: '#FFFFFF', borderWidth: 1 },
+  authSecondaryButton: { borderColor: '#FFFFFF' },
   inputGroup: { gap: spacing.sm },
   inputWrap: { minHeight: 50, borderWidth: 1, borderRadius: radius.md, flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingHorizontal: spacing.lg },
   input: { flex: 1, fontSize: 16, outlineStyle: 'none' } as never,
   createLink: { minHeight: 44, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 6 },
   security: { flexDirection: 'row', gap: spacing.sm, alignItems: 'flex-start', marginTop: spacing.md },
+  securityText: { flex: 1 },
   message: { borderRadius: radius.md, padding: spacing.md },
   storySection: { gap: spacing.huge },
   storyLead: { gap: spacing.xxl },
