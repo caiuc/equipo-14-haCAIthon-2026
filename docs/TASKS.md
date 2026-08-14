@@ -89,7 +89,7 @@ T3 + T4 ─> T6 Missions/Social/Sharing ─> T7 Barcode
 
 | ID | Tarea | Estado | Owner | Depende de | Criterio de aceptación / evidencia |
 | --- | --- | --- | --- | --- | --- |
-| RTN-501 | Tokens, logo y componentes base | PARCIAL | — | RTN-001 | light/dark, contraste, componentes y assets verificados |
+| RTN-501 | Tokens, logo y componentes base | RESERVADA | Codex · [claim](claims/RTN-501.md) | RTN-001 | light/dark, contraste, componentes y assets verificados |
 | RTN-502 | Shell mobile/desktop | PARCIAL | — | RTN-501 | bottom nav móvil y rail desktop sin rutas rotas |
 | RTN-503 | Estados loading/empty/error | PENDIENTE | — | RTN-501 | catálogo reutilizable y aplicado a flows críticos |
 | RTN-504 | Auditoría de accesibilidad | PENDIENTE | — | RTN-502 | teclado web, labels, contraste, targets y lector |

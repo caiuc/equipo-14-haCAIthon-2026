@@ -10,7 +10,9 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 
 ## Trabajo activo
 
-No hay claims activos. Antes de implementar una tarea, reservarla mediante el protocolo de [`claims/README.md`](claims/README.md).
+| Tarea | Owner | Rama | Lease hasta | Write set |
+| --- | --- | --- | --- | --- |
+| RTN-501 | Codex | `feat/RTN-501-lime-visual-refresh` | 2026-08-15T03:26:14Z | Tokens, componentes, navegación y pantallas de creación; ver [`claims/RTN-501.md`](claims/RTN-501.md) |
 
 ## Completado
 
