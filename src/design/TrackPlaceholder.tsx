@@ -14,7 +14,7 @@ export function TrackPlaceholder({ title, taskId, description }: { title: string
     <AppShell>
       <ScreenScroll contentContainerStyle={styles.screen}>
         <Card style={styles.card}>
-          <View style={[styles.icon, { backgroundColor: colors.environmentalSoft }]}><Construction color={colors.environmental} size={28} /></View>
+          <View style={styles.icon}><Construction color={colors.environmental} size={36} /></View>
           <Pill label={`${taskId} · Track pendiente`} tone="primary" />
           <AppText variant="h1" style={{ textAlign: 'center' }}>{title}</AppText>
           <AppText style={{ color: colors.textMuted, textAlign: 'center', maxWidth: 520 }}>{description}</AppText>
@@ -29,6 +29,6 @@ export function TrackPlaceholder({ title, taskId, description }: { title: string
 const styles = StyleSheet.create({
   screen: { flexGrow: 1, width: '100%', maxWidth: 720, alignSelf: 'center', justifyContent: 'center' },
   card: { alignItems: 'center', gap: spacing.lg, paddingVertical: spacing.xxxl },
-  icon: { width: 58, height: 58, borderRadius: 19, alignItems: 'center', justifyContent: 'center' },
-  notice: { width: '100%', borderRadius: 14, padding: spacing.md, flexDirection: 'row', gap: spacing.sm, alignItems: 'center' },
+  icon: { width: 58, height: 58, alignItems: 'center', justifyContent: 'center' },
+  notice: { width: '100%', padding: spacing.md, flexDirection: 'row', gap: spacing.sm, alignItems: 'center' },
 });

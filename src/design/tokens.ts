@@ -10,11 +10,11 @@ export const spacing = {
 } as const;
 
 export const radius = {
-  sm: 10,
-  md: 16,
-  lg: 22,
-  xl: 30,
-  pill: 999,
+  sm: 0,
+  md: 0,
+  lg: 0,
+  xl: 0,
+  pill: 0,
 } as const;
 
 export const lightColors = {

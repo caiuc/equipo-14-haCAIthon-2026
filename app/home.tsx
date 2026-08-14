@@ -50,10 +50,10 @@ export default function HomeScreen() {
           </View>
 
           <View style={styles.sideColumn}>
-            <View style={styles.section}><SectionHeader title="Ingeniería esta semana" actionLabel="Ranking" onAction={() => router.push('/leaderboards')} /><Card style={styles.leaderboard}><View style={styles.rankSummary}><View style={[styles.trophy, { backgroundColor: colors.environmentalSoft }]}><Trophy size={24} color={colors.environmental} /></View><View style={{ flex: 1 }}><AppText variant="caption" style={{ color: colors.textMuted }}>Subiste 2 puestos</AppText><AppText variant="h3">Estás #{currentRank}</AppText></View><ArrowUpRight color={colors.environmental} /></View><LeaderboardRows entries={leaderboard} limit={5} /></Card></View>
+            <View style={styles.section}><SectionHeader title="Ingeniería esta semana" actionLabel="Ranking" onAction={() => router.push('/leaderboards')} /><Card style={styles.leaderboard}><View style={styles.rankSummary}><View style={styles.trophy}><Trophy size={30} color={colors.environmental} /></View><View style={{ flex: 1 }}><AppText variant="caption" style={{ color: colors.textMuted }}>Subiste 2 puestos</AppText><AppText variant="h3">Estás #{currentRank}</AppText></View><ArrowUpRight color={colors.environmental} /></View><LeaderboardRows entries={leaderboard} limit={5} /></Card></View>
             {wide && <View style={styles.section}><SectionHeader title="Desafío activo" /><ChallengeCard state={state} challenge={challenge} /></View>}
             <Pressable onPress={() => router.push('/share-card')} style={({ pressed }) => [styles.sharePrompt, { backgroundColor: colors.primary, opacity: pressed ? 0.85 : 1 }]}>
-              <View style={styles.shareIcon}><Sparkles size={22} color={colors.primary} /></View><View style={{ flex: 1 }}><AppText variant="h3" style={{ color: '#17351B' }}>Tu avance merece verse</AppText><AppText variant="caption" style={{ color: '#17351B', opacity: 0.78 }}>Crea una Story con tu ranking semanal.</AppText></View><ChevronRight color="#17351B" />
+              <View style={styles.shareIcon}><Sparkles size={28} color="#17351B" /></View><View style={{ flex: 1 }}><AppText variant="h3" style={{ color: '#17351B' }}>Tu avance merece verse</AppText><AppText variant="caption" style={{ color: '#17351B', opacity: 0.78 }}>Crea una Story con tu ranking semanal.</AppText></View><ChevronRight color="#17351B" />
             </Pressable>
           </View>
         </View>
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: spacing.md },
   identity: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   headerActions: { flexDirection: 'row', gap: spacing.sm },
-  iconButton: { width: 43, height: 43, borderRadius: 15, alignItems: 'center', justifyContent: 'center' },
+  iconButton: { width: 43, height: 43, alignItems: 'center', justifyContent: 'center' },
   notificationDot: { width: 7, height: 7, borderRadius: 4, position: 'absolute', right: 10, top: 9 },
   columns: { gap: spacing.xl },
   columnsWide: { flexDirection: 'row', alignItems: 'flex-start' },
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   feed: { paddingVertical: spacing.sm },
   leaderboard: { padding: spacing.sm },
   rankSummary: { flexDirection: 'row', alignItems: 'center', padding: spacing.md, gap: spacing.md },
-  trophy: { width: 48, height: 48, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
+  trophy: { width: 48, height: 48, alignItems: 'center', justifyContent: 'center' },
   sharePrompt: { minHeight: 105, borderRadius: radius.lg, padding: spacing.lg, flexDirection: 'row', alignItems: 'center', gap: spacing.md },
-  shareIcon: { width: 44, height: 44, borderRadius: 15, backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center' },
+  shareIcon: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
 });

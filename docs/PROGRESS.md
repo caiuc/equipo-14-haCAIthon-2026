@@ -2,7 +2,7 @@
 
 > **Obligatorio:** todo agente que cambie el repositorio debe actualizar este archivo en el mismo cambio. Ver [`../AGENTS.md`](../AGENTS.md).
 
-Última actualización: **2026-08-14 15:40 America/Santiago — Codex**
+Última actualización: **2026-08-14 15:52 America/Santiago — Codex**
 
 ## Resumen ejecutivo
 
@@ -13,7 +13,6 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 | Tarea | Owner | Rama | Lease hasta | Write set |
 | --- | --- | --- | --- | --- |
 | RTN-302 | Codex | `feat/RTN-302-recycling-flow` | 2026-08-15T03:10:22Z | Claim remoto activo; flujo de reciclaje/cámara sin solapamiento con RTN-501 |
-| RTN-505 | Codex | `feat/RTN-505-square-auth-demo` | 2026-08-15T03:40:31Z | Geometría angular, logo libre, auth escalonado y acceso seed; ver [`claims/RTN-505.md`](claims/RTN-505.md) |
 
 ## Completado
 
@@ -25,6 +24,7 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 - Primer borrador de tokens, temas, logo SVG y componentes base.
 - Auth propia Supabase, perfil y organizaciones implementados en código.
 - Identidad visual unificada en verde lima: tokens light/dark, componentes, formularios y navegación de reciclaje.
+- Lenguaje visual angular: logo transparente, tarjetas/controles sin radios ni sombras, auth escalonado y acceso demo local con Martina.
 - Primer borrador de shell responsive.
 - Primer borrador visual de onboarding, Home y Comunidades.
 - Gobernanza multiagente: `AGENTS.md` y documentación `/docs`.
@@ -65,7 +65,7 @@ El repositorio partió sólo con las bases del hackathon. La entrega actual deja
 ## Bloqueos y riesgos conocidos
 
 1. El resultado previo de `npm audit --omit=dev` quedó obsoleto tras retirar Clerk; RTN-006 debe repetir el triage sin usar `--force`.
-2. Supabase Auth, migración y seed quedaron implementados pero no se ejecutaron contra una instancia local en esta intervención. Auth y organizaciones no ofrecen fallback demo intencionalmente.
+2. Supabase Auth, migración y seed SQL quedaron implementados pero no se ejecutaron contra una instancia local. El acceso general sí ofrece modo demo con fixtures; operaciones reales de organizaciones todavía requieren Supabase.
 3. Las rutas pendientes existen como placeholders intencionales, pero sus capacidades aún no están implementadas.
 4. Los totales base en fixtures sirven para demo visual; no representan el ledger productivo futuro.
 5. No hubo verificación visual en Android ni auditoría de accesibilidad/Lighthouse.
@@ -96,6 +96,10 @@ Ejecutado el 2026-08-14:
 | `npm test` (RTN-501) | OK; 5/5 tests existentes |
 | `git diff --check` (RTN-501) | OK |
 | Cálculo de contraste (RTN-501) | OK; 6.69:1 o superior en combinaciones principales |
+| `npm run typecheck` (RTN-505) | OK |
+| `npm run lint` (RTN-505) | OK, sin warnings |
+| `npm test` (RTN-505) | OK; 5/5 tests existentes |
+| `git diff --check` (RTN-505) | OK |
 
 ## Registro de cambios de agentes
 
@@ -108,3 +112,4 @@ Ejecutado el 2026-08-14:
 | 2026-08-14 | Codex | RTN-101–106 | Retiró Clerk; agregó Supabase Auth, perfil real, organizaciones, membresías, solicitudes, roles, migración, seed y UI | Typecheck, lint, 5 tests y diff-check OK; Supabase local no ejecutado; sin verificación web adicional por indicación del usuario |
 | 2026-08-14 | Codex | RTN-008 | Publicó el plan en PR #2 y completó el protocolo de claims en PR #3 tras un merge temprano del plan | Enlaces Markdown locales y `git diff --check` OK; claim liberado |
 | 2026-08-14 | Codex | RTN-501/502 | Unificó acentos en verde lima, superficies naturales y sombras bosque; retiró selectores multicolor y cambió el `+` central por flechas de reciclaje | Typecheck, lint, 5 tests, diff-check y contraste principal 6.69:1+ OK; revisión visual local queda a cargo del usuario |
+| 2026-08-14 | Codex | RTN-505 | Eliminó placas/radios/sombras, liberó el logo, reconstruyó login y registro con escala Tú→Planeta y agregó acceso seed sin Supabase | Typecheck, lint, 5 tests y diff-check OK; revisión visual local queda a cargo del usuario |
