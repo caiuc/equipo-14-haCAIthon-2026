@@ -45,6 +45,9 @@ No hay claims activos. Antes de implementar una tarea, reservarla mediante el pr
 - Rama de integración `develop` y rama `chore/RTN-001-initial-setup` publicadas.
 - Setup inicial fusionado en `develop`: `https://github.com/caiuc/equipo-14-haCAIthon-2026/pull/1`.
 - Protocolo de task leases: plan remoto, write set, heartbeat, expiración, takeover y liberación documentados en [`claims/README.md`](claims/README.md).
+- Proyecto Supabase remoto `retorna` creado (`bhjplveltcqocbhfmbhn`, sa-east-1) y migración de usuarios/organizaciones aplicada; trigger `handle_new_user` verificado con una inserción SQL directa.
+- Fix de SSR en `src/data/supabase.ts` (el export estático fallaba con `window is not defined` al pre-renderizar rutas en Node) y `public/vercel.json` con `cleanUrls`/rewrites para que las rutas dinámicas no devuelvan 404 en Vercel.
+- Deploy de producción publicado en Vercel: `https://dist-five-pearl-95.vercel.app` (proyecto `retorna`, cuenta personal `benjamintaito-7391`).
 - PWA instalable/offline: `app/+html.tsx` inyecta manifest, `theme-color` e íconos; `public/sw.js` cachea el app shell y sirve `offline.html` sin red; verificado sirviendo `dist/` y con Lighthouse (performance/accesibilidad/best-practices).
 - `app.json` corregido contra el esquema Expo SDK 57 (`newArchEnabled`, `splash` top-level y `android.edgeToEdgeEnabled` retirados; `android.versionCode` agregado) y `eas.json` con `cli.appVersionSource` para builds reproducibles; `expo-doctor` 21/21.
 
@@ -78,6 +81,8 @@ No hay claims activos. Antes de implementar una tarea, reservarla mediante el pr
 2. Supabase Auth, migración y seed SQL quedaron implementados pero no se ejecutaron contra una instancia local. El acceso general sí ofrece modo demo con fixtures; operaciones reales de organizaciones todavía requieren Supabase.
 3. Las rutas pendientes existen como placeholders intencionales, pero sus capacidades aún no están implementadas.
 4. Los totales base en fixtures sirven para demo visual; no representan el ledger productivo futuro.
+5. No hubo verificación visual en Android ni auditoría de accesibilidad/Lighthouse.
+6. El proyecto Supabase Cloud exige confirmación de correo por defecto (a diferencia de `supabase/config.toml`, que sólo aplica a `supabase start` local); no hay herramienta MCP para cambiar la config de Auth. Falta desactivar manualmente "Confirm email" en `https://supabase.com/dashboard/project/bhjplveltcqocbhfmbhn/auth/providers` antes de que el registro real funcione end-to-end en producción.
 5. No hubo verificación visual en Android (sin SDK/emulador en este entorno) ni auditoría de accesibilidad dedicada (RTN-504 sigue pendiente).
 6. No hay proyecto EAS real conectado (`extra.eas.projectId` es placeholder) ni cuenta Expo autenticada con permiso de build; `eas build --platform android` no se ejecutó. Acción concreta: crear el proyecto EAS con el usuario/organización real (`eas init`) y correr `eas build --platform android --profile preview`.
 7. Lighthouse CLI ≥10 ya no incluye la categoría PWA (instalabilidad/service worker se movieron a Chrome DevTools). Se corrió Lighthouse (`performance` 0.53, `accessibility` 0.95, `best-practices` 1.0 sobre `dist/` servido localmente) y se verificó instalabilidad a mano: manifest enlazado, íconos 192/512, `theme-color`, `display: standalone` y service worker registrado y sirviendo `offline.html` sin red.
@@ -175,6 +180,7 @@ Ejecutado el 2026-08-14:
 | 2026-08-14 | Codex | RTN-008 | Publicó el plan en PR #2 y completó el protocolo de claims en PR #3 tras un merge temprano del plan | Enlaces Markdown locales y `git diff --check` OK; claim liberado |
 | 2026-08-14 | Codex | RTN-501/502 | Unificó acentos en verde lima, superficies naturales y sombras bosque; retiró selectores multicolor y cambió el `+` central por flechas de reciclaje | Typecheck, lint, 5 tests, diff-check y contraste principal 6.69:1+ OK; revisión visual local queda a cargo del usuario |
 | 2026-08-14 | Codex | RTN-505 | Eliminó placas/radios/sombras, liberó el logo, reconstruyó login y registro con escala Tú→Planeta y agregó acceso seed sin Supabase | Typecheck, lint, 5 tests y diff-check OK; revisión visual local queda a cargo del usuario |
+| 2026-08-14 | Claude | RTN-806 | Creó el proyecto Supabase remoto y aplicó la migración; corrigió el SSR de `src/data/supabase.ts` y agregó `public/vercel.json`; desplegó producción en Vercel | Typecheck, lint, 5 tests, `web:export` y verificación en navegador (sin 404, sin errores de consola) OK; registro real bloqueado por confirmación de correo del proyecto Supabase Cloud, ver bloqueo 6 |
 | 2026-08-14 | Codex | RTN-506 | Redujo la UI a blanco/negro/lima y convirtió Home en una columna con CTA de reciclaje primero | Typecheck, lint, 5 tests y diff-check OK; revisión visual local queda a cargo del usuario |
 | 2026-08-14 | Codex | RTN-508 | Retiró campana, indicador y estilos de notificaciones de Inicio; preservó Configuración | Typecheck, lint y diff-check OK |
 | 2026-08-14 | Codex | RTN-507 | Amplió el logo Retorna y agregó “El cambio empieza contigo” sobre el hero Tú→Planeta | Typecheck, lint y diff-check OK |

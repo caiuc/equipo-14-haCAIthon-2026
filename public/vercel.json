@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/community/:id", "destination": "/community/[id].html" },
+    { "source": "/mission/:id", "destination": "/mission/[id].html" },
+    { "source": "/activity/:id", "destination": "/activity/[id].html" }
+  ]
+}
